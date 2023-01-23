@@ -8,7 +8,7 @@ body {
 }
 
 .header {
-    display: grid;
+    display: flex;
     justify-content: center;
     text-transform: uppercase;
 	background: linear-gradient(to right, #b46363 20%, #5036af 100%);
