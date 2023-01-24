@@ -3,11 +3,11 @@
     border: none;
     color: rgba(255, 255, 255, 0.925);
     
-    padding: 15px 32px;
+    padding: 15px 90px;
     text-align: center;
     text-decoration: none;
     display: inline-block;
-    font-size: 16px;
-    margin: 4px 2px;
+    font-size: 30px;
+    margin: 20px 2px;
     cursor: pointer;
   }
