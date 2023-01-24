@@ -1,0 +1,14 @@
+.text-container {
+    width: 80%;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #df992fd2;
+    border-radius: 10px;
+  }
+  
+  .text-container p {
+    font-size: 16px;
+    line-height: 1.5;
+    color: rgb(255, 255, 255);
+    text-align: center;
+  }
