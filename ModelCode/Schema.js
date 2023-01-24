@@ -6,7 +6,6 @@ const accountSchema = new mongoose.Schema({
   lastName: String,
   email: String,
   token: String,
-  schedule: {type: mongoose.Schema.Types.ObjectId, ref: 'Schedule'}
 });
 
 const CourseSchema = new mongoose.Schema({
