@@ -3,9 +3,10 @@ const MongoDBAccess = require('./MongoDBAccess');
 const { accountSchema } = require('./schema');
 
 /**
- * MongoDBAccess class is an abstraction layer that simplifies interaction with MongoDB database.
+ * The AccountManagerModel class is a database access class to save and load data of an Account. It extends from is super class 
+ * MongoDBAccess.
  */
-class AccountManagerModel {
+class AccountManagerModel extends MongoDBAccess {
     constructor() {
         super();
         this.model = mongoose.model('Account', accountSchema);
@@ -20,22 +21,28 @@ class AccountManagerModel {
     }
 
     /**
-     * This method gets an Account
-     * @param {ObjectId} accountId 
+     * This method gets an Account by its identifier. The identifier could be either an Account identifier
+     * nor an email to identifiy the Account document.
+     * @param {String} identifier  
      */
-    async getAccount(accountId) {
+    async getAccount(identifier) {
 
     }
 
-    async getAccount(email) {
-
-    }
-
+    /**
+     * This method updates the data of an Account. It uses the getAccount method to get the Account to be changed. 
+     * @param {Account} account Object of lib/Account
+     */
     async update(account) {
 
     }
 
-    async delete(accountId) {
+    /**
+     * This method deletes one Account from the collection Account by its identifier. The identifier could be either
+     * an Account identifier nor an email to identifiy the Account document.
+     * @param {String} identifier 
+     */
+    async delete(identifier) {
 
     }
 }
