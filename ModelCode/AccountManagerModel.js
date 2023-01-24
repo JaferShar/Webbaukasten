@@ -3,7 +3,7 @@ const MongoDBAccess = require('./MongoDBAccess');
 const { accountSchema } = require('./schema');
 
 /**
- * The AccountManagerModel class is a database access class to save and load data of an Account. It extends from is super class 
+ * The AccountManagerModel class is a database access class to save and load data of an Account. It extends from its super class 
  * MongoDBAccess.
  */
 class AccountManagerModel extends MongoDBAccess {
@@ -38,7 +38,7 @@ class AccountManagerModel extends MongoDBAccess {
     }
 
     /**
-     * This method deletes one Account from the collection Account by its identifier. The identifier could be either
+     * This method deletes an Account from the collection Account by its identifier. The identifier could be either
      * an Account identifier nor an email to identifiy the Account document.
      * @param {String} identifier 
      */
