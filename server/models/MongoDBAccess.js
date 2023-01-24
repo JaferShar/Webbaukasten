@@ -1,9 +1,10 @@
 const mongoose = require('mongoose');
-const uri = 'mongodb+srv://Nick:ZnBzioOGU9oFAnwA@cluster0.z5edzea.mongodb.net/test';
+const config = require('./dbConfig.json')
 
 class MongoDBAccess {
     constructor() {
         this.connection = null;
+        this.uri = config.mongoUri;
     }
 
     // connects to the database
