@@ -1,16 +1,20 @@
 
+import {AiFillCheckSquare} from "react-icons/ai";
+import {AiTwotoneHome} from "react-icons/ai";
+import "../Styling/ButtonStyling/homeButton.css"
+import "../Styling/ButtonStyling/saveButton.css"
 
 function Buttons(){
     return (
     
     <div>
         <div>
-            <button className='saveButton'></button>
+            <AiFillCheckSquare className='saveButton'></AiFillCheckSquare>
         </div>
         <div>
-            <button className='homeButton'></button>
+            <AiTwotoneHome className='homeButton'></AiTwotoneHome>
         </div>
-       
+        
     </div>
     
     );
