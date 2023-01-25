@@ -16,17 +16,23 @@ function Course () {
       <h1 Course="header">Kurs</h1>
       <div className="course">
       </div>
-      <div className="textContainer1">
-                  <textContainer text="Text for container 1"  />
-                </div>
-                <div className="textContainer2">
-                  <textContainer text="Text for container 2"  />
-                </div>
+            <div className="textContainer1">
+        <textContainer1>
+          <p>Headline</p>
+        </textContainer1>
+      </div>
+      <div className="textContainer2">
+        <textContainer2>
+          <p>Screen text container</p>
+        </textContainer2>
+      </div>
     </div><div>
         <ScreenContainer>
-        
+          ...
         </ScreenContainer>
-      </div></>)
+      </div></>
+      
+      )
 }
 
 export default Course;

@@ -15,17 +15,22 @@
 
 
   .textContainer1 {
-    width: 80%;
+    width: 50%;
     margin: 0 auto;
     padding: 20px;
     background-color: #373229d2;
     border-radius: 10px;
+    top: 50%;
+  transform: translateY(60%);
 }
 
 .textContainer2 {
-  width: 60%;
+  width: 50%;
+  height: 65%;
   margin: 0 auto;
   padding: 20px;
-  background-color: #df992fd2;
+  background-color: #fbc0497a;
   border-radius: 10px;
+  top: 50%;
+  transform: translateY(10%);
 }

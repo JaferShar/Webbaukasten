@@ -4,12 +4,12 @@ import '../Styling/SiteStyling/TextContainer.css';
 function TextContainer(props) {
   return (
     <><div className="textContainer1">
-      ...
+      <p>This is some text inside the container</p>
     </div><div className="textContainer2">
-        ...k
+        <p>This is some text inside the container</p>
       </div></>
+  
   );
 }
 
 export default TextContainer;
-
