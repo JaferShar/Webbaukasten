@@ -6,6 +6,9 @@ import '../Styling/SiteStyling/TextContainer.css'
 import TextContainer from './TextContainer'
 import ScreenContainer from '../Components/ScreenContainer'
 import '../Styling/SiteStyling/ScreenContainer.css'
+import Buttons from '../Components/Buttons';
+import "../Styling/ButtonStyling/saveButton.css"
+import "../Styling/ButtonStyling/homeButton.css"
 
 
 
@@ -15,6 +18,10 @@ function Course () {
   <><div className="background">
       <h1 Course="header">Kurs</h1>
       <div className="course">
+
+      </div>
+      <div className='Buttons'>
+        <Buttons>AiOutlineCheckSquare</Buttons>
       </div>
             <div className="textContainer1">
         <textContainer1>
