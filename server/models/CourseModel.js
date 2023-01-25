@@ -7,7 +7,7 @@ const Element = require('../databases/Element');
  * The CourseModel class is a database access class to save and load data of a distinct Course. It extends from its super class 
  * MongoDBAccess.
  */
-class AccountManagerModel extends MongoDBAccess {
+class CourseModel extends MongoDBAccess {
     constructor() {
         super();
     }
@@ -107,3 +107,5 @@ class AccountManagerModel extends MongoDBAccess {
 
     }
 }
+
+module.exports = CourseModel;

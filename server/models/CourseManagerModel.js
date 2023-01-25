@@ -62,3 +62,5 @@ class CourseManagerModel extends MongoDBAccess {
 
     }
 }
+
+module.exports = CourseManagerModel;

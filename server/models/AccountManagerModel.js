@@ -16,7 +16,7 @@ class AccountManagerModel extends MongoDBAccess {
      * @param {Account} account Object of lib/Account
      */
     async create(account) {
-
+        
     }
 
     /**
@@ -45,3 +45,5 @@ class AccountManagerModel extends MongoDBAccess {
 
     }
 }
+
+module.exports = AccountManagerModel;
