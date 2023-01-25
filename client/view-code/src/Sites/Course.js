@@ -1,9 +1,6 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import App from '../App';
 import '../Styling/SiteStyling/Course.css'
 import '../Styling/SiteStyling/TextContainer.css'
-import TextContainer from './TextContainer'
 import ScreenContainer from '../Components/ScreenContainer'
 import '../Styling/SiteStyling/ScreenContainer.css'
 
