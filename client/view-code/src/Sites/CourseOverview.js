@@ -2,6 +2,7 @@ import '../Styling/SiteStyling/CourseOverview.css';
 import '../Styling/ButtonStyling/LoginButton.css';
 import React, { useState } from 'react';
 import LogInOverlay from './LogInOverlay';
+//import Course from './Course' .. relevant for bubbles for courses
 
 
 
@@ -24,6 +25,7 @@ function CourseOverview() {
             <LogInOverlay onClose={toggleOverlay}/>
             )}
         </div>
+        
     );
 }
 
