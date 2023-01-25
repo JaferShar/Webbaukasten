@@ -1,8 +1,10 @@
+import React from 'react';
+import App from '../App';
 import {AiOutlinePlus} from "react-icons/ai";
 import '../Styling/ButtonStyling/addButton.css'
 
 
-function addButton(){
+function AddButton(){
     return (
     
     <div>
@@ -15,4 +17,4 @@ function addButton(){
     );
 
 }
-export default addButton;
+export default AddButton;

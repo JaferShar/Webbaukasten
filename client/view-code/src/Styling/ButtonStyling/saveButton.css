@@ -11,3 +11,12 @@
     cursor: pointer;
     
 }
+
+.buttons{
+    position: fixed;
+    top:0;
+    right: 0;
+    width: 3%;
+    height: 0%;
+}
+

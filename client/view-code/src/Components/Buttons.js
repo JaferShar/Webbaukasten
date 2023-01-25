@@ -10,10 +10,10 @@ function Buttons(){
     
     <div>
         <div>
-            <AiOutlineCheckSquare className='saveButton'></AiOutlineCheckSquare>
+            <AiTwotoneHome className='homeButton'></AiTwotoneHome>
         </div>
         <div>
-            <AiTwotoneHome className='homeButton'></AiTwotoneHome>
+            <AiOutlineCheckSquare className='saveButton'></AiOutlineCheckSquare>
         </div>
         
     </div>
