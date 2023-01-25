@@ -1,7 +1,7 @@
 const { default: mongoose } = require('mongoose');
 const MongoDBAccess = require('./MongoDBAccess');
-const { courseSchema } = require('./schema');
-const { elementSchema } = require('./schema');
+const Course = require('../databases/Course');
+const Element = require('../databases/Element');
 
 /**
  * The CourseModel class is a database access class to save and load data of a distinct Course. It extends from its super class 
@@ -10,8 +10,6 @@ const { elementSchema } = require('./schema');
 class AccountManagerModel extends MongoDBAccess {
     constructor() {
         super();
-        this.model = mongoose.model('Course', courseSchema);
-        this.model = mongoose.model('Element', elementSchema);
     }
 
     /**

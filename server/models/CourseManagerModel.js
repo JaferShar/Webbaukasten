@@ -1,6 +1,6 @@
 const { default: mongoose } = require('mongoose');
 const MongoDBAccess = require('./MongoDBAccess');
-const { courseSchema } = require('./schema');
+const Course = require('../databases/Course');
 
 /**
  * The CourseManagerModel class is a database access class to manage access of courses. It extends from its super class 
@@ -9,7 +9,6 @@ const { courseSchema } = require('./schema');
 class CourseManagerModel extends MongoDBAccess {
     constructor() {
         super();
-        this.model = mongoose.model('Course', courseSchema);
     }
 
     /**

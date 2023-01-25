@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
 const config = require('./dbConfig.json')
 
+mongoose.connect("mongodb://localhost/testdb");
+
 class MongoDBAccess {
     constructor() {
         this.connection = null;

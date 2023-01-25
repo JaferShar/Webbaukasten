@@ -1,6 +1,6 @@
 const { default: mongoose } = require('mongoose');
 const MongoDBAccess = require('./MongoDBAccess');
-const { accountSchema } = require('../databases/Schema');
+const Account = require('../databases/Account');
 
 /**
  * The AccountManagerModel class is a database access class to save and load data of an Account. It extends from its super class 
@@ -9,7 +9,6 @@ const { accountSchema } = require('../databases/Schema');
 class AccountManagerModel extends MongoDBAccess {
     constructor() {
         super();
-        this.model = mongoose.model('Account', accountSchema);
     }
 
     /**

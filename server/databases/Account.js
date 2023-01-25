@@ -1,9 +1,7 @@
 const mongoose = require('mongoose');
-const googleOAuth = require('googleOAuth')
-const profile = await googleOAuth.getProfileInfo(code)
 
 const accountSchema = new mongoose.Schema({
-  googleId: profile.sub,
+  googleId: String,
   firstName: String,
   lastName: String,
   email: {type: String, required: true},
