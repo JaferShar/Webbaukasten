@@ -3,9 +3,11 @@ import '../Styling/SiteStyling/TextContainer.css';
 
 function TextContainer(props) {
   return (
-    <div className="text-container">
-      <p>{props.text}</p>
-    </div>
+    <><div className="textContainer1">
+      ...
+    </div><div className="textContainer2">
+        ...k
+      </div></>
   );
 }
 

@@ -1,4 +1,4 @@
-.text-container {
+.header {
     width: 80%;
     margin: 0 auto;
     padding: 20px;
@@ -6,9 +6,26 @@
     border-radius: 10px;
   }
   
-  .text-container p {
+  .header p {
     font-size: 16px;
     line-height: 1.5;
     color: rgb(255, 255, 255);
     text-align: center;
   }
+
+
+  .textContainer1 {
+    width: 80%;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #373229d2;
+    border-radius: 10px;
+}
+
+.textContainer2 {
+  width: 60%;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #df992fd2;
+  border-radius: 10px;
+}
