@@ -16,7 +16,8 @@ class AccountManagerModel extends MongoDBAccess {
      * @param {Account} account Object of lib/Account
      */
     async create(account) {
-        
+        this.connect();
+        Account.insertOne()
     }
 
     /**
