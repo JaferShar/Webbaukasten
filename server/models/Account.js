@@ -1,11 +1,11 @@
 const mongoose = require('mongoose');
 
 const accountSchema = new mongoose.Schema({
-  googleId: String,
+  //googleId: String,
   firstName: String,
-  lastName: String,
-  email: {type: String, required: true},
-  token: String,
+  surname: String,
+  email: {type: String, required: true, unique: true},
+  //token: String,
 });
 
 module.exports = mongoose.model("Account", accountSchema);
