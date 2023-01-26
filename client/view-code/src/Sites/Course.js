@@ -9,8 +9,10 @@ import '../Styling/SiteStyling/ScreenContainer.css'
 import Buttons from '../Components/Buttons';
 import "../Styling/ButtonStyling/saveButton.css"
 import "../Styling/ButtonStyling/homeButton.css"
-import AddButton from '../Components/addButton';
+import AddButton from '../Components/AddButton';
 import "../Styling/ButtonStyling/addButton.css"
+import NextButton from '../Components/NextButton';
+import "../Styling/ButtonStyling/nextButton.css"
 
 
 
@@ -33,6 +35,7 @@ function Course () {
     
       <div className="textContainer2">
         <div className='addButton'><AddButton></AddButton></div>
+        <div className='nextButton'><NextButton></NextButton></div>
         <textContainer2>
           
           <p>Screen text container</p>
