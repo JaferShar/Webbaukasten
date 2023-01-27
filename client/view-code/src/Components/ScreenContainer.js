@@ -1,12 +1,12 @@
 import React from 'react';
 import '../Styling/SiteStyling/ScreenContainer.css'
 
-function MyComponent() {
+function ScreenContainer() {
     return (
         <div className="ScreenContainer">
-            Folien Übersicht
+            Hi.
         </div>
     );
 }
 
-export default MyComponent;
+export default ScreenContainer;
