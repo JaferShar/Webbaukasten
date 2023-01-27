@@ -15,7 +15,7 @@ const registerAccount = asyncHandler(async (req, res) => {
         throw new Error('Please add all fields')
     }
     // Check if Account already exists
-    const userExists = await Account.findOne({ email })
+    const accountExists = await Account.findOne({ email })
 
     if (userExists) {
         res.status(400)
@@ -73,11 +73,10 @@ const getMe = asyncHandler(async (req, res) => {
 })
 
 //Generate JWT
-const generateToken = () => {
+const generateToken = (id) => {
     return jwt.sign({id}, process.env.JWT_SECRET, {
         expiresIn: '30d',
     })
-    expiresIn: '30d'
 }
 
 module.exports = {
