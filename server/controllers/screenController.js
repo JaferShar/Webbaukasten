@@ -2,17 +2,18 @@ const mongoose = require('mongoose');
 const asyncHandler = require('express-async-handler')
 
 const Course = require('../models/Course')
-const Screen = require('../models/Screen')
+const { Screen, Picture, TextField, H5P } = require('../models/Screen')
 
 const setScreen = asyncHandler(async (req, res) => {
-    if (!req.body.template) {
+    const template = req.body.template
+    if (!template) {
         res.status(400)
         throw new Error('Please select a template')
     }
 
     try {
         const screen = await Screen.create({
-            template: req.body.template
+            template: template
         })
         const screenId = screen._id
         Course.findOneAndUpdate(
@@ -24,3 +25,7 @@ const setScreen = asyncHandler(async (req, res) => {
         res.status(400).json({error: error.message})
     }
 });
+
+module.exports = {
+    setScreen,
+}
