@@ -34,3 +34,15 @@
   top: 50%;
   transform: translateY(10%);
 }
+
+.textContainer3 {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  width: 50%;
+  height: auto;
+  background-color: #931add7a;
+  padding: 20px;
+  border-radius: 10px;
+  transform: translateY(10%);
+}

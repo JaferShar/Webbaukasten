@@ -6,13 +6,19 @@ import '../Styling/SiteStyling/TextContainer.css'
 import TextContainer from './TextContainer'
 import ScreenContainer from '../Components/ScreenContainer'
 import '../Styling/SiteStyling/ScreenContainer.css'
-import Buttons from '../Components/Buttons';
+import Buttons from '../Components/Buttons.js';
 import "../Styling/ButtonStyling/saveButton.css"
 import "../Styling/ButtonStyling/homeButton.css"
-import AddButton from '../Components/AddButton';
+import AddButton from '../Components/addButton.js';
 import "../Styling/ButtonStyling/addButton.css"
-import NextButton from '../Components/NextButton';
+import NextButton from '../Components/NextButton.js';
 import "../Styling/ButtonStyling/nextButton.css"
+import Screen from './Screen'
+import TemplateContainer from '../Components/TemplateContainer'
+import '../Styling/SiteStyling/TemplateContainer.css'
+import PictureContainer from '../Components/PictureContainer'
+import '../Styling/SiteStyling/PictureContainer.css'
+
 
 
 
@@ -33,19 +39,37 @@ function Course () {
         </textContainer1>
       </div>
     
-      <div className="textContainer2">
+      <div className="mainScreen">
         <div className='addButton'><AddButton></AddButton></div>
         <div className='nextButton'><NextButton></NextButton></div>
-        <textContainer2>
+        <mainScreen>
           
-          <p>Screen text container</p>
-        </textContainer2>
+          <p>Main screen.</p>
+          <div className="textContainer3">
+        <textContainer3>
+          <p>Text in screen.</p>
+          <div className='addButton'><AddButton></AddButton></div>
+        </textContainer3>
       </div>
+      <div className="pictureContainer">
+        <pictureContainer>
+          <p>Insert picture here.</p>
+          <div className='addButton'><AddButton></AddButton></div>
+        </pictureContainer>
+      </div>
+        </mainScreen>
+      </div>
+      
     </div><div>
         <ScreenContainer>
           ...
         </ScreenContainer>
-      </div></>
+      </div>
+      <div>
+        <TemplateContainer>
+        </TemplateContainer>
+      </div>
+      </>
       
       )
 }
