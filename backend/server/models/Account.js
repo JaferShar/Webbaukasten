@@ -17,8 +17,10 @@ const accountSchema = mongoose.Schema({
     required: [true, 'Please add a email'],
     unique: true
   },
-
   //token: String,
+}, 
+{
+  timestamps: true
 });
 
 module.exports = mongoose.model("Account", accountSchema);
