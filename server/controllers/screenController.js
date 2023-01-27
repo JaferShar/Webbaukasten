@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const asyncHandler = require('express-async-handler')
 
 const Course = require('../models/Course')
-const Account = require('../models/Account')
+const Screen = require('../models/Screen')
 
 const setScreen = asyncHandler(async (req, res) => {
     if (!req.body.template) {
@@ -11,10 +11,15 @@ const setScreen = asyncHandler(async (req, res) => {
     }
 
     try {
-        const course = await Course.findOneAndUpdate(
-            {_id: req.params.id}, 
-            {$push: {screens: {template: req.body.template, elements: []}}})
-        res.status(200).json(course)
+        const screen = await Screen.create({
+            template: req.body.template
+        })
+        const screenId = screen._id
+        Course.findOneAndUpdate(
+            {_id: req.params.id},
+            {push: {screens: {screenId}}}
+            )
+        res.status(201).json(screen)
     } catch (error) {
         res.status(400).json({error: error.message})
     }

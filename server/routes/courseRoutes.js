@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const { getCourse, setCourse, getAllCourses, deleteCourse, updateCourse } = require('../controllers/courseManagerController')
+const { getCourse, setCourse, getAllCourses, deleteCourse, updateCourse } = require('../controllers/courseController')
 
 router.route('/').post(setCourse)
 router.route('/all').get(getAllCourses)
