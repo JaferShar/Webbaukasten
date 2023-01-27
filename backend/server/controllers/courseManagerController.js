@@ -70,6 +70,9 @@ const deleteCourse = asyncHandler(async (req, res) => {
     res.status(200).json({message: `Deleted course ${req.params.id}`})
 })
 
+/**
+ * To DO: share
+ */
 const shareCourse = asyncHandler( async (req, res) => {
     //api/share/:id/:email
     const email = req.body

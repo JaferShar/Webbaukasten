@@ -1,15 +1,5 @@
 const mongoose = require('mongoose')
 
-const screenSchema = new mongoose.Schema({
-    template: {
-        type: String,
-        default: 'Welcome',
-        required: true,
-        immutable: true,
-    },
-    elements: [{type: mongoose.Schema.Types.ObjectId, ref:'Element'}]
-})
-
 const courseSchema = new mongoose.Schema({
     accountID: {
         type: mongoose.Schema.Types.ObjectId,
@@ -24,11 +14,15 @@ const courseSchema = new mongoose.Schema({
         StartIndex: {
             type: Number,
         },
-    },],
-    default: function() {
-        return [{sectionName: this.courseName, startIndex: 0}]
-    }},
-    screens: [screenSchema]
+        },],
+        default: function() {
+            return [{sectionName: this.courseName, startIndex: 0}]
+        }
+    },
+    screens: {
+        type: [mongoose.Schema.Types.ObjectId],
+        ref: 'Screen'
+    },
 })
 
 //create function
