@@ -1,10 +1,23 @@
 const mongoose = require('mongoose');
 
-const accountSchema = new mongoose.Schema({
+const accountSchema = mongoose.Schema({
   //googleId: String,
-  firstName: String,
-  surname: String,
-  email: {type: String, required: true, unique: true},
+  firstName: {
+    type: String, 
+    required: [true, 'Please add a firstName']
+  }, 
+
+  lastName: {
+    type: String, 
+    required: [true, 'Please add a lastName']
+  },
+
+  email: {
+    type: String, 
+    required: [true, 'Please add a email'],
+    unique: true
+  },
+
   //token: String,
 });
 
