@@ -11,10 +11,10 @@ const screenSchema = new mongoose.Schema({
 })
 
 const courseSchema = new mongoose.Schema({
-    accountID: {
+    account: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Account',
-        //required: true
+        required: true,
     },
     courseName: {type: String, required: true},
     section: {type: [{
