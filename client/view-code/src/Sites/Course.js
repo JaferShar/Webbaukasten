@@ -18,6 +18,14 @@ import TemplateContainer from '../Components/TemplateContainer'
 import '../Styling/SiteStyling/TemplateContainer.css'
 import PictureContainer from '../Components/PictureContainer'
 import '../Styling/SiteStyling/PictureContainer.css'
+import Menu from '../Components/Menu'
+import '../Styling/SiteStyling/Menu.css'
+import PopUpButton from '../Components/PopUpButtonText'
+import '../Styling/ButtonStyling/PopUpButtonText.css'
+import PopUpButtonText from '../Components/PopUpButtonText';
+import '../Styling/ButtonStyling/PopUpButtonPicture.css'
+import PopUpButtonPicture from '../Components/PopUpButtonPicture';
+
 
 
 
@@ -35,7 +43,9 @@ function Course () {
       </div>
             <div className="textContainer1">
         <textContainer1>
-          <p>Headline</p>
+        <div className='addButton'><AddButton></AddButton></div>
+          <p>.</p>
+          
         </textContainer1>
       </div>
     
@@ -49,6 +59,12 @@ function Course () {
         <textContainer3>
           <p>Text in screen.</p>
           <div className='addButton'><AddButton></AddButton></div>
+          <div>
+        <PopUpButtonText>
+          
+        </PopUpButtonText>
+      </div>
+        
         </textContainer3>
       </div>
       <div className="pictureContainer">
@@ -56,6 +72,9 @@ function Course () {
           <p>Insert picture here.</p>
           <div className='addButton'><AddButton></AddButton></div>
         </pictureContainer>
+        <PopUpButtonPicture>
+          
+          </PopUpButtonPicture>
       </div>
         </mainScreen>
       </div>
@@ -68,6 +87,10 @@ function Course () {
       <div>
         <TemplateContainer>
         </TemplateContainer>
+      </div>
+      <div>
+        <Menu>
+        </Menu>
       </div>
       </>
       

@@ -16,9 +16,10 @@
 
   .textContainer1 {
     width: 50%;
+    height: 5%;
     margin: 0 auto;
     padding: 20px;
-    background-color: #373229d2;
+    background-color: #7f6e4ed2;
     border-radius: 10px;
     top: 50%;
   transform: translateY(60%);
