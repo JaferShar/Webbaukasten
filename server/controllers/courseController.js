@@ -19,6 +19,7 @@ const getCourse = asyncHandler(async (req, res) => {
     res.status(200).json(course)
 })
 
+
 const setCourse = asyncHandler(async (req, res) => {
     if (!req.body.courseName) {
         res.status(400)
@@ -26,12 +27,20 @@ const setCourse = asyncHandler(async (req, res) => {
     }
     const {accountId, courseName} = req.body
 
+    // checks if there already exists an document with the given filters
+    const count = await Course.countDocuments({account: accountId, courseName: courseName})
+    if (count > 0) {
+        throw new Error('This course already exists')
+    }
+
     try {
+        // create Welcome screen and course
         const screen = await Screen.create({template: 'Welcome'})
         const course = await Course.create({
             account: accountId,
             courseName: courseName
         })
+        // push screen
         course.screens.push(screen)
         course.save()
         res.status(200).json(course)

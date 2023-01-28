@@ -6,27 +6,32 @@ const { Screen, Picture, TextField, H5P } = require('../models/Screen')
 
 const setScreen = asyncHandler(async (req, res) => {
     const template = req.body.template
-    if (!template) {
+    if (!template || template.toString() === 'Welcome') {
         res.status(400)
-        throw new Error('Please select a template')
+        throw new Error('Please select a valid template')
     }
 
     try {
-        const screen = await Screen.create()
-        const screenId = screen._id
-        Course.findOneAndUpdate(
-            {_id: courseId},
-            {push: {screens: {screenId}}}
-            )
-        res.status(201).json(screen)
+        const screen = await Screen.create({template: template})
+        const course = await Course.findById(req.params.id)
+        course.screens.push(screen)
+        course.save()
+
+        // may change to screen later
+        res.status(201).json(course)
     } catch (error) {
         res.status(400).json({error: error.message})
     }
 })
 
+// tested
 const setSection = asyncHandler(async (req, res) => {
+    const { sectionName, index } = req.body
+    if (!sectionName || !index) {
+        throw new Error('Please add valid variables for the section')
+    }
+    
     try {
-        const { sectionName, index } = req.body
         const course = await Course.findOneAndUpdate(
             {_id: req.params.id},
             {$push: {sections: {
@@ -41,7 +46,22 @@ const setSection = asyncHandler(async (req, res) => {
     }
 })
 
+const setTextField = asyncHandler(async (req, res) => {
+    const text = req.body.text
+    try {
+        const textField = await TextField.create({text: text})
+        const screen = await Screen.findById(req.params.screenId)
+        screen.elements.push(textField)
+        screen.save()
+
+        res.status(201).json(screen)
+    } catch (error) {
+        res.status(400).json({error: error.message})
+    }
+})
+
 module.exports = {
     setScreen,
     setSection,
+    setTextField,
 }
