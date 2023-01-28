@@ -25,6 +25,7 @@ import '../Styling/ButtonStyling/PopUpButtonText.css'
 import PopUpButtonText from '../Components/PopUpButtonText';
 import '../Styling/ButtonStyling/PopUpButtonPicture.css'
 import PopUpButtonPicture from '../Components/PopUpButtonPicture';
+import PopUpButtonPixabay from '../Components/PopUpButtonPixabay';
 
 
 
@@ -75,6 +76,10 @@ function Course () {
         <PopUpButtonPicture>
           
           </PopUpButtonPicture>
+          
+           <PopUpButtonPixabay>
+          
+        </PopUpButtonPixabay>
       </div>
         </mainScreen>
       </div>
