@@ -11,7 +11,6 @@ const protect = asyncHandler(async (req, res, next) => {
             // Header has format: 'Bearer tokenstuffaaskdlfjaklsdjf'
             // So we need just index 1 for the actual token
             token = req.headers.authorization.split(' ')[1]
-            console.log(token)
 
             // Verify token
             const decoded = jwt.verify(token, process.env.JWT_SECRET)

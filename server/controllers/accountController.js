@@ -29,13 +29,13 @@ const registerAccount = asyncHandler(async (req, res) => {
         email: email,
     })
 
-    if (Account) {
+    if (account) {
         res.status(201).json({
             _id: account.id,
             firstName: account.firstName,
             lastName: account.lastName,
             email: account.email,
-            token: generateToken(Account.id)
+            token: generateToken(account._id)
         })
     } else {
         res.status(400)
@@ -71,7 +71,14 @@ const loginAccount = asyncHandler(async (req, res) => {
 //@route    GET /api/account/me
 //@access   Private
 const getMe = asyncHandler(async (req, res) => {
-    res.json({ message: 'Account data display' })
+    const {_id, firstName, lastName, email} = await Account.findById(req.account.id)
+
+    res.status(200).json({
+        id: _id,
+        firstName,
+        lastName,
+        email
+    })
 
 })
 
