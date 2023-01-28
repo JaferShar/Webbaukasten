@@ -3,6 +3,7 @@
 logs
 **/*.backup.*
 **/*.back.*
+.env
 
 node_modules
 bower_components
@@ -27,3 +28,4 @@ __generated__
 
 # Local History for Visual Studio Code
 .history/
+.notes

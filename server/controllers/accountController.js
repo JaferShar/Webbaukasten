@@ -17,15 +17,15 @@ const registerAccount = asyncHandler(async (req, res) => {
     // Check if Account already exists
     const accountExists = await Account.findOne({ email })
 
-    if (userExists) {
+    if (accountExists) {
         res.status(400)
         throw new Error('Account already exists')
     }
 
     //Create Account
     const account = await Account.create({
-        firstName,
-        lastName,
+        firstName: firstName, 
+        lastName: lastName,
         email: email,
     })
 
@@ -35,6 +35,7 @@ const registerAccount = asyncHandler(async (req, res) => {
             firstName: account.firstName,
             lastName: account.lastName,
             email: account.email,
+            token: generateToken(Account.id)
         })
     } else {
         res.status(400)
