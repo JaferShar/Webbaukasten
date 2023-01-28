@@ -1,0 +1,12 @@
+.pictureContainer {
+    display: flex;
+    position: absolute;
+    justify-content: flex-end;
+    top: 25%;
+    right: 0;
+    width: 35%;
+    height: 25%;
+    background-color: rgb(206, 136, 136);
+    border: 1px solid black;
+  }
+

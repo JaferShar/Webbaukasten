@@ -1,0 +1,14 @@
+.menu {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    grid-gap: 10px;
+    position: absolute;
+    top: 10%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 450px;
+    height: 100px;
+    background-color: rgb(232, 151, 193);
+    border: 1px solid black;
+  }

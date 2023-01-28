@@ -1,4 +1,5 @@
-
+import React from 'react';
+import App from '../App';
 import {AiOutlineCheckSquare} from "react-icons/ai";
 import {AiTwotoneHome} from "react-icons/ai";
 import "../Styling/ButtonStyling/homeButton.css"
@@ -9,10 +10,10 @@ function Buttons(){
     
     <div>
         <div>
-            <AiOutlineCheckSquare className='saveButton'></AiOutlineCheckSquare>
+            <AiTwotoneHome className='homeButton'></AiTwotoneHome>
         </div>
         <div>
-            <AiTwotoneHome className='homeButton'></AiTwotoneHome>
+            <AiOutlineCheckSquare className='saveButton'></AiOutlineCheckSquare>
         </div>
         
     </div>

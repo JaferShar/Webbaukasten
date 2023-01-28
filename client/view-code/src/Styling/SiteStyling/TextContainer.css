@@ -16,9 +16,10 @@
 
   .textContainer1 {
     width: 50%;
+    height: 5%;
     margin: 0 auto;
     padding: 20px;
-    background-color: #373229d2;
+    background-color: #7f6e4ed2;
     border-radius: 10px;
     top: 50%;
   transform: translateY(60%);
@@ -32,5 +33,17 @@
   background-color: #fbc0497a;
   border-radius: 10px;
   top: 50%;
+  transform: translateY(10%);
+}
+
+.textContainer3 {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  width: 50%;
+  height: auto;
+  background-color: #931add7a;
+  padding: 20px;
+  border-radius: 10px;
   transform: translateY(10%);
 }

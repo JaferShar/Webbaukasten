@@ -7,7 +7,11 @@ function TextContainer(props) {
       <p>This is some text inside the container</p>
     </div><div className="textContainer2">
         <p>This is some text inside the container</p>
-      </div></>
+      </div>
+      <div className="textContainer3">
+        <p>This is some text inside the container</p>
+      </div>
+      </>
   
   );
 }
