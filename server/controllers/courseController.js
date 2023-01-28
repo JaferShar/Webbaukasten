@@ -3,6 +3,7 @@ const asyncHandler = require('express-async-handler')
 
 const Course = require('../models/Course')
 const Account = require('../models/Account')
+const Screen = require('../models/Screen').Screen
 
 const getCourse = asyncHandler(async (req, res) => {
     /**
@@ -25,14 +26,14 @@ const setCourse = asyncHandler(async (req, res) => {
     }
     const {accountId, courseName} = req.body
 
-    /**
-     * TO DO: accountId
-     */
     try {
+        const screen = await Screen.create({template: 'Welcome'})
         const course = await Course.create({
             account: accountId,
             courseName: courseName
         })
+        course.screens.push(screen)
+        course.save()
         res.status(200).json(course)
     } catch (error) {
         res.status(400).json({error: error.message})

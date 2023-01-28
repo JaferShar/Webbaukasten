@@ -5,16 +5,14 @@ const Course = require('../models/Course')
 const { Screen, Picture, TextField, H5P } = require('../models/Screen')
 
 const setScreen = asyncHandler(async (req, res) => {
-    const { courseId, template } = req.body.template
+    const template = req.body.template
     if (!template) {
         res.status(400)
         throw new Error('Please select a template')
     }
 
     try {
-        const screen = await Screen.create({
-            template: template
-        })
+        const screen = await Screen.create()
         const screenId = screen._id
         Course.findOneAndUpdate(
             {_id: courseId},
