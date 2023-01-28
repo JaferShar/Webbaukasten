@@ -17,6 +17,7 @@ const protect = asyncHandler(async (req, res, next) => {
 
             // Get account from token
             req.account = await Account.findById(decoded.id)
+            
 
             next()
         } catch (error) {
