@@ -7,12 +7,16 @@ const courseSchema = new mongoose.Schema({
         required: true,
     },
     courseName: {type: String, required: true},
-    section: {type: [{
+    sections: {type: [{
         sectionName: {
             type: String,
+            required: true,
+            default: this.courseName
         },
-        StartIndex: {
+        index: {
             type: Number,
+            required: true,
+            default: 0
         },
         },],
         default: function() {

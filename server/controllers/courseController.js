@@ -30,7 +30,9 @@ const setCourse = asyncHandler(async (req, res) => {
      */
     try {
         const course = await Course.create({
-            courseName: courseName})
+            account: accountId,
+            courseName: courseName
+        })
         res.status(200).json(course)
     } catch (error) {
         res.status(400).json({error: error.message})
