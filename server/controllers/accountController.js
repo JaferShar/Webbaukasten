@@ -58,6 +58,8 @@ const loginAccount = asyncHandler(async (req, res) => {
             firstName: account.firstName,
             lastName: account.lastName,
             email: account.email,
+            token: generateToken(Account.id)
+
         })
     } else {
         res.status(400)
@@ -67,7 +69,7 @@ const loginAccount = asyncHandler(async (req, res) => {
 
 //@desc     Get user data
 //@route    GET /api/account/me
-//@access   Public
+//@access   Private
 const getMe = asyncHandler(async (req, res) => {
     res.json({ message: 'Account data display' })
 
