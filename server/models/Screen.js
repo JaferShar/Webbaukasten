@@ -38,6 +38,7 @@ const H5P = Element.discriminator('H5P',
 const screenSchema = new mongoose.Schema({
     template: {
         type: String,
+        enum: ['Welcome', 'Standard', 'End'],
         default: 'Welcome',
         required: true,
     },

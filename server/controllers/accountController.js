@@ -17,24 +17,25 @@ const registerAccount = asyncHandler(async (req, res) => {
     // Check if Account already exists
     const accountExists = await Account.findOne({ email })
 
-    if (userExists) {
+    if (accountExists) {
         res.status(400)
         throw new Error('Account already exists')
     }
 
     //Create Account
     const account = await Account.create({
-        firstName,
-        lastName,
+        firstName: firstName, 
+        lastName: lastName,
         email: email,
     })
 
-    if (Account) {
+    if (account) {
         res.status(201).json({
             _id: account.id,
             firstName: account.firstName,
             lastName: account.lastName,
             email: account.email,
+            token: generateToken(account._id)
         })
     } else {
         res.status(400)
@@ -57,6 +58,8 @@ const loginAccount = asyncHandler(async (req, res) => {
             firstName: account.firstName,
             lastName: account.lastName,
             email: account.email,
+            token: generateToken(Account.id)
+
         })
     } else {
         res.status(400)
@@ -66,9 +69,16 @@ const loginAccount = asyncHandler(async (req, res) => {
 
 //@desc     Get user data
 //@route    GET /api/account/me
-//@access   Public
+//@access   Private
 const getMe = asyncHandler(async (req, res) => {
-    res.json({ message: 'Account data display' })
+    const {_id, firstName, lastName, email} = await Account.findById(req.account.id)
+
+    res.status(200).json({
+        id: _id,
+        firstName,
+        lastName,
+        email
+    })
 
 })
 
