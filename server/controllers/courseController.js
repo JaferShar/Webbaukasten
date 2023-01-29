@@ -54,7 +54,6 @@ const setCourse = asyncHandler(async (req, res) => {
 
 const getAllCourses = asyncHandler(async (req, res) => {
     const courses = await Course.find({ account: req.account.id})
-
     res.status(200).json({courses})
 });
 
@@ -65,7 +64,7 @@ const updateCourse = asyncHandler(async (req, res) => {
         res.status(400)
         throw new Error('Course not found')
     } else if (course.account != req.account.id) {
-        res.status(400)
+        res.status(401)
         throw new Error('Acces denied')
     }
 
@@ -80,7 +79,7 @@ const deleteCourse = asyncHandler(async (req, res) => {
         res.status(400)
         throw new Error('Course not found')
     } else if (course.account != req.account.id) {
-        res.status(400)
+        res.status(401)
         throw new Error('Acces denied')
     }
     /**
