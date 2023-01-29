@@ -8,11 +8,8 @@ const Element = mongoose.model('Element', elementSchema)
 
 const Picture = Element.discriminator('Picture', 
     new mongoose.Schema({
-        picName: String,
-        image: {
-            data: {type: Buffer, required: true},
-            picType: String,
-        }
+        data: {type: Buffer, required: true},
+        picType: { type: String, required: true}
     })
 )
 

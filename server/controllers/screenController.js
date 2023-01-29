@@ -60,8 +60,34 @@ const setTextField = asyncHandler(async (req, res) => {
     }
 })
 
+const setPicture = asyncHandler(async (req, res) => {
+    
+    try {
+        const image = Picture.create({picType: req.header, data: req.body})
+        const screen = await Screen.findById(req.params.screenId)
+        screen.elements.push(image)
+        screen.save()
+
+        res.status(201).json(image)
+    } catch (error) {
+        res.status(400).json({error: error.message})
+    }
+})
+
+const setH5P = asyncHandler(async (req, res) => {
+    const { h5pType, data } = req.body
+    try {
+        const h5p = await H5P.create({h5pType: h5pType, data: data})
+        const screen = await Screen.findById(req.params.screenId)
+        screen.elements.push(h5p)
+        screen.save()
+    } catch (error) {
+        res.status(400).json({error: error.message})
+    }
+})
 module.exports = {
     setScreen,
     setSection,
     setTextField,
+    //setPicture
 }
