@@ -1,12 +1,15 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
+import App from '../App';
 import '../Styling/SiteStyling/Course.css'
 import '../Styling/SiteStyling/TextContainer.css'
+import TextContainer from './TextContainer'
 import ScreenContainer from '../Components/ScreenContainer'
 import '../Styling/SiteStyling/ScreenContainer.css'
 import Buttons from '../Components/Buttons.js';
 import "../Styling/ButtonStyling/saveButton.css"
 import "../Styling/ButtonStyling/homeButton.css"
-import AddButton from '../Components/addButton.js';
+import AddButton from '../Components/AddButton.js';
 import "../Styling/ButtonStyling/addButton.css"
 import NextButton from '../Components/NextButton.js';
 import "../Styling/ButtonStyling/nextButton.css"
@@ -23,6 +26,9 @@ import PopUpButtonText from '../Components/PopUpButtonText';
 import '../Styling/ButtonStyling/PopUpButtonPicture.css'
 import PopUpButtonPicture from '../Components/PopUpButtonPicture';
 import PopUpButtonPixabay from '../Components/PopUpButtonPixabay';
+import ProgressBar from '../Components/ProgressBar';
+import{ useState } from 'react';
+import '../Styling/SiteStyling/ProgressBar.css'
 
 
 
@@ -50,9 +56,11 @@ function Course () {
       <div className="mainScreen">
         <div className='addButton'><AddButton></AddButton></div>
         <div className='nextButton'><NextButton></NextButton></div>
+
         <mainScreen>
           
           <p>Main screen.</p>
+          
           <div className="textContainer3">
         <textContainer3>
           <p>Text in screen.</p>
@@ -77,7 +85,8 @@ function Course () {
            <PopUpButtonPixabay>
           
         </PopUpButtonPixabay>
-      </div>
+      </div>´
+      <div><ProgressBar current={30} total={100}></ProgressBar></div>
         </mainScreen>
       </div>
       
@@ -90,6 +99,7 @@ function Course () {
         <TemplateContainer>
         </TemplateContainer>
       </div>
+      
       <div>
         <Menu>
         </Menu>

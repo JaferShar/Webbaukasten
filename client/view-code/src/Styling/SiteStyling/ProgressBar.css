@@ -1,0 +1,55 @@
+.progress-bar-container {
+    width: 90%;
+    height: 40px;
+    border: 2px solid pink;
+    border-radius: 0;
+    overflow: hidden;
+    position: absolute;
+    top: 80%;
+
+
+  }
+  
+  .progress-bar {
+    content: "";
+    width: 0%;
+    height: 100%;
+    background-color: pink;
+    position: absolute;
+    top: 0;
+    left: 0;
+    animation: progress-animation 2s ease-out forwards;
+  }
+  
+  /* Animation Keyframes */
+  @keyframes progress-animation {
+    0% {
+      width: 0%;
+    }
+    100% {
+      width: current / total * 100%;
+    }
+
+
+}
+  
+  .progress-bar span {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 20px;
+    font-weight: bold;
+    color: #000;
+    animation: percent-animation 2s ease-out forwards;
+  }
+
+  @keyframes percent-animation {
+    0% {
+      content: "0%";
+    }
+    100% {
+      content: current / total * 100 + "%";
+    }
+}
+  
