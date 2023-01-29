@@ -9,7 +9,7 @@ import '../Styling/SiteStyling/ScreenContainer.css'
 import Buttons from '../Components/Buttons.js';
 import "../Styling/ButtonStyling/saveButton.css"
 import "../Styling/ButtonStyling/homeButton.css"
-import AddButton from '../Components/AddButton.js';
+import AddButton from '../Components/addButton.js';
 import "../Styling/ButtonStyling/addButton.css"
 import NextButton from '../Components/NextButton.js';
 import "../Styling/ButtonStyling/nextButton.css"
