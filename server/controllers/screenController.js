@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const asyncHandler = require('express-async-handler')
+const multer = require('multer')
 
 const Course = require('../models/Course')
 const { Screen, Picture, TextField, H5P } = require('../models/Screen')
@@ -52,7 +53,7 @@ const setTextField = asyncHandler(async (req, res) => {
         const textField = await TextField.create({text: text})
         const screen = await Screen.findById(req.params.screenId)
         screen.elements.push(textField)
-        screen.save()
+        await screen.save()
 
         res.status(201).json(screen)
     } catch (error) {
@@ -63,12 +64,23 @@ const setTextField = asyncHandler(async (req, res) => {
 const setPicture = asyncHandler(async (req, res) => {
     
     try {
-        const image = Picture.create({picType: req.header, data: req.body})
-        const screen = await Screen.findById(req.params.screenId)
-        screen.elements.push(image)
-        screen.save()
-
-        res.status(201).json(image)
+        const upload = multer({storage: multer.memoryStorage()}).single('image')
+        upload(req, res, async (err) => {
+            if (err) {
+                res.status(400).json({error: err.message})
+            }
+            // create picture
+            const picture = new Picture({
+                data: req.file.buffer,
+                contentType: req.file.mimetype
+            })
+            await picture.save()
+            // add picture to screen
+            const screen = await Screen.findById(req.params.screenId)
+            screen.elements.push(picture)
+            await screen.save()
+            res.status(201).json(screen)
+        })
     } catch (error) {
         res.status(400).json({error: error.message})
     }
@@ -85,9 +97,11 @@ const setH5P = asyncHandler(async (req, res) => {
         res.status(400).json({error: error.message})
     }
 })
+
 module.exports = {
     setScreen,
     setSection,
     setTextField,
-    //setPicture
+    setPicture,
+    setH5P
 }
