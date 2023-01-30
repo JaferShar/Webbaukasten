@@ -1,16 +1,45 @@
 
 import React from 'react';
 
-function PopUpButtonText() {
-  const openNewWindow = () => {
-    window.open("https://www.google.com", "", "width=600,height=400");
+import ReactQuill from 'react-quill';
+
+class PopUpButtonText extends React.Component {
+  state = {
+    open: false,
+    text: ''
   }
 
-  return (
-    <div>
-      <button onClick={openNewWindow}>Open New Window</button>
-    </div>
-  );
+  handleOpen = () => {
+    this.setState({ open: true });
+  }
+
+  handleClose = () => {
+    this.setState({ open: false });
+  }
+
+  handleChange = (value) => {
+    this.setState({ text: value });
+  }
+
+  handleSave = () => {
+    // Save the text to your desired location
+    this.setState({ open: false });
+  }
+
+  render() {
+    return (
+      <div>
+        <button onClick={this.handleOpen}>Open Pop-up</button>
+        {this.state.open && (
+          <div className="popup-content">
+            <ReactQuill value={this.state.text} onChange={this.handleChange} />
+            <button onClick={this.handleSave}>Save</button>
+            <button onClick={this.handleClose}>Close</button>
+          </div>
+        )}
+      </div>
+    )
+  }
 }
 
 export default PopUpButtonText;

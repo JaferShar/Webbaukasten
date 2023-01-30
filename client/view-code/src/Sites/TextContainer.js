@@ -1,18 +1,30 @@
-import React from 'react';
+import React, { useState } from "react";
+import axios from "axios";
 import '../Styling/SiteStyling/TextContainer.css';
 
-function TextContainer(props) {
+function TextContainer() {
+  const [text, setText] = useState("");
+
+  const handleTextChange = (e) => {
+    setText(e.target.innerText);
+  };
+
+  const handleSave = () => {
+    axios
+      .post("/api/save-text", { text })
+      .then((res) => console.log(res.data))
+      .catch((err) => console.error(err));
+  };
+
   return (
-    <><div className="textContainer1">
-      <p>This is some text inside the container</p>
-    </div><div className="textContainer2">
-        <p>This is some text inside the container</p>
-      </div>
-      <div className="textContainer3">
-        <p>This is some text inside the container</p>
-      </div>
-      </>
-  
+    <div>
+      <div
+        contentEditable
+        onInput={handleTextChange}
+        style={{ width: "50vw", height: "50vh" }}
+      />
+      <button onClick={handleSave}>Save</button>
+    </div>
   );
 }
 

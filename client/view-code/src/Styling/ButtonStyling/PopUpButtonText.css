@@ -1,9 +1,9 @@
 .popup {
     position: fixed;
-    top: 50%;
+    top: 10%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background-color: white;
+    background-color: rgb(158, 57, 57);
     padding: 20px;
     border: 1px solid black;
     z-index: 1;
