@@ -26,6 +26,9 @@ import PopUpButtonText from '../Components/PopUpButtonText';
 import '../Styling/ButtonStyling/PopUpButtonPicture.css'
 import PopUpButtonPicture from '../Components/PopUpButtonPicture';
 import PopUpButtonPixabay from '../Components/PopUpButtonPixabay';
+import ProgressBar from '../Components/ProgressBar';
+import{ useState } from 'react';
+import '../Styling/SiteStyling/ProgressBar.css'
 
 
 
@@ -53,9 +56,11 @@ function Course () {
       <div className="mainScreen">
         <div className='addButton'><AddButton></AddButton></div>
         <div className='nextButton'><NextButton></NextButton></div>
+
         <mainScreen>
           
           <p>Main screen.</p>
+          
           <div className="textContainer3">
         <textContainer3>
           <p>Text in screen.</p>
@@ -80,7 +85,8 @@ function Course () {
            <PopUpButtonPixabay>
           
         </PopUpButtonPixabay>
-      </div>
+      </div>´
+      <div><ProgressBar current={30} total={100}></ProgressBar></div>
         </mainScreen>
       </div>
       
@@ -93,6 +99,7 @@ function Course () {
         <TemplateContainer>
         </TemplateContainer>
       </div>
+      
       <div>
         <Menu>
         </Menu>

@@ -8,11 +8,8 @@ const Element = mongoose.model('Element', elementSchema)
 
 const Picture = Element.discriminator('Picture', 
     new mongoose.Schema({
-        picName: String,
-        image: {
-            data: {type: Buffer, required: true},
-            picType: String,
-        }
+        data: {type: Buffer, required: true},
+        contentType: { type: String, required: true}
     })
 )
 
@@ -38,6 +35,7 @@ const H5P = Element.discriminator('H5P',
 const screenSchema = new mongoose.Schema({
     template: {
         type: String,
+        enum: ['Welcome', 'Standard', 'End'],
         default: 'Welcome',
         required: true,
     },

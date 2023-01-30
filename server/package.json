@@ -11,11 +11,15 @@
   "license": "MIT",
   "dependencies": {
     "colors": "^1.4.0",
+    "cors": "^2.8.5",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "express-async-handler": "^1.2.0",
     "jsonwebtoken": "^9.0.0",
-    "mongoose": "^6.9.0"
+    "mongodb": "^4.13.0",
+    "mongoose": "^6.9.0",
+    "multer": "^1.4.4",
+    "multer-gridfs-storage": "^5.0.2"
   },
   "devDependencies": {
     "nodemon": "^2.0.20"
