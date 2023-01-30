@@ -4,6 +4,6 @@ const { setScreen, setTextField, setPicture } = require('../controllers/screenCo
 
 router.route('/:id').post(setScreen)
 router.route('/textfield/:screenId').post(setTextField)
-router.route('/picture/:screenId').post(setPicture)
+//router.route('/picture/:screenId').post(setPicture)
 
 module.exports = router
