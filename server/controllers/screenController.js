@@ -3,7 +3,6 @@ const asyncHandler = require('express-async-handler')
 
 const Course = require('../models/Course')
 const { Screen, Picture, TextField, H5P } = require('../models/Screen');
-const { ConnectionClosedEvent } = require('mongodb');
 
 const setScreen = asyncHandler(async (req, res) => {
     const template = req.body.template
@@ -16,7 +15,7 @@ const setScreen = asyncHandler(async (req, res) => {
         const screen = await Screen.create({template: template})
         const course = await Course.findById(req.params.id)
         course.screens.push(screen)
-        course.save()
+        await course.save()
 
         // may change to screen later
         res.status(201).json(course)
@@ -35,9 +34,11 @@ const setSection = asyncHandler(async (req, res) => {
     try {
         const course = await Course.findOneAndUpdate(
             {_id: req.params.id},
-            {$push: {sections: {
-                sectionName: sectionName,
-                index: index
+            {$push: 
+                {sections: 
+                    {
+                    sectionName: sectionName,
+                    index: index
             }}}, 
             { new: true }
             )
@@ -62,7 +63,6 @@ const setTextField = asyncHandler(async (req, res) => {
 })
 
 const setPicture = asyncHandler(async (req, res) => {
-    
     try {
         const image = Picture.create({picType: req.header, data: req.body})
         const screen = await Screen.findById(req.params.screenId)
@@ -90,25 +90,23 @@ const setH5P = asyncHandler(async (req, res) => {
     }
 })
 
-const updateScreenPosition = async (req, res) => {
-    const { screenId, newPosition } = req.body;
+const updateScreenPosition = asyncHandler(async (req, res) => {
+    const { screenId, newIndex } = req.body
     try {
-        // check course and new position
-        const course = await Course.findById(req.params.id);
-        if (!course) {
-            throw new Error('Course not found');
-        } else if (course.screens.length < newPosition) {
-            throw new Error('New position is out of bounds');
+        // check course and new index
+        const course = await Course.findById(req.params.id)
+        if (!course) {  
+            throw new Error('Course not found')
+        } else if(course.screens.length <= newIndex) {
+            throw new Error('New index is out of bounds')
         }
-        // update screen position
-        course.updateScreenPosition(screenId, newPosition)
+        course.updateScreenPosition(screenId, newIndex)
         await course.save()
-        res.status(201).json(course);
+        res.status(201).json(course)
     } catch (error) {
-        res.status(400).json({error: error.message});
+        res.status(400).json({error: error.message})
     }
-};
-
+})
 
 
 module.exports = {

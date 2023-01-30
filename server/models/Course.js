@@ -27,7 +27,7 @@ const courseSchema = new mongoose.Schema({
         type: [mongoose.Schema.Types.ObjectId],
         ref: 'Screen'
     },
-}, {versionKey: false})
+})
 
 courseSchema.methods.updateScreenPosition = function(screenId, newIndex) {
     const screenIndex = this.screens.indexOf(screenId)
