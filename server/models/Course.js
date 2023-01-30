@@ -27,7 +27,16 @@ const courseSchema = new mongoose.Schema({
         type: [mongoose.Schema.Types.ObjectId],
         ref: 'Screen'
     },
-})
+}, {versionKey: false})
 
-//create function
+courseSchema.methods.updateScreenPosition = function(screenId, newIndex) {
+    const screenIndex = this.screens.indexOf(screenId)
+    if (screenIndex === -1) {
+        throw new Error('Screen not found in course screens')
+    }
+
+    this.screens.splice(screenIndex, 1)
+    this.screens.splice(newIndex, 0, screenId)
+}
+
 module.exports = mongoose.model('Course', courseSchema)

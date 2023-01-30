@@ -3,7 +3,8 @@ const asyncHandler = require('express-async-handler')
 const multer = require('multer')
 
 const Course = require('../models/Course')
-const { Screen, Picture, TextField, H5P } = require('../models/Screen')
+const { Screen, Picture, TextField, H5P } = require('../models/Screen');
+const { ConnectionClosedEvent } = require('mongodb');
 
 const setScreen = asyncHandler(async (req, res) => {
     const template = req.body.template
@@ -86,6 +87,9 @@ const setPicture = asyncHandler(async (req, res) => {
     }
 })
 
+/**
+ * To Do: integrate H5P and handle the data
+ */
 const setH5P = asyncHandler(async (req, res) => {
     const { h5pType, data } = req.body
     try {
@@ -98,10 +102,32 @@ const setH5P = asyncHandler(async (req, res) => {
     }
 })
 
+const updateScreenPosition = async (req, res) => {
+    const { screenId, newPosition } = req.body;
+    try {
+        // check course and new position
+        const course = await Course.findById(req.params.id);
+        if (!course) {
+            throw new Error('Course not found');
+        } else if (course.screens.length < newPosition) {
+            throw new Error('New position is out of bounds');
+        }
+        // update screen position
+        course.updateScreenPosition(screenId, newPosition)
+        await course.save()
+        res.status(201).json(course);
+    } catch (error) {
+        res.status(400).json({error: error.message});
+    }
+};
+
+
+
 module.exports = {
     setScreen,
     setSection,
     setTextField,
     setPicture,
-    setH5P
+    setH5P,
+    updateScreenPosition,
 }
