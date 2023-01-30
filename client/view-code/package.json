@@ -3,12 +3,17 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@emotion/react": "^11.10.5",
+    "@emotion/styled": "^11.10.5",
+    "@mui/icons-material": "^5.11.0",
+    "@mui/material": "^5.11.6",
     "@reduxjs/toolkit": "^1.9.2",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-google-login": "^5.2.2",
     "react-icons": "^4.7.1",
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -20,6 +25,7 @@
     "react-router-dom": "^6.8.0",
 >>>>>>> bafef5d67c627fa19eba93e2da936a177acf2a00
     "react-scripts": "5.0.1",
+    "react-social-login-buttons": "^3.6.1",
     "redux": "^4.2.1",
     "web-vitals": "^2.1.4"
   },
