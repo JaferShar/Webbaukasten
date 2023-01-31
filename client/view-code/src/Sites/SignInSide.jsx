@@ -14,7 +14,6 @@ import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Image from './bookShelf.jpg';
 import { GoogleLoginButton } from "react-social-login-buttons";
-import ReactGoogleLogin from "react-google-login";
 
   const onResponse = (resp) => {
     console.log("Google Login Response: ")
@@ -83,15 +82,6 @@ export default function SignInSide() {
               Sign in
             </Typography>
             <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
-              
-              
-              
-            <ReactGoogleLogin
-              clientId="852695826269-326bgl5c4t0sojrcoqq3kqtentjo7hqp.apps.googleusercontent.com" // We created this earlier, remember?
-              buttonText="Login with Google"
-              onSuccess={onResponse}
-              onFailure={onResponse}
-            />
               
               <Copyright sx={{ mt: 5 }} />
             </Box>
