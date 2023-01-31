@@ -14,7 +14,7 @@ const setScreen = asyncHandler(async (req, res) => {
 
     try {
         const screen = await Screen.create({template: template})
-        const course = await Course.findById(req.params.id)
+        const course = await Course.findById(req.params.courseId)
         course.screens.push(screen)
         await course.save()
 
@@ -103,10 +103,11 @@ const setH5P = asyncHandler(async (req, res) => {
 })
 
 const updateScreenPosition = asyncHandler(async (req, res) => {
+    console.log('holi')
     const { screenId, newIndex } = req.body
     try {
         // check course and new index
-        const course = await Course.findById(req.params.id)
+        const course = await Course.findById(req.params.courseId)
         if (!course) {  
             throw new Error('Course not found')
         } else if(course.screens.length <= newIndex) {
@@ -150,6 +151,7 @@ const updateSection  = asyncHandler(async (req, res) => {
 
 // updateScreen function does not notices if element was deleted. May add functionallity to delete or create elements later
 const updateScreen = asyncHandler(async (req, res) => {
+    console.log('hei')
     try {
         const { elements } = req.body;
     
@@ -206,13 +208,13 @@ const deleteScreen = asyncHandler(async (req, res) => {
     try {
         // delete screen on course first
         const course = await Course.findById(req.params.courseId)
-        if (!course.screens.id(req.params.id)) {
+        if (!course.screens.id(req.params.screenId)) {
             throw new Error('Nothing to do, screen not found')
         }
-        course.screens.id(req.params.id).remove()
+        course.screens.id(req.params.screenId).remove()
         // save changes and delete screen afterwards
         await course.save()
-        await Screen.findByIdAndDelete(req.params.id)
+        await Screen.findByIdAndDelete(req.params.screenId)
         res.status(200).json(course)
     } catch (error) {
         res.status(400).json({error: error.message})
@@ -255,5 +257,9 @@ module.exports = {
     setPicture,
     setH5P,
     updateScreenPosition,
-    updateSection
+    updateSection,
+    updateScreen,
+    deleteScreen,
+    deleteSection,
+    deleteElement
 }
