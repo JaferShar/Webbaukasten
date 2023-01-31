@@ -1,10 +1,6 @@
 import * as React from 'react';
 import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
-import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
 import Link from '@mui/material/Link';
 import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
@@ -13,16 +9,23 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Image from './bookShelf.jpg';
-import { GoogleLoginButton } from "react-social-login-buttons";
+import { GoogleLogin } from '@react-oauth/google';
+import { GoogleOAuthProvider } from '@react-oauth/google';
+import jwtDecode from 'jwt-decode'
 
-  const onResponse = (resp) => {
-    console.log("Google Login Response: ")
-    console.log(resp);
-  };
+const onResponse = (resp) => {
+  console.log('Google Login Response: ');
+  console.log(resp);
+};
 
 function Copyright(props) {
   return (
-    <Typography variant="body2" color="text.secondary" align="center" {...props}>
+    <Typography
+      variant="body2"
+      color="text.secondary"
+      align="center"
+      {...props}
+    >
       {'Copyright © '}
       <Link color="inherit" href="https://mui.com/">
         Kursify
@@ -32,8 +35,6 @@ function Copyright(props) {
     </Typography>
   );
 }
-
-
 
 const theme = createTheme();
 
@@ -60,7 +61,9 @@ export default function SignInSide() {
             backgroundImage: `url(${Image})`,
             backgroundRepeat: 'no-repeat',
             backgroundColor: (t) =>
-              t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],
+              t.palette.mode === 'light'
+                ? t.palette.grey[50]
+                : t.palette.grey[900],
             backgroundSize: 'cover',
             backgroundPosition: 'center',
           }}
@@ -81,8 +84,27 @@ export default function SignInSide() {
             <Typography component="h1" variant="h5">
               Sign in
             </Typography>
-            <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
-              
+            <h1>Tets</h1>
+            <GoogleOAuthProvider clientId="852695826269-326bgl5c4t0sojrcoqq3kqtentjo7hqp.apps.googleusercontent.com">
+              <GoogleLogin
+                onSuccess={(credentialResponse) => {
+                  console.log('Login Success');
+                  console.log(credentialResponse);
+                  console.log(credentialResponse.credential);
+                  console.log(jwtDecode(credentialResponse.credential))
+                }}
+                onError={() => {
+                  console.log('Login Failed');
+                }}
+              />
+            </GoogleOAuthProvider>
+
+            <Box
+              component="form"
+              noValidate
+              onSubmit={handleSubmit}
+              sx={{ mt: 1 }}
+            >
               <Copyright sx={{ mt: 5 }} />
             </Box>
           </Box>

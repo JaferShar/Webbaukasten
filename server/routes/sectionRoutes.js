@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router()
-const { setSection } = require('../controllers/screenController')
+const { setSection, updateSection } = require('../controllers/screenController')
 
-router.route('/:id').put(setSection)
+router.route('/:id').post(setSection).put(updateSection)
 
 module.exports = router

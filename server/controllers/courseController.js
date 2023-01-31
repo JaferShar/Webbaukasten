@@ -23,12 +23,12 @@ const getCourse = asyncHandler(async (req, res) => {
 })
 
 const setCourse = asyncHandler(async (req, res) => {
-    if (!req.body.courseName) {
+    const { courseName } = req.body
+    const accountId  = req.account.id
+    if (!courseName) {
         res.status(400)
         throw new Error('Please add course name')
     }
-    const { courseName } = req.body
-    const accountId  = req.account.id
 
     // checks if there already exists an document with the given filters
     const count = await Course.countDocuments({account: accountId, courseName: courseName})

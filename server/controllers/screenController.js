@@ -26,23 +26,22 @@ const setScreen = asyncHandler(async (req, res) => {
 })
 
 // tested
-const setSection = asyncHandler(async (req, res) => {
-    const { sectionName, index } = req.body
-    if (!sectionName || !index) {
-        throw new Error('Please add valid variables for the section')
-    }
-    
+const setSection = asyncHandler(async (req, res) => {  
     try {
-        const course = await Course.findOneAndUpdate(
-            {_id: req.params.id},
-            {$push: 
-                {sections: 
-                    {
-                    sectionName: sectionName,
-                    index: index
-            }}}, 
-            { new: true }
-            )
+        const { sectionName, index } = req.body
+        const course = await Course.findById(req.params.id)
+        if (!sectionName || !index) {
+            throw new Error('Please add valid variables for the section')
+        }
+        if (!course) {
+            throw new Error('Course not found')
+        }
+        if (course.screens.length <= index) {
+            throw new Error('Please add a screen before adding a section')
+        }
+        //To Do: check if there already exists a section with the same name or index
+        course.sections.push({sectionName: sectionName, index: index})
+        await course.save()
         res.status(201).json(course)
     } catch (error) {
         res.status(400).json({error: error.message})
@@ -121,6 +120,31 @@ const updateScreenPosition = asyncHandler(async (req, res) => {
     }
 })
 
+const updateSection  = asyncHandler(async (req, res) => {
+    const { sectionName, index, position } = req.body
+    try {
+        if (!sectionName || !index || !position) {
+            throw new Error('Please add valid variables for the section')
+        }
+        const course = await Course.findById(req.params.id)
+        if (!course) {
+            throw new Error('Course not found')
+        }
+        if (course.sections.length <= position) {
+            throw new Error('Position is out of bounds')
+        }
+        if (course.screens.length <= index) {
+            throw new Error('Please add a screen before adding a section')
+        }
+        //To Do: check if there already exists a section with the same name or index
+        course.sections.set(position, {sectionName: sectionName, index: index})
+        await course.save()
+        res.status(200).json(course)
+    } catch (error) {
+        res.status(400).json({error: error.message})
+    }
+})
+
 
 module.exports = {
     setScreen,
@@ -129,4 +153,5 @@ module.exports = {
     setPicture,
     setH5P,
     updateScreenPosition,
+    updateSection
 }
