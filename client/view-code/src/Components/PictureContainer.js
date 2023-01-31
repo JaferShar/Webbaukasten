@@ -5,7 +5,7 @@ function PictureContainer() {
   return (
    
     <div className="pictureContainer">
-    <p>This is some text inside the container</p>
+   
   </div>
   );
 }

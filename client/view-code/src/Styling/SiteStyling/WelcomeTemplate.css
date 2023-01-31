@@ -1,0 +1,38 @@
+
+  .textContainer {
+    font-size: 24px;
+    font-weight: bold;
+    color: rgb(118, 60, 60);
+    text-align: center;
+    margin-bottom: 20px;
+    border-radius: 10px;
+  }
+  
+  .picContainer {
+    display: flex;
+    position: absolute;
+    justify-content: flex-end;
+    top: 25%;
+    right: 0;
+    width: 35%;
+    height: 45%;
+    background-color: rgb(121, 231, 227);
+    border: 1px solid black;
+  }
+
+  
+  .pictureContainer img {
+    width: 100%;
+    height: auto;
+  }
+
+  .welcomeTemplate {
+    width: 60%;
+    height: 65%;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #e3be7476;
+    border-radius: 10px;
+    top: 50%;
+    transform: translateY(10%);
+  }

@@ -1,31 +1,39 @@
 import React, { useState } from "react";
 import axios from "axios";
 import '../Styling/SiteStyling/TextContainer.css';
+import { EditorState, Editor } from 'draft-js';
 
-function TextContainer() {
-  const [text, setText] = useState("");
+const TextContainer = ({ text }) => <div>{text}</div>;
 
-  const handleTextChange = (e) => {
-    setText(e.target.innerText);
-  };
+export default function PopUpButtonText() {
+  const [showEditor, setShowEditor] = useState(false);
+  const [editorState, setEditorState] = useState(() =>
+    EditorState.createEmpty()
+  );
+  const [textContent, setTextContent] = useState('');
 
   const handleSave = () => {
-    axios
-      .post("/api/save-text", { text })
-      .then((res) => console.log(res.data))
-      .catch((err) => console.error(err));
+    setTextContent(
+      editorState.getCurrentContent().getPlainText()
+    );
   };
 
   return (
     <div>
-      <div
-        contentEditable
-        onInput={handleTextChange}
-        style={{ width: "50vw", height: "50vh" }}
-      />
-      <button onClick={handleSave}>Save</button>
+      <button onClick={() => setShowEditor(!showEditor)}>
+        Editor
+      </button>
+      {showEditor && (
+        <div style={{ border: "1px solid black", padding: '2px', minHeight: '200px'}}>
+          <Editor
+            editorState={editorState}
+            onEditorStateChange={setEditorState}
+          />
+          <button onClick={handleSave}>Save</button>
+        </div>
+      )}
+      <TextContainer text={textContent} />
     </div>
   );
 }
 
-export default TextContainer;
