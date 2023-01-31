@@ -85,7 +85,7 @@ function Course () {
            <PopUpButtonPixabay>
           
         </PopUpButtonPixabay>
-      </div>´
+      </div>
       <div><ProgressBar current={30} total={100}></ProgressBar></div>
         </mainScreen>
       </div>
