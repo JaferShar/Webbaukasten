@@ -18,6 +18,7 @@ export const register = createAsyncThunk('auth/register', async (user, thunkAPI)
     } catch (error) {
         return thunkAPI.rejectWithValue(error.response.data);
     }
+});
 
 export const authSlice = createSlice({
     name: 'auth',
@@ -36,4 +37,4 @@ export const authSlice = createSlice({
 })
 
 export const {reset} = authSlice.actions;
-export default authSlice.reducer;
+export default authSlice.reducers;
