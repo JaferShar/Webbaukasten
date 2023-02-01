@@ -9,6 +9,7 @@ import App from './App';
 const root = ReactDOM.createRoot(document.getElementById("root"))
 root.render(
 
+  //Provider is a component that wraps the entire app and makes the store available to all components
   <React.StrictMode>
     <Provider store={store}>
       <App />
