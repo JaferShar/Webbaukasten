@@ -20,7 +20,7 @@ import Menu from '@mui/material/Menu';
 
 import '../Styling/SiteStyling/Kursuebersicht.css'
 
-export default function Kursübersicht() {
+export default function Kursübersicht({secondary}) {
     // const for MoreVertIcon
     const [anchorEl, setAnchorEl] = React.useState(null);
   
@@ -70,39 +70,39 @@ export default function Kursübersicht() {
 
                         <List component="nav" aria-label='main mailbox folders'>                           
                             {courses.map((item, index) => (
-                            <ListItem key={index} button component={Link} to="/kurs"> 
-
-                                <ListItemSecondaryAction>
-                                    <div>
-                                    <IconButton 
-                                        edge="end" 
-                                        aria-label="more"
-                                        onClick={handleClick}
-                                        aria-haspopup="true"
-                                        aria-controls="long-menu">
-                                        <MoreVertIcon />
-                                    </IconButton>
-                                    <Menu 
-                                        anchorEl={anchorEl} 
-                                        keepMounted onClose={handleClose} 
-                                        open={open}>
-                                        {MyOptions.map((option) => (
-                                            <MenuItem
-                                                key={option} 
-                                                onClick={handleClose}>
-                                                {option}
-                                            </MenuItem>
-                                        ))}
-                                    </Menu>
-                                    </div>
-                                </ListItemSecondaryAction>
                                 
+                            <ListItem key={index} button component={Link} to="/kurs"> 
                                 <ListItemAvatar>
                                         <Avatar>
-                                            <FolderIcon />
+                                            <FolderIcon/>
                                         </Avatar>
-                                    </ListItemAvatar>
-                                <ListItemText primary={item}/>
+                                </ListItemAvatar>
+                                <ListItemText primary={item} secondary={secondary}/>
+                                
+                                    <ListItemSecondaryAction>
+                                        <div>
+                                        <IconButton 
+                                            edge="end" 
+                                            aria-label="more"
+                                            onClick={handleClick}
+                                            aria-haspopup="true"
+                                            aria-controls="long-menu">
+                                            <MoreVertIcon />
+                                        </IconButton>
+                                        <Menu 
+                                            anchorEl={anchorEl} 
+                                            keepMounted onClose={handleClose} 
+                                            open={open}>
+                                            {MyOptions.map((option) => (
+                                                <MenuItem
+                                                    key={option} 
+                                                    onClick={handleClose}>
+                                                    {option}
+                                                </MenuItem>
+                                            ))}
+                                        </Menu>
+                                        </div>
+                                    </ListItemSecondaryAction>                                   
                             </ListItem>
                             ))}
                         </List>
