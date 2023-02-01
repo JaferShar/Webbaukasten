@@ -19,6 +19,7 @@ app.use('/api/course', require('./routes/courseRoutes'));
 app.use('/api/account', require('./routes/accountRoutes'));
 app.use('/api/screen', require('./routes/screenRoutes'));
 app.use('/api/section', require('./routes/sectionRoutes'));
+app.use('api/element', require('./routes/elementRoutes'));
 
 //app.use('/api/users', require('./routes/userRoutes'));
 
@@ -40,4 +41,5 @@ app.use(errorHandler);
 
 
 
-app.listen(port, () => console.log(`Server started on port ${port}`));
+//app.listen(port, () => console.log(`Server started on port ${port}`));
+app.listen(port, () => console.log(`Ahoi Matrosen wir segeln zum Port Hamburg`.yellow.bold));
