@@ -1,9 +1,9 @@
 import React from 'react';
-// import CourseOverview from './Sites/CourseOverview' commented for the course view
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import CourseOverview from './Pages/CourseOverview'
+//import CourseOverview from './Pages/CourseOverview'
 import Course from './Pages/Course'
 import SignInSide from './Pages/SignInSide'
+import Kursübersicht from './Pages/Kursuebersicht'
 
 
 function App() {
@@ -11,7 +11,7 @@ function App() {
     <div>
       <BrowserRouter>
         <Routes>
-          <Route path='/kurs-uebersicht' element={<CourseOverview />} />
+          <Route path='/kursuebersicht' element={<Kursübersicht />} />
           <Route path='/kurs' element={<Course />} />
           <Route path='/login' element={<SignInSide />} />
         </Routes>
