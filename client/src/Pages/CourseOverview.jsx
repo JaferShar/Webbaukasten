@@ -11,16 +11,15 @@ import Avatar from '@mui/material/Avatar';
 import IconButton from '@mui/material/IconButton';
 import Grid from '@mui/material/Grid';
 import FolderIcon from '@mui/icons-material/Folder';
-import DeleteIcon from '@mui/icons-material/Delete';
 import AddIcon from '@mui/icons-material/Add';
 import Button from '@mui/material/Button';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
 
-import '../Styling/SiteStyling/Kursuebersicht.css'
+import '../Styling/SiteStyling/CourseOverview.css'
 
-export default function Kursübersicht({secondary}) {
+export default function CourseOverview({secondary}) {
     // const for MoreVertIcon
     const [anchorEl, setAnchorEl] = React.useState(null);
   
