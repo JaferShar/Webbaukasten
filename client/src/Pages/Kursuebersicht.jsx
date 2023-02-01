@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { createBrowserHistory } from "history";
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import Box from '@mui/material/Box';
@@ -7,6 +6,7 @@ import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
 import ListItemText from '@mui/material/ListItemText';
+import ListItemSecondaryAction from '@mui/material/ListItemSecondaryAction';
 import Avatar from '@mui/material/Avatar';
 import IconButton from '@mui/material/IconButton';
 import Grid from '@mui/material/Grid';
@@ -48,11 +48,6 @@ export default function Kursübersicht() {
         setCourses([...courses, 'Neuer Kurs']);
     };
 
-    const history = createBrowserHistory();
-    const handleListItemClicked = () => {
-        history.push('/kurs');
-    };
-
     return (    
         <div>
             <header className="header">
@@ -75,31 +70,33 @@ export default function Kursübersicht() {
 
                         <List component="nav" aria-label='main mailbox folders'>                           
                             {courses.map((item, index) => (
-                            <ListItem key={index} component="button" onClick={handleListItemClicked}
-                            secondaryAction={
-                                <div>
-                                <IconButton 
-                                    edge="end" 
-                                    aria-label="more"
-                                    onClick={handleClick}
-                                    aria-haspopup="true"
-                                    aria-controls="long-menu">
-                                    <MoreVertIcon />
-                                </IconButton>
-                                <Menu 
-                                    anchorEl={anchorEl} 
-                                    keepMounted onClose={handleClose} 
-                                    open={open}>
-                                    {MyOptions.map((option) => (
-                                        <MenuItem
-                                            key={option} 
-                                            onClick={handleClose}>
-                                            {option}
-                                        </MenuItem>
-                                    ))}
-                                </Menu>
-                                </div>
-                            }>
+                            <ListItem key={index} button component={Link} to="/kurs"> 
+
+                                <ListItemSecondaryAction>
+                                    <div>
+                                    <IconButton 
+                                        edge="end" 
+                                        aria-label="more"
+                                        onClick={handleClick}
+                                        aria-haspopup="true"
+                                        aria-controls="long-menu">
+                                        <MoreVertIcon />
+                                    </IconButton>
+                                    <Menu 
+                                        anchorEl={anchorEl} 
+                                        keepMounted onClose={handleClose} 
+                                        open={open}>
+                                        {MyOptions.map((option) => (
+                                            <MenuItem
+                                                key={option} 
+                                                onClick={handleClose}>
+                                                {option}
+                                            </MenuItem>
+                                        ))}
+                                    </Menu>
+                                    </div>
+                                </ListItemSecondaryAction>
+                                
                                 <ListItemAvatar>
                                         <Avatar>
                                             <FolderIcon />
