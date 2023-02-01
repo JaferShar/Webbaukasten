@@ -48,6 +48,21 @@ export default function Kursübersicht({secondary}) {
         setCourses([...courses, 'Neuer Kurs']);
     };
 
+    const handleOptionClicked = (option) => () => {
+        if (option === 'Löschen') {
+            setCourses(courses.filter((item) => item !== option));
+        } else if (option === 'Editieren') {
+            console.log('Editieren');
+        } else if (option === 'Teilen') {
+            console.log('Teilen');
+        } else if (option === 'Veröffentlichen') {
+            console.log('Veröffentlichen');
+        } else if (option === 'Umbenennen') {
+            console.log('Umbenennen');
+        }
+        handleClose();
+    };
+
     return (    
         <div>
             <header className="header">
@@ -91,12 +106,13 @@ export default function Kursübersicht({secondary}) {
                                         </IconButton>
                                         <Menu 
                                             anchorEl={anchorEl} 
-                                            keepMounted onClose={handleClose} 
-                                            open={open}>
+                                            keepMounted
+                                            open={Boolean(anchorEl)}
+                                            onClose={handleClose}>
                                             {MyOptions.map((option) => (
                                                 <MenuItem
                                                     key={option} 
-                                                    onClick={handleClose}>
+                                                    onClick={handleOptionClicked(option)}>
                                                     {option}
                                                 </MenuItem>
                                             ))}
