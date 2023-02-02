@@ -3,6 +3,8 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import CourseOverview from './Pages/CourseOverview'
 import Course from './Pages/Course'
 import SignInSide from './Pages/SignInSide'
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 function App() {
@@ -15,6 +17,7 @@ function App() {
           <Route path='/login' element={<SignInSide />} />
         </Routes>
       </BrowserRouter>
+      <ToastContainer />
     </div>
   );
 }

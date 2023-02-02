@@ -12,6 +12,12 @@ import Image from './bookShelf.jpg';
 import { GoogleLogin } from '@react-oauth/google';
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import jwtDecode from 'jwt-decode'
+import { useSelector, useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import { FaUser  } from 'react-icons/fa';
+import { register, reset } from '../features/auth/authSlice';
+
 
 const onResponse = (resp) => {
   console.log('Google Login Response: ');
