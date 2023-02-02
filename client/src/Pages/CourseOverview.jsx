@@ -16,6 +16,7 @@ import Button from '@mui/material/Button';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
+import Container from '@mui/material/Container';
 
 import '../Styling/SiteStyling/CourseOverview.css'
 
@@ -62,9 +63,9 @@ export default function CourseOverview({secondary}) {
         handleClose();
     };
 
-    return (    
+    return (   
         <div>
-            <header className="header">
+            <header id='header'>
                 <h1>Kursübersicht</h1>
             </header>
             <Box b={1} mt={5} /> {/* add a border and a margin-top of 2 */}
