@@ -11,18 +11,20 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Image from './bookShelf.jpg';
 import { GoogleLogin } from '@react-oauth/google';
 import { GoogleOAuthProvider } from '@react-oauth/google';
-import jwtDecode from 'jwt-decode'
+import jwtDecode from 'jwt-decode';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { FaUser  } from 'react-icons/fa';
+import { FaUser } from 'react-icons/fa';
 import { register, reset } from '../features/auth/authSlice';
 
-
-const onResponse = (resp) => {
-  console.log('Google Login Response: ');
-  console.log(resp);
-};
+function Register() {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { account, isLoading, isError, isSuccess, message } = useSelector(
+    (state) => state.auth
+  );
+}
 
 function Copyright(props) {
   return (
@@ -43,7 +45,6 @@ function Copyright(props) {
 }
 
 const theme = createTheme();
-
 export default function SignInSide() {
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -94,10 +95,20 @@ export default function SignInSide() {
             <GoogleOAuthProvider clientId="852695826269-326bgl5c4t0sojrcoqq3kqtentjo7hqp.apps.googleusercontent.com">
               <GoogleLogin
                 onSuccess={(credentialResponse) => {
+                  const { email, name, picture } = jwtDecode(
+                    credentialResponse.credential
+                  );
+                  const account = {
+                    email,
+                    name,
+                    picture,
+                  };
+
+                  
                   console.log('Login Success');
                   console.log(credentialResponse);
                   console.log(credentialResponse.credential);
-                  console.log(jwtDecode(credentialResponse.credential))
+                  console.log(jwtDecode(credentialResponse.credential));
                 }}
                 onError={() => {
                   console.log('Login Failed');
