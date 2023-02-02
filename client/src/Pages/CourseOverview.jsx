@@ -1,133 +1,110 @@
 import * as React from 'react';
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
-import Box from '@mui/material/Box';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemAvatar from '@mui/material/ListItemAvatar';
-import ListItemText from '@mui/material/ListItemText';
-import ListItemSecondaryAction from '@mui/material/ListItemSecondaryAction';
-import Avatar from '@mui/material/Avatar';
-import IconButton from '@mui/material/IconButton';
-import Grid from '@mui/material/Grid';
+import { Box, List, ListItem, ListItemAvatar, ListItemButton, ListItemText, ListItemSecondaryAction} from '@mui/material';
+import { Avatar, Button, IconButton, Menu, MenuItem, Grid } from '@mui/material';
 import FolderIcon from '@mui/icons-material/Folder';
 import AddIcon from '@mui/icons-material/Add';
-import Button from '@mui/material/Button';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
-import MenuItem from '@mui/material/MenuItem';
-import Menu from '@mui/material/Menu';
-import Container from '@mui/material/Container';
+import '../Styling/SiteStyling/CourseOverview.css'       
 
-import '../Styling/SiteStyling/CourseOverview.css'
+function MoreVertMenu({ anchorEl, selectedIndex, handleClose, handleDelete, handleEdit, handleShare, handlePublish, handleRename }) {
+    return (
+        <Menu
+        id="long-menu"
+        anchorEl={anchorEl}
+        keepMounted
+        open={Boolean(anchorEl)}
+        onClose={handleClose}>       
+            <MenuItem onClick={handleEdit}>Editieren</MenuItem>
+            <MenuItem onClick={handleShare}>Teilen</MenuItem>
+            <MenuItem onClick={handlePublish}>Veröffentlichen</MenuItem>
+            <MenuItem onClick={handleDelete}>Löschen</MenuItem>
+            <MenuItem onClick={handleRename}>Umbenennen</MenuItem>
+        </Menu>
+    );
+}
 
-export default function CourseOverview({secondary}) {
+export default function CourseOverview({props}) {
     // const for MoreVertIcon
     const [anchorEl, setAnchorEl] = React.useState(null);
-  
-    const MyOptions = [
-        "Editieren",
-        "Teilen",
-        "Veröffentlichen",
-        "Löschen",
-        "Umbenennen",
-    ];
-  
-    const handleClick = (event) => {
-        setAnchorEl(event.currentTarget);
-    };
-  
-    const open = Boolean(anchorEl);
-  
+    const [selectedIndex, setSelectedIndex] = React.useState(null);
+
     const handleClose = () => {
         setAnchorEl(null);
     };
-    // const for AddIcon
-    const [courses, setCourses] = useState(['Kurs 1']);
+  
+    const handleClickMoreVertIcon = (event, index) => {
+        console.log('hi')
+        setAnchorEl(event.currentTarget);
+        setSelectedIndex(index);
+    };
+    const [courses, setCourses] = useState([]);
     
     const handleCreateCourse = () => {
-        setCourses([...courses, 'Neuer Kurs']);
+        setCourses([...courses,  {id: courses.length + 1, name: 'Kurs ' + (courses.length + 1)}]);
+    };
+    const handleDelete = (id) => {
+        setCourses(courses.filter((course) => course.id !== id));
+    };
+    const handleEdit = () => {
+    };
+    const handleShare = () => {
+    };
+    const handlePublish = () => {
+    };
+    const handleRename = () => {
     };
 
-    const handleOptionClicked = (option) => () => {
-        if (option === 'Löschen') {
-            setCourses(courses.filter((item) => item !== option));
-        } else if (option === 'Editieren') {
-            console.log('Editieren');
-        } else if (option === 'Teilen') {
-            console.log('Teilen');
-        } else if (option === 'Veröffentlichen') {
-            console.log('Veröffentlichen');
-        } else if (option === 'Umbenennen') {
-            console.log('Umbenennen');
-        }
-        handleClose();
-    };
-
-    return (   
+    return (
         <div>
-            <header id='header'>
-                <h1>Kursübersicht</h1>
-            </header>
-            <Box b={1} mt={5} /> {/* add a border and a margin-top of 2 */}
-            <Box sx={{ display: 'flex', flexGrow: 1, maxWidth: '100%', justifyContent: 'center'}}>
-                <Grid
-                    container
-                    justifyContent="center"
-                    alignItems="flex-start"
-                    item xs={12} md={6}>
-                    <div style={{ display: 'flex', flexDirection: 'column'}}>
-                        <Button  
-                            variant="contained" 
-                            startIcon={<AddIcon />} 
-                            onClick={handleCreateCourse}>
-                                    Neuen Kurs erstellen
-                        </Button>
-
-                        <List component="nav" aria-label='main mailbox folders'>                           
-                            {courses.map((item, index) => (
-                                
-                            <ListItem key={index} button component={Link} to="/kurs"> 
-                                <ListItemAvatar>
-                                        <Avatar>
-                                            <FolderIcon/>
-                                        </Avatar>
-                                </ListItemAvatar>
-                                <ListItemText primary={item} secondary={secondary}/>
-                                
-                                    <ListItemSecondaryAction>
-                                        <div>
-                                        <IconButton 
-                                            edge="end" 
-                                            aria-label="more"
-                                            onClick={handleClick}
-                                            aria-haspopup="true"
-                                            aria-controls="long-menu">
-                                            <MoreVertIcon />
-                                        </IconButton>
-                                        <Menu 
-                                            anchorEl={anchorEl} 
-                                            keepMounted
-                                            open={Boolean(anchorEl)}
-                                            onClose={handleClose}>
-                                            {MyOptions.map((option) => (
-                                                <MenuItem
-                                                    key={option} 
-                                                    onClick={handleOptionClicked(option)}>
-                                                    {option}
-                                                </MenuItem>
-                                            ))}
-                                        </Menu>
-                                        </div>
-                                    </ListItemSecondaryAction>                                   
-                            </ListItem>
-                            ))}
-                        </List>
-
-                    </div>
-                </Grid>
-            </Box>
-      </div>
-      
-    )
-}
-
+          <header id='header'>
+            <h1>Kursübersicht</h1>
+          </header>
+          <Box b={1} mt={5} />
+          <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+            <Grid container>
+              <Grid item xs={12} sm={6}>
+                <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+                  <List>
+                    {courses.map((course, index) => (
+                      <ListItem key={course.id}>
+                        <ListItemAvatar>
+                          <Avatar>
+                            <FolderIcon />
+                          </Avatar>
+                        </ListItemAvatar>
+                        <ListItemText
+                          primary={course.name}
+                        />
+                        <ListItemSecondaryAction>
+                          <IconButton edge="end" aria-label="more" onClick={(event) => handleClickMoreVertIcon(event, index)}>
+                            <MoreVertIcon />
+                          </IconButton>
+                        </ListItemSecondaryAction>
+                      </ListItem>
+                    ))}
+                  </List>
+                </Box>
+              </Grid>
+            </Grid>
+          </Box>
+          <MoreVertMenu
+            anchorEl={anchorEl}
+            selectedIndex={selectedIndex}
+            handleClose={handleClose}
+            handleDelete={handleDelete}
+            handleEdit={handleEdit}
+            handleShare={handleShare}
+            handlePublish={handlePublish}
+            handleRename={handleRename}
+          />
+          <Box sx={{ display: 'flex', justifyContent: 'center', marginTop: '20px' }}>
+            <Button variant="contained" color="primary" onClick={handleCreateCourse}>
+              <AddIcon />
+              Kurs erstellen
+            </Button>
+          </Box>
+        </div>
+      );
+}    
