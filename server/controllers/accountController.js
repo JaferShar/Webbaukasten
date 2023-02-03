@@ -36,6 +36,7 @@ const registerAccount = asyncHandler(async (req, res) => {
             firstName: account.firstName,
             lastName: account.lastName,
             email: account.email,
+            picture: account.picture,
             token: generateToken(account._id)
         })
     } else {
@@ -59,6 +60,7 @@ const loginAccount = asyncHandler(async (req, res) => {
             firstName: account.firstName,
             lastName: account.lastName,
             email: account.email,
+            picture: account.picture,
             token: generateToken(Account.id)
 
         })

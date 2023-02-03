@@ -107,13 +107,14 @@ const handleSubmit = (event) => {
             <GoogleOAuthProvider clientId="852695826269-326bgl5c4t0sojrcoqq3kqtentjo7hqp.apps.googleusercontent.com">
               <GoogleLogin
                 onSuccess={(credentialResponse) => {
-                  const { email, given_name, family_name } = jwtDecode(
+                  const { email, given_name, family_name, picture } = jwtDecode(
                     credentialResponse.credential
                   );
                   const accountData = {
                     email,
                     firstName: given_name,
                     lastName: family_name,
+                    picture: picture,
                   };
 
                   dispatch(register(accountData));

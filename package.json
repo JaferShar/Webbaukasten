@@ -41,7 +41,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "concurrently \"npm run start:server\" \"npm run start:client\"",
-    "dev": "concurrently \"npm run dev:server\" \"npm run dev:client\"",
+    "dev": "concurrently \"npm run dev:server\" \"npm run start:client\"",
     "dev:server": "cd server && npm run server",
     "dev:client": "cd client && npm run start",
     "start:server": "cd server && npm run start",
