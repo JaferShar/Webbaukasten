@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import { Box, List, ListItem, ListItemAvatar, ListItemText, ListItemSecondaryAction} from '@mui/material';
+import { Box, List, ListItem, ListItemAvatar, ListItemButton, ListItemText, ListItemSecondaryAction} from '@mui/material';
 import { Avatar, Button, IconButton, Menu, MenuItem, Grid, TextField, Popover } from '@mui/material';
 import FolderIcon from '@mui/icons-material/Folder';
 import AddIcon from '@mui/icons-material/Add';
@@ -27,12 +27,6 @@ function MoreVertMenu({ anchorEl, handleClose, handleDelete, handleEdit, handleS
     const handleSubmit = () => {
         handleRename(newName);
         setModalOpen(false);
-    };
-
-    const handleKeyDown = (e) => {
-        if (e.key === 'Enter') {
-            handleSubmit();
-        }
     };
 
     return (
@@ -60,8 +54,7 @@ function MoreVertMenu({ anchorEl, handleClose, handleDelete, handleEdit, handleS
                         value={newName}
                         onChange={(e) => setNewName(e.target.value)} />
                     <Box mt={2} sx={{ display: 'flex', justifyContent: 'flex-end' }}>
-                        <Button onClick={handleSubmit} onKeyDown={handleKeyDown}>OK</Button>
-                        <Button onClick={() => setModalOpen(false)}>Abbrechen</Button>
+                        <Button onClick={handleSubmit}>OK</Button>
                     </Box>
                 </Box>
             </Popover>
@@ -90,7 +83,9 @@ export default function CourseOverview({props}) {
             counter += 1;
         }
         setCourses([...courses, { id: uuidv4(), name: courseName }]);
-    }; 
+    };
+    const handleClickRename = () => {
+    };  
     const handleDelete = () => {
         console.log(selectedCourseId)
         setCourses(courses.filter((course) => course.id !== selectedCourseId));
@@ -119,55 +114,58 @@ export default function CourseOverview({props}) {
         setCourses([...courses])
         handleClose();
     };
-    return (
-        <div>
-          <header id='header'>
-            <h1>Kursübersicht</h1>
-          </header>
-          <Box b={1} mt={5} />
-          <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-            <Grid container>
-              <Grid item xs={12} sm={6}>
-                <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-                  <List>
-                    {courses.map((course) => (
-                      <ListItem key={course.id}
-                      button
-                      component={Link} to={`/kurs`}>
-                        <ListItemAvatar>
-                          <Avatar>
-                            <FolderIcon />
-                          </Avatar>
-                        </ListItemAvatar>
-                        <ListItemText primary={course.name}/>
-                        <ListItemSecondaryAction>
-                          <IconButton edge="end" aria-label="more" onClick={(event) => handleClickMoreVertIcon(event, course.id)}>
-                            <MoreVertIcon />
-                          </IconButton>
-                        </ListItemSecondaryAction>
-                      </ListItem>
-                    ))}
-                  </List>
-                </Box>
+        return (
+          <div>
+            <header id='header'>
+              <h1>Kursübersicht</h1>
+            </header>
+            <Box b={1} mt={5} />
+            <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+              <Grid container>
+                <Grid item xs={12} sm={6}>
+                  <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+                    <List>
+                      {courses.map((course) => (
+                        <ListItem key={course.id}>
+                          <ListItemAvatar>
+                            <Avatar>
+                              <FolderIcon />
+                            </Avatar>
+                          </ListItemAvatar>
+                          <ListItemText primary={course.name} />
+                          <ListItemSecondaryAction>
+                            <IconButton edge="end" aria-label="actions" onClick={(event) => handleClickMoreVertIcon(event, course.id)}>
+                              <MoreVertIcon />
+                            </IconButton>
+                          </ListItemSecondaryAction>
+                        </ListItem>
+                      ))}
+                    </List>
+                  </Box>
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      size="large"
+                      startIcon={<AddIcon />}
+                      onClick={handleCreateCourse}>
+                      Kurs erstellen
+                    </Button>
+                  </Box>
+                </Grid>
               </Grid>
-            </Grid>
-          </Box>
-          <MoreVertMenu
-            anchorEl={anchorEl}
-            selectedCourseId={selectedCourseId}
-            handleClose={handleClose}
-            handleDelete={() => handleDelete()}
-            handleEdit={handleEdit}
-            handleShare={handleShare}
-            handlePublish={handlePublish}
-            handleRename={handleRename}
-          />
-          <Box sx={{ display: 'flex', justifyContent: 'center', marginTop: '20px' }}>
-            <Button variant="contained" color="primary" onClick={handleCreateCourse}>
-              <AddIcon />
-              Kurs erstellen
-            </Button>
-          </Box>
-        </div>
-      );
-}
+            </Box>
+            <MoreVertMenu
+              anchorEl={anchorEl}
+              handleClose={handleClose}
+              handleDelete={handleDelete}
+              handleEdit={handleEdit}
+              handleShare={handleShare}
+              handlePublish={handlePublish}
+              handleRename={handleRename}
+            />
+          </div>
+        );  
+    }
