@@ -14,31 +14,37 @@ const createCourse = async (courseData) => {
     const bodyParameters = {
       courseName: courseData,
     };
+  
     try {
       const response = await Axios.post(API_URL, bodyParameters, config);
-      if (response.status === 201) {
-        return response.data;
-      } else {
+  
+      if (response.status !== 201) {
         throw new Error('Unerwarteter Response-Status');
       }
+  
+      return response.data;
     } catch (error) {
-      toast.error(error.message);
+      throw error;
+    }
+  };  
+
+  const deleteCourse = async (courseId) => {
+    try {
+      const response = await Axios.delete(`${API_URL}/${courseId}`, config);
+  
+      if (response.status !== 200) {
+        throw new Error('Kurs konnte nicht gelöscht werden');
+      }
+  
+      return response.status;
+    } catch (error) {
+      throw error;
     }
   };
-  
-
-const deleteCourse = async (courseId) => {
-    try {
-        const response = await Axios.delete(`${API_URL}/${courseId}`, config);
-        return response.data;
-    } catch (error) { 
-        toast.error(error.message)
-    }
-}
-
 
 const overviewService = {
-    createCourse
+    createCourse,
+    deleteCourse
 };
 
 export default overviewService

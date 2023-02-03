@@ -73,21 +73,25 @@ const updateCourse = asyncHandler(async (req, res) => {
 })
 
 const deleteCourse = asyncHandler(async (req, res) => {
-    const course = (await Course.findById(req.params.id))
+    try {
+        const course = await Course.findById(req.params.id)
 
-    if (!course) {
-        res.status(400)
-        throw new Error('Course not found')
-    } else if (course.account != req.account.id) {
-        res.status(401)
-        throw new Error('Acces denied')
+        if (!course) {
+            res.status(400)
+            throw new Error('Course not found')
+        } else if (course.account != req.account.id) {
+            res.status(401)
+            throw new Error('Acces denied')
+        }
+        /**
+         * TO DO: delete elements of all screens
+         */
+
+        await course.remove()
+        res.status(200).json({message: `Deleted course ${req.params.id}`})
+    } catch (error) {
+        res.status(400).json({error: error.message})
     }
-    /**
-     * TO DO: delete elements of all screens
-     */
-
-    await course.remove()
-    res.status(200).json({message: `Deleted course ${req.params.id}`})
 })
 
 /**

@@ -85,27 +85,36 @@ export default function CourseOverview({props}) {
         setSelectedCourseId(courseId);
     };
 
-    const handleCreateCourse = () => {
+    const handleCreateCourse = async () => {
         let counter = 1;
         let courseName = "neuer Kurs";
-        // eslint-disable-next-line no-loop-func
         while (courses.find(course => course.name === courseName)) {
-            courseName = `neuer Kurs ${counter}`;
-            counter += 1;
+          courseName = `neuer Kurs ${counter}`;
+          counter += 1;
         }
-        const courseId = overviewService.createCourse(courseName);
-        if (courseId instanceof Promise) {
-            toast('Kurs konnte nicht erstellt werden', {type: 'error'});
-            return
+      
+        try {
+          const courseId = await overviewService.createCourse(courseName);
+          setCourses([...courses, { id: courseId, name: courseName }]);
+        } catch (error) {
+          toast('Kurs konnte nicht erstellt werden', { type: 'error' });
         }
-        setCourses([...courses, { id: courseId, name: courseName }]);
-        console.log(courseId)
-    }; 
-    const handleDelete = () => {
-        console.log(selectedCourseId)
-        setCourses(courses.filter((course) => course.id !== selectedCourseId));
-        handleClose();
     };
+      
+    const handleDelete = async () => {
+        try {
+          if (await overviewService.deleteCourse(selectedCourseId) !== 200) {
+            throw new Error('Kurs konnte nicht gelöscht werden');
+          } 
+          setCourses(courses.filter(course => course.id !== selectedCourseId));
+        } catch (error) {
+          toast('Kurs konnte nicht gelöscht werden', { type: 'error' });
+        } finally {
+          handleClose();
+        }
+      };
+      
+
     const handleEdit = () => {
         navigate('/kurs')
     };
