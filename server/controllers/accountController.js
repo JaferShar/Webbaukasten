@@ -7,7 +7,7 @@ const Account = require('../models/Account')
 //@route    POST /api/account
 //@access   Public
 const registerAccount = asyncHandler(async (req, res) => {
-    const { firstName, lastName, email } = req.body
+    const { firstName, lastName, email, picture } = req.body
 
     if (!firstName || !lastName || !email) {
 
@@ -27,6 +27,7 @@ const registerAccount = asyncHandler(async (req, res) => {
         firstName: firstName, 
         lastName: lastName,
         email: email,
+        picture: picture,
     })
 
     if (account) {

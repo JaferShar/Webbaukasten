@@ -17,8 +17,13 @@ const accountSchema = mongoose.Schema({
     required: [true, 'Please add a email'],
     unique: true
   },
-  //token: String,
+  
+  picture: {
+    type: String,
+    required: [true, 'Please add a picture']
+  },
 }, 
+
 {
   timestamps: true
 });
