@@ -18,8 +18,8 @@ const registerAccount = asyncHandler(async (req, res) => {
     const accountExists = await Account.findOne({ email })
 
     if (accountExists) {
-        res.status(400)
-        throw new Error('Account already exists')
+        loginAccount(req, res);
+        return;
     }
 
     //Create Account
