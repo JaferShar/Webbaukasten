@@ -46,8 +46,9 @@ const setCourse = asyncHandler(async (req, res) => {
         // push screen
         course.screens.push(screen)
         course.save()
-        res.status(200).json(course)
+        res.status(200).json(course._id)
     } catch (error) {
+        console.log(error.message)
         res.status(400).json({error: error.message})
     }
 });

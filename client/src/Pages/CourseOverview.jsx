@@ -14,6 +14,7 @@ import PublishIcon from '@mui/icons-material/Publish';
 import DriveFileRenameOutlineIcon from '@mui/icons-material/DriveFileRenameOutline';
 import '../Styling/SiteStyling/CourseOverview.css'       
 import { toast } from 'react-toastify';
+import overviewService from '../features/overviewService';
 
 function MoreVertMenu({ anchorEl, handleClose, handleDelete, handleEdit, handleShare, handlePublish, handleRename }) {
     const [modalOpen, setModalOpen] = useState(false);
@@ -53,7 +54,9 @@ function MoreVertMenu({ anchorEl, handleClose, handleDelete, handleEdit, handleS
                 open={modalOpen}
                 onClose={() => setModalOpen(false)}
                 anchorReference="anchorPosition"
-                anchorPosition={{ top: window.innerHeight / 2, left: window.innerWidth / 2 }}>
+                anchorPosition={{ top: window.innerHeight / 2, left: window.innerWidth / 2 }}
+
+>
                 <Box p={2}>
                     <TextField
                         label="Neuer Kursname"
@@ -81,6 +84,7 @@ export default function CourseOverview({props}) {
         setAnchorEl(event.currentTarget);
         setSelectedCourseId(courseId);
     };
+
     const handleCreateCourse = () => {
         let counter = 1;
         let courseName = "neuer Kurs";
@@ -89,7 +93,9 @@ export default function CourseOverview({props}) {
             courseName = `neuer Kurs ${counter}`;
             counter += 1;
         }
-        setCourses([...courses, { id: uuidv4(), name: courseName }]);
+        const courseId = overviewService.createCourse(courseName);
+        setCourses([...courses, { id: courseId, name: courseName }]);
+        console.log(courseId)
     }; 
     const handleDelete = () => {
         console.log(selectedCourseId)
