@@ -31,7 +31,7 @@ function Register() {
       toast.error(message);
     }
     if (isSuccess || account) {
-      navigate('/kursuebersicht');
+      navigate('/logout');
     }
     dispatch(reset());
   }, [isError, isSuccess, message, navigate, dispatch, account]);
