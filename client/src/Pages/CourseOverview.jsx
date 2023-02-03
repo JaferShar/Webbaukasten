@@ -1,6 +1,7 @@
 import * as React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
+import { v4 as uuidv4 } from 'uuid';
 import { Box, List, ListItem, ListItemAvatar, ListItemButton, ListItemText, ListItemSecondaryAction} from '@mui/material';
 import { Avatar, Button, IconButton, Menu, MenuItem, Grid } from '@mui/material';
 import FolderIcon from '@mui/icons-material/Folder';
@@ -8,7 +9,7 @@ import AddIcon from '@mui/icons-material/Add';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import '../Styling/SiteStyling/CourseOverview.css'       
 
-function MoreVertMenu({ anchorEl, selectedIndex, handleClose, handleDelete, handleEdit, handleShare, handlePublish, handleRename }) {
+function MoreVertMenu({ anchorEl, handleClose, handleDelete, handleEdit, handleShare, handlePublish, handleRename }) {
     return (
         <Menu
         id="long-menu"
@@ -28,26 +29,37 @@ function MoreVertMenu({ anchorEl, selectedIndex, handleClose, handleDelete, hand
 export default function CourseOverview({props}) {
     // const for MoreVertIcon
     const [anchorEl, setAnchorEl] = React.useState(null);
-    const [selectedIndex, setSelectedIndex] = React.useState(null);
+    const [selectedCourseId, setSelectedCourseId] = React.useState(null);
+    const navigate = useNavigate();
 
     const handleClose = () => {
         setAnchorEl(null);
     };
   
-    const handleClickMoreVertIcon = (event, index) => {
+    const handleClickMoreVertIcon = (event, courseId) => {
         console.log('hi')
         setAnchorEl(event.currentTarget);
-        setSelectedIndex(index);
+        setSelectedCourseId(courseId);
     };
     const [courses, setCourses] = useState([]);
     
     const handleCreateCourse = () => {
-        setCourses([...courses,  {id: courses.length + 1, name: 'Kurs ' + (courses.length + 1)}]);
+        let counter = 1;
+        let courseName = "neuer Kurs";
+        while (courses.find(course => course.name === courseName)) {
+            courseName = `neuer Kurs ${counter}`;
+            counter += 1;
+        }
+        setCourses([...courses, { id: uuidv4(), name: courseName }]);
     };
-    const handleDelete = (id) => {
-        setCourses(courses.filter((course) => course.id !== id));
+    
+    const handleDelete = () => {
+        console.log(selectedCourseId)
+        setCourses(courses.filter((course) => course.id !== selectedCourseId));
+        handleClose();
     };
     const handleEdit = () => {
+        navigate('/kurs')
     };
     const handleShare = () => {
     };
@@ -67,8 +79,10 @@ export default function CourseOverview({props}) {
               <Grid item xs={12} sm={6}>
                 <Box sx={{ display: 'flex', justifyContent: 'center' }}>
                   <List>
-                    {courses.map((course, index) => (
-                      <ListItem key={course.id}>
+                    {courses.map((course) => (
+                      <ListItem key={course.id}
+                      button
+                      component={Link} to={`/kurs`}>
                         <ListItemAvatar>
                           <Avatar>
                             <FolderIcon />
@@ -76,9 +90,10 @@ export default function CourseOverview({props}) {
                         </ListItemAvatar>
                         <ListItemText
                           primary={course.name}
+                          
                         />
                         <ListItemSecondaryAction>
-                          <IconButton edge="end" aria-label="more" onClick={(event) => handleClickMoreVertIcon(event, index)}>
+                          <IconButton edge="end" aria-label="more" onClick={(event) => handleClickMoreVertIcon(event, course.id)}>
                             <MoreVertIcon />
                           </IconButton>
                         </ListItemSecondaryAction>
@@ -91,9 +106,9 @@ export default function CourseOverview({props}) {
           </Box>
           <MoreVertMenu
             anchorEl={anchorEl}
-            selectedIndex={selectedIndex}
+            selectedCourseId={selectedCourseId}
             handleClose={handleClose}
-            handleDelete={handleDelete}
+            handleDelete={() => handleDelete()}
             handleEdit={handleEdit}
             handleShare={handleShare}
             handlePublish={handlePublish}
