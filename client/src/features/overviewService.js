@@ -12,19 +12,30 @@ const config = {
 
 const createCourse = async (courseData) => {
     const bodyParameters = {
-        courseName: courseData,
-    }
+      courseName: courseData,
+    };
     try {
-        const response = await Axios.post(API_URL, bodyParameters, config);
-        console.log(response.data)
+      const response = await Axios.post(API_URL, bodyParameters, config);
+      if (response.status === 201) {
         return response.data;
+      } else {
+        throw new Error('Unerwarteter Response-Status');
+      }
+    } catch (error) {
+      toast.error(error.message);
     }
-    catch (error) {
-        console.log(error)
-        console.log(error.message)
-        toast.error(error)
+  };
+  
+
+const deleteCourse = async (courseId) => {
+    try {
+        const response = await Axios.delete(`${API_URL}/${courseId}`, config);
+        return response.data;
+    } catch (error) { 
+        toast.error(error.message)
     }
 }
+
 
 const overviewService = {
     createCourse

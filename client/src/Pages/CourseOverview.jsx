@@ -94,6 +94,10 @@ export default function CourseOverview({props}) {
             counter += 1;
         }
         const courseId = overviewService.createCourse(courseName);
+        if (courseId instanceof Promise) {
+            toast('Kurs konnte nicht erstellt werden', {type: 'error'});
+            return
+        }
         setCourses([...courses, { id: courseId, name: courseName }]);
         console.log(courseId)
     }; 

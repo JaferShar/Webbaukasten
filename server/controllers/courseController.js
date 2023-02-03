@@ -25,18 +25,18 @@ const getCourse = asyncHandler(async (req, res) => {
 const setCourse = asyncHandler(async (req, res) => {
     const { courseName } = req.body
     const accountId  = req.account.id
-    if (!courseName) {
-        res.status(400)
-        throw new Error('Please add course name')
-    }
-
-    // checks if there already exists an document with the given filters
-    const count = await Course.countDocuments({account: accountId, courseName: courseName})
-    if (count > 0) {
-        throw new Error('This course already exists')
-    }
-
     try {
+        if (!courseName) {
+            res.status(400)
+            throw new Error('Please add course name')
+        }
+
+        // checks if there already exists an document with the given filters
+        const count = await Course.countDocuments({account: accountId, courseName: courseName})
+        if (count > 0) {
+            throw new Error('This course already exists')
+        }
+
         // create Welcome screen and course
         const screen = await Screen.create({template: 'Welcome'})
         const course = await Course.create({
@@ -46,9 +46,8 @@ const setCourse = asyncHandler(async (req, res) => {
         // push screen
         course.screens.push(screen)
         course.save()
-        res.status(200).json(course._id)
+        res.status(201).json(course._id)
     } catch (error) {
-        console.log(error.message)
         res.status(400).json({error: error.message})
     }
 });
