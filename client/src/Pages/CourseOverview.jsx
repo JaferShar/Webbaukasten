@@ -3,11 +3,12 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { Box, List, ListItem, ListItemAvatar, ListItemButton, ListItemText, ListItemSecondaryAction} from '@mui/material';
-import { Avatar, Button, IconButton, Menu, MenuItem, Grid } from '@mui/material';
+import { Avatar, Button, IconButton, Menu, MenuItem, Grid, TextField } from '@mui/material';
 import FolderIcon from '@mui/icons-material/Folder';
 import AddIcon from '@mui/icons-material/Add';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import '../Styling/SiteStyling/CourseOverview.css'       
+import { toast } from 'react-toastify';
 
 function MoreVertMenu({ anchorEl, handleClose, handleDelete, handleEdit, handleShare, handlePublish, handleRename }) {
     return (
@@ -30,8 +31,7 @@ export default function CourseOverview({props}) {
     // const for MoreVertIcon
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [selectedCourseId, setSelectedCourseId] = React.useState(null);
-    const [counter, setCounter] = useState(1);
-    const [courseName, setCourseName] = useState("neuer Kurs");
+    const [courses, setCourses] = useState([]);
     const navigate = useNavigate();
 
     const handleClose = () => {
@@ -39,20 +39,20 @@ export default function CourseOverview({props}) {
     };
   
     const handleClickMoreVertIcon = (event, courseId) => {
-        console.log('hi')
         setAnchorEl(event.currentTarget);
         setSelectedCourseId(courseId);
     };
-    const [courses, setCourses] = useState([]);
-    
+
     const handleCreateCourse = () => {
-    const existingCourse = courses.find(course => course.name === courseName);
-    if (existingCourse) {
-        setCounter(prevCounter => prevCounter + 1);
-        setCourseName(`neuer Kurs ${counter}`);
-    }
-    setCourses([...courses, { id: uuidv4(), name: courseName }]);
-    };
+        let counter = 1;
+        let courseName = "neuer Kurs";
+        // eslint-disable-next-line no-loop-func
+        while (courses.find(course => course.name === courseName)) {
+            courseName = `neuer Kurs ${counter}`;
+            counter += 1;
+        }
+        setCourses([...courses, { id: uuidv4(), name: courseName }]);
+    };    
     
     const handleDelete = () => {
         console.log(selectedCourseId)
@@ -66,7 +66,24 @@ export default function CourseOverview({props}) {
     };
     const handlePublish = () => {
     };
-    const handleRename = () => {
+    const handleRename = (name) => {
+        console.log(name)
+        const changeCourse = courses.find(course => course.id === selectedCourseId)
+        if (changeCourse.name === name) {
+            handleClose();
+            return
+        }
+        const exist = courses.find(course => course.name === name)
+        if (exist) {
+            toast('Kursname existiert bereits', {type: 'error'});
+            handleClose();
+            return
+        }
+        // change course name
+        changeCourse.name = name
+        //toast(changeCourse.name)
+        setCourses([...courses])
+        handleClose();
     };
 
     return (
@@ -89,10 +106,7 @@ export default function CourseOverview({props}) {
                             <FolderIcon />
                           </Avatar>
                         </ListItemAvatar>
-                        <ListItemText
-                          primary={course.name}
-                          
-                        />
+                        <ListItemText primary={course.name}/>
                         <ListItemSecondaryAction>
                           <IconButton edge="end" aria-label="more" onClick={(event) => handleClickMoreVertIcon(event, course.id)}>
                             <MoreVertIcon />
@@ -113,7 +127,7 @@ export default function CourseOverview({props}) {
             handleEdit={handleEdit}
             handleShare={handleShare}
             handlePublish={handlePublish}
-            handleRename={handleRename}
+            handleRename={() => handleRename('Alter let\'s go')}
           />
           <Box sx={{ display: 'flex', justifyContent: 'center', marginTop: '20px' }}>
             <Button variant="contained" color="primary" onClick={handleCreateCourse}>
