@@ -30,6 +30,8 @@ export default function CourseOverview({props}) {
     // const for MoreVertIcon
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [selectedCourseId, setSelectedCourseId] = React.useState(null);
+    const [counter, setCounter] = useState(1);
+    const [courseName, setCourseName] = useState("neuer Kurs");
     const navigate = useNavigate();
 
     const handleClose = () => {
@@ -44,13 +46,12 @@ export default function CourseOverview({props}) {
     const [courses, setCourses] = useState([]);
     
     const handleCreateCourse = () => {
-        let counter = 1;
-        let courseName = "neuer Kurs";
-        while (courses.find(course => course.name === courseName)) {
-            courseName = `neuer Kurs ${counter}`;
-            counter += 1;
-        }
-        setCourses([...courses, { id: uuidv4(), name: courseName }]);
+    const existingCourse = courses.find(course => course.name === courseName);
+    if (existingCourse) {
+        setCounter(prevCounter => prevCounter + 1);
+        setCourseName(`neuer Kurs ${counter}`);
+    }
+    setCourses([...courses, { id: uuidv4(), name: courseName }]);
     };
     
     const handleDelete = () => {
