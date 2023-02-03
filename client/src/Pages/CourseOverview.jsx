@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useState } from 'react';
-import { v4 as uuidv4 } from 'uuid';
+import { useState, useEffect } from 'react';
 import { Box, List, ListItem, ListItemAvatar, ListItemText, ListItemSecondaryAction} from '@mui/material';
 import { Avatar, Button, IconButton, Menu, MenuItem, Grid, TextField, Popover } from '@mui/material';
 import FolderIcon from '@mui/icons-material/Folder';
@@ -77,25 +76,36 @@ export default function CourseOverview({props}) {
     const [selectedCourseId, setSelectedCourseId] = React.useState(null);
     const [courses, setCourses] = useState([]);
     const navigate = useNavigate();
+
     const handleClose = () => {
         setAnchorEl(null);
     }; 
+
     const handleClickMoreVertIcon = (event, courseId) => {
         setAnchorEl(event.currentTarget);
         setSelectedCourseId(courseId);
     };
 
+    useEffect(() => {
+        try {
+            overviewService.getAllCourses().then((courses) => {
+                setCourses(courses);
+            });
+        } catch (error) {
+            toast('Kurse konnten nicht geladen werden', { type: 'error' });
+        }      
+    }, []);
+
     const handleCreateCourse = async () => {
         let counter = 1;
         let courseName = "neuer Kurs";
-        while (courses.find(course => course.name === courseName)) {
+        while (courses.find(course => course.cName === courseName)) {
           courseName = `neuer Kurs ${counter}`;
           counter += 1;
-        }
-      
+        }    
         try {
           const courseId = await overviewService.createCourse(courseName);
-          setCourses([...courses, { id: courseId, name: courseName }]);
+          setCourses([...courses, { id: courseId, cName: courseName }]);
         } catch (error) {
           toast('Kurs konnte nicht erstellt werden', { type: 'error' });
         }
@@ -112,8 +122,7 @@ export default function CourseOverview({props}) {
         } finally {
           handleClose();
         }
-      };
-      
+    };
 
     const handleEdit = () => {
         navigate('/kurs')
@@ -138,55 +147,58 @@ export default function CourseOverview({props}) {
         setCourses([...courses])
         handleClose();
     };
-    return (
-        <div>
-          <header id='header'>
-            <h1>Kursübersicht</h1>
-          </header>
-          <Box b={1} mt={5} />
-          <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-            <Grid container>
-              <Grid item xs={12} sm={6}>
-                <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-                  <List>
-                    {courses.map((course) => (
-                      <ListItem key={course.id}
-                      button
-                      component={Link} to={`/kurs`}>
-                        <ListItemAvatar>
-                          <Avatar>
-                            <FolderIcon />
-                          </Avatar>
-                        </ListItemAvatar>
-                        <ListItemText primary={course.name}/>
-                        <ListItemSecondaryAction>
-                          <IconButton edge="end" aria-label="more" onClick={(event) => handleClickMoreVertIcon(event, course.id)}>
-                            <MoreVertIcon />
-                          </IconButton>
-                        </ListItemSecondaryAction>
-                      </ListItem>
-                    ))}
-                  </List>
-                </Box>
-              </Grid>
-            </Grid>
-          </Box>
-          <MoreVertMenu
-            anchorEl={anchorEl}
-            selectedCourseId={selectedCourseId}
-            handleClose={handleClose}
-            handleDelete={() => handleDelete()}
-            handleEdit={handleEdit}
-            handleShare={handleShare}
-            handlePublish={handlePublish}
-            handleRename={handleRename}
-          />
-          <Box sx={{ display: 'flex', justifyContent: 'center', marginTop: '20px' }}>
-            <Button variant="contained" color="primary" onClick={handleCreateCourse}>
-              <AddIcon />
-              Kurs erstellen
-            </Button>
-          </Box>
-        </div>
-      );
+
+    
+        return (
+            <div>
+            <header id='header'>
+                <h1>Kursübersicht</h1>
+            </header>
+            <Box b={1} mt={5} />
+            <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+                <Grid container>
+                <Grid item xs={12} sm={6}>
+                    <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+                    <List>
+                        {courses.map((course) => (
+                        <ListItem key={course.id}
+                        button
+                        component={Link} to={`/kurs`}>
+                            <ListItemAvatar>
+                            <Avatar>
+                                <FolderIcon />
+                            </Avatar>
+                            </ListItemAvatar>
+                            <ListItemText primary={course.cName}/>
+                            <ListItemSecondaryAction>
+                            <IconButton edge="end" aria-label="more" onClick={(event) => handleClickMoreVertIcon(event, course.id)}>
+                                <MoreVertIcon />
+                            </IconButton>
+                            </ListItemSecondaryAction>
+                        </ListItem>
+                        ))}
+                    </List>
+                    </Box>
+                </Grid>
+                </Grid>
+            </Box>
+            <MoreVertMenu
+                anchorEl={anchorEl}
+                selectedCourseId={selectedCourseId}
+                handleClose={handleClose}
+                handleDelete={() => handleDelete()}
+                handleEdit={handleEdit}
+                handleShare={handleShare}
+                handlePublish={handlePublish}
+                handleRename={handleRename}
+            />
+            <Box sx={{ display: 'flex', justifyContent: 'center', marginTop: '20px' }}>
+                <Button variant="contained" color="primary" onClick={handleCreateCourse}>
+                <AddIcon />
+                Kurs erstellen
+                </Button>
+            </Box>
+            </div>
+        );
+    
 }

@@ -40,11 +40,25 @@ const createCourse = async (courseData) => {
     } catch (error) {
       throw error;
     }
-  };
+};
+
+const getAllCourses = async () => {
+    try {
+        const response = await Axios.get(`${API_URL}/all`, config);
+        if (response.status !== 200) {
+            throw new Error('Could not get courses');
+        }
+        const courses = response.data.courses.map(course => ({id: course._id, cName: course.courseName}));
+        return courses;
+    } catch (error) {
+        throw error;
+    }
+}
 
 const overviewService = {
     createCourse,
-    deleteCourse
+    deleteCourse,
+    getAllCourses
 };
 
 export default overviewService

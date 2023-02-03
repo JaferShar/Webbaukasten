@@ -53,8 +53,12 @@ const setCourse = asyncHandler(async (req, res) => {
 });
 
 const getAllCourses = asyncHandler(async (req, res) => {
-    const courses = await Course.find({ account: req.account.id})
-    res.status(200).json({courses})
+    try {
+        const courses = await Course.find({ account: req.account.id})
+        res.status(200).json({courses})
+    } catch (error) {
+        res.status(400).json({error: error.message})
+    }
 });
 
 const updateCourse = asyncHandler(async (req, res) => {
