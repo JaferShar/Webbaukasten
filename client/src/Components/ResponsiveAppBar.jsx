@@ -39,10 +39,11 @@ function ResponsiveAppBar() {
     setAnchorElNav(null);
   };
 
-  const handleCloseUserMenu = (clickedSetting) => {
+  const handleCloseUserMenu = async(clickedSetting) => {
     if (clickedSetting === 'Logout') {
-      dispatch(logout());
-      dispatch(reset());
+      localStorage.removeItem("account");
+      await dispatch(reset());
+      await dispatch(logout());
       navigate('/login');
     }
     setAnchorElUser(null);
