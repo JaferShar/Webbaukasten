@@ -15,8 +15,8 @@ import jwtDecode from 'jwt-decode';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { FaUser } from 'react-icons/fa';
 import { register, reset } from '../features/auth/authSlice';
+import { useEffect } from 'react';
 
 function Register() {
   const navigate = useNavigate();
@@ -24,7 +24,18 @@ function Register() {
   const { account, isLoading, isError, isSuccess, message } = useSelector(
     (state) => state.auth
   );
-}
+
+  // if one of these changes (out of the dependency array), run the function
+  useEffect(() => {
+    if (isError) {
+      toast.error(message);
+    }
+    if (isSuccess || account) {
+      navigate('/kursuebersicht');
+    }
+    dispatch(reset());
+  }, [isError, isSuccess, message, navigate, dispatch, account]);
+
 
 function Copyright(props) {
   return (
@@ -45,8 +56,8 @@ function Copyright(props) {
 }
 
 const theme = createTheme();
-export default function SignInSide() {
-  const handleSubmit = (event) => {
+
+const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     console.log({
@@ -54,6 +65,7 @@ export default function SignInSide() {
       password: data.get('password'),
     });
   };
+
 
   return (
     <ThemeProvider theme={theme}>
@@ -95,16 +107,17 @@ export default function SignInSide() {
             <GoogleOAuthProvider clientId="852695826269-326bgl5c4t0sojrcoqq3kqtentjo7hqp.apps.googleusercontent.com">
               <GoogleLogin
                 onSuccess={(credentialResponse) => {
-                  const { email, name, picture } = jwtDecode(
+                  const { email, given_name, family_name } = jwtDecode(
                     credentialResponse.credential
                   );
-                  const account = {
+                  const accountData = {
                     email,
-                    name,
-                    picture,
+                    firstName: given_name,
+                    lastName: family_name,
                   };
 
-                  
+                  dispatch(register(accountData));
+
                   console.log('Login Success');
                   console.log(credentialResponse);
                   console.log(credentialResponse.credential);
@@ -115,7 +128,6 @@ export default function SignInSide() {
                 }}
               />
             </GoogleOAuthProvider>
-
             <Box
               component="form"
               noValidate
@@ -130,3 +142,6 @@ export default function SignInSide() {
     </ThemeProvider>
   );
 }
+
+
+export default Register;
