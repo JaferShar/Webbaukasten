@@ -13,7 +13,7 @@ import PublishIcon from '@mui/icons-material/Publish';
 import DriveFileRenameOutlineIcon from '@mui/icons-material/DriveFileRenameOutline';
 import '../Styling/SiteStyling/CourseOverview.css'       
 import { toast } from 'react-toastify';
-import overviewService from '../features/overviewService';
+import overviewService from '../features/course/overviewService';
 
 function MoreVertMenu({ anchorEl, handleClose, handleDelete, handleEdit, handleShare, handlePublish, handleRename }) {
     const [modalOpen, setModalOpen] = useState(false);
@@ -166,9 +166,7 @@ export default function CourseOverview({props}) {
             </header>
             <Box b={1} mt={5} />
             <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-                <Grid container>
                 <Grid item xs={12} sm={6}>
-                    <Box sx={{ display: 'flex', justifyContent: 'center' }}>
                     <List>
                         {courses.map((course) => (
                         <ListItem key={course.id}
@@ -188,8 +186,6 @@ export default function CourseOverview({props}) {
                         </ListItem>
                         ))}
                     </List>
-                    </Box>
-                </Grid>
                 </Grid>
             </Box>
             <MoreVertMenu
