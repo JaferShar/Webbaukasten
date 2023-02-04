@@ -38,6 +38,7 @@ function ResponsiveAppBar() {
 
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
+
   };
 
   const handleCloseUserMenu = async(clickedSetting) => {
@@ -143,7 +144,9 @@ function ResponsiveAppBar() {
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src={account.picture}/>
+                <Avatar alt="Remy Sharp" 
+                src={account ? account.picture : ''}
+                />
               </IconButton>
             </Tooltip>
             <Menu
