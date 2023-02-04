@@ -86,6 +86,7 @@ export default function CourseOverview({props}) {
         setSelectedCourseId(courseId);
     };
 
+    // load courses tested
     useEffect(() => {
         try {
             overviewService.getAllCourses().then((courses) => {
@@ -96,6 +97,7 @@ export default function CourseOverview({props}) {
         }      
     }, []);
 
+    // tested
     const handleCreateCourse = async () => {
         let counter = 1;
         let courseName = "neuer Kurs";
@@ -107,47 +109,55 @@ export default function CourseOverview({props}) {
           const courseId = await overviewService.createCourse(courseName);
           setCourses([...courses, { id: courseId, cName: courseName }]);
         } catch (error) {
-          toast('Kurs konnte nicht erstellt werden', { type: 'error' });
+          toast(error.message, { type: 'error' });
         }
     };
-      
+    
+    // tested
     const handleDelete = async () => {
         try {
-          if (await overviewService.deleteCourse(selectedCourseId) !== 200) {
-            throw new Error('Kurs konnte nicht gelöscht werden');
-          } 
+          await overviewService.deleteCourse(selectedCourseId)
           setCourses(courses.filter(course => course.id !== selectedCourseId));
         } catch (error) {
-          toast('Kurs konnte nicht gelöscht werden', { type: 'error' });
+          toast(error.message, { type: 'error' });
         } finally {
           handleClose();
         }
     };
 
+    // tested
     const handleEdit = () => {
         navigate('/kurs')
     };
+
+    // To DO
     const handleShare = () => {
     };
     const handlePublish = () => {
     };
-    const handleRename = (name) => {
-        const changeCourse = courses.find(course => course.id === selectedCourseId)
-        if (changeCourse.name === name) {
-            handleClose();
-            return
-        }
-        const exist = courses.find(course => course.name === name)
-        if (exist) {
-            toast('Kursname existiert bereits', {type: 'error'});
-            handleClose();
-            return
-        }
-        changeCourse.name = name
-        setCourses([...courses])
-        handleClose();
-    };
 
+    // tested
+    const handleRename = async (newName) => {
+        try {
+            const changeCourse = courses.find(course => course.id === selectedCourseId)
+            // nothing to do
+            if (changeCourse.cName === newName) {
+                handleClose();
+                return
+            }
+            const exist = courses.find(course => course.cName === newName)
+            if (exist) {
+                throw new Error('Kursname existiert bereits')
+            }       
+            await overviewService.updateCourse(selectedCourseId, newName)  
+            changeCourse.cName = newName
+            setCourses([...courses])     
+        } catch (error) {
+            toast(error.message, { type: 'error' });
+        } finally {
+            handleClose();
+        }          
+    };
     
         return (
             <div>
