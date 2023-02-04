@@ -14,7 +14,6 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-app.use('/api/goals', require('./routes/goalRoutes'));
 app.use('/api/course', require('./routes/courseRoutes'));
 app.use('/api/account', require('./routes/accountRoutes'));
 app.use('/api/screen', require('./routes/screenRoutes'));

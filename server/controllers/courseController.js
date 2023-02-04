@@ -25,18 +25,18 @@ const getCourse = asyncHandler(async (req, res) => {
 const setCourse = asyncHandler(async (req, res) => {
     const { courseName } = req.body
     const accountId  = req.account.id
-    if (!courseName) {
-        res.status(400)
-        throw new Error('Please add course name')
-    }
-
-    // checks if there already exists an document with the given filters
-    const count = await Course.countDocuments({account: accountId, courseName: courseName})
-    if (count > 0) {
-        throw new Error('This course already exists')
-    }
-
     try {
+        if (!courseName) {
+            res.status(400)
+            throw new Error('Please add course name')
+        }
+
+        // checks if there already exists an document with the given filters
+        const count = await Course.countDocuments({account: accountId, courseName: courseName})
+        if (count > 0) {
+            throw new Error('This course already exists')
+        }
+
         // create Welcome screen and course
         const screen = await Screen.create({template: 'Welcome'})
         const course = await Course.create({
@@ -46,15 +46,19 @@ const setCourse = asyncHandler(async (req, res) => {
         // push screen
         course.screens.push(screen)
         course.save()
-        res.status(200).json(course)
+        res.status(201).json(course._id)
     } catch (error) {
         res.status(400).json({error: error.message})
     }
 });
 
 const getAllCourses = asyncHandler(async (req, res) => {
-    const courses = await Course.find({ account: req.account.id})
-    res.status(200).json({courses})
+    try {
+        const courses = await Course.find({ account: req.account.id})
+        res.status(200).json({courses})
+    } catch (error) {
+        res.status(400).json({error: error.message})
+    }
 });
 
 const updateCourse = asyncHandler(async (req, res) => {
@@ -73,21 +77,25 @@ const updateCourse = asyncHandler(async (req, res) => {
 })
 
 const deleteCourse = asyncHandler(async (req, res) => {
-    const course = (await Course.findById(req.params.id))
+    try {
+        const course = await Course.findById(req.params.id)
 
-    if (!course) {
-        res.status(400)
-        throw new Error('Course not found')
-    } else if (course.account != req.account.id) {
-        res.status(401)
-        throw new Error('Acces denied')
+        if (!course) {
+            res.status(400)
+            throw new Error('Course not found')
+        } else if (course.account != req.account.id) {
+            res.status(401)
+            throw new Error('Acces denied')
+        }
+        /**
+         * TO DO: delete elements of all screens
+         */
+
+        await course.remove()
+        res.status(200).json({message: `Deleted course ${req.params.id}`})
+    } catch (error) {
+        res.status(400).json({error: error.message})
     }
-    /**
-     * TO DO: delete elements of all screens
-     */
-
-    await course.remove()
-    res.status(200).json({message: `Deleted course ${req.params.id}`})
 })
 
 /**

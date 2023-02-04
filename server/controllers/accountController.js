@@ -7,7 +7,7 @@ const Account = require('../models/Account')
 //@route    POST /api/account
 //@access   Public
 const registerAccount = asyncHandler(async (req, res) => {
-    const { firstName, lastName, email } = req.body
+    const { firstName, lastName, email, picture } = req.body
 
     if (!firstName || !lastName || !email) {
 
@@ -18,8 +18,8 @@ const registerAccount = asyncHandler(async (req, res) => {
     const accountExists = await Account.findOne({ email })
 
     if (accountExists) {
-        res.status(400)
-        throw new Error('Account already exists')
+        loginAccount(req, res);
+        return;
     }
 
     //Create Account
@@ -27,6 +27,7 @@ const registerAccount = asyncHandler(async (req, res) => {
         firstName: firstName, 
         lastName: lastName,
         email: email,
+        picture: picture,
     })
 
     if (account) {
@@ -35,6 +36,7 @@ const registerAccount = asyncHandler(async (req, res) => {
             firstName: account.firstName,
             lastName: account.lastName,
             email: account.email,
+            picture: account.picture,
             token: generateToken(account._id)
         })
     } else {
@@ -58,6 +60,7 @@ const loginAccount = asyncHandler(async (req, res) => {
             firstName: account.firstName,
             lastName: account.lastName,
             email: account.email,
+            picture: account.picture,
             token: generateToken(Account.id)
 
         })
