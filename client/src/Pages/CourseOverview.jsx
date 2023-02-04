@@ -54,6 +54,11 @@ function MoreVertMenu({ anchorEl, handleClose, handleDelete, handleEdit, handleS
                 onClose={() => setModalOpen(false)}
                 anchorReference="anchorPosition"
                 anchorPosition={{ top: window.innerHeight / 2, left: window.innerWidth / 2 }}
+                BackdropProps={{
+                    style: {
+                      backgroundColor: 'rgba(0, 0, 0, 0.5)',
+                    },
+                }}
 
 >
                 <Box p={2}>
