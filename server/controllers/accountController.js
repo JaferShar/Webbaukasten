@@ -18,6 +18,8 @@ const registerAccount = asyncHandler(async (req, res) => {
     const accountExists = await Account.findOne({ email })
 
     if (accountExists) {
+        //res.status(400)
+        //throw new Error('Account already exists')
         loginAccount(req, res);
         return;
     }
@@ -74,15 +76,7 @@ const loginAccount = asyncHandler(async (req, res) => {
 //@route    GET /api/account/me
 //@access   Private
 const getMe = asyncHandler(async (req, res) => {
-    const {_id, firstName, lastName, email} = await Account.findById(req.account.id)
-
-    res.status(200).json({
-        id: _id,
-        firstName,
-        lastName,
-        email
-    })
-
+    res.status(200).json(req.account)
 })
 
 //Generate JWT

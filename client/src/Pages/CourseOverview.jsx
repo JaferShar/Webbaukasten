@@ -13,7 +13,7 @@ import PublishIcon from '@mui/icons-material/Publish';
 import DriveFileRenameOutlineIcon from '@mui/icons-material/DriveFileRenameOutline';
 import '../Styling/SiteStyling/CourseOverview.css'       
 import { toast } from 'react-toastify';
-import overviewService from '../features/overviewService';
+import overviewService from '../features/course/overviewService';
 
 function MoreVertMenu({ anchorEl, handleClose, handleDelete, handleEdit, handleShare, handlePublish, handleRename }) {
     const [modalOpen, setModalOpen] = useState(false);
@@ -54,6 +54,11 @@ function MoreVertMenu({ anchorEl, handleClose, handleDelete, handleEdit, handleS
                 onClose={() => setModalOpen(false)}
                 anchorReference="anchorPosition"
                 anchorPosition={{ top: window.innerHeight / 2, left: window.innerWidth / 2 }}
+                BackdropProps={{
+                    style: {
+                      backgroundColor: 'rgba(0, 0, 0, 0.5)',
+                    },
+                }}
 
 >
                 <Box p={2}>
@@ -86,6 +91,7 @@ export default function CourseOverview({props}) {
         setSelectedCourseId(courseId);
     };
 
+    // load courses tested
     useEffect(() => {
         try {
             overviewService.getAllCourses().then((courses) => {
@@ -96,6 +102,7 @@ export default function CourseOverview({props}) {
         }      
     }, []);
 
+    // tested
     const handleCreateCourse = async () => {
         let counter = 1;
         let courseName = "neuer Kurs";
@@ -107,47 +114,55 @@ export default function CourseOverview({props}) {
           const courseId = await overviewService.createCourse(courseName);
           setCourses([...courses, { id: courseId, cName: courseName }]);
         } catch (error) {
-          toast('Kurs konnte nicht erstellt werden', { type: 'error' });
+          toast(error.message, { type: 'error' });
         }
     };
-      
+    
+    // tested
     const handleDelete = async () => {
         try {
-          if (await overviewService.deleteCourse(selectedCourseId) !== 200) {
-            throw new Error('Kurs konnte nicht gelöscht werden');
-          } 
+          await overviewService.deleteCourse(selectedCourseId)
           setCourses(courses.filter(course => course.id !== selectedCourseId));
         } catch (error) {
-          toast('Kurs konnte nicht gelöscht werden', { type: 'error' });
+          toast(error.message, { type: 'error' });
         } finally {
           handleClose();
         }
     };
 
+    // tested
     const handleEdit = () => {
         navigate('/kurs')
     };
+
+    // To DO
     const handleShare = () => {
     };
     const handlePublish = () => {
     };
-    const handleRename = (name) => {
-        const changeCourse = courses.find(course => course.id === selectedCourseId)
-        if (changeCourse.name === name) {
-            handleClose();
-            return
-        }
-        const exist = courses.find(course => course.name === name)
-        if (exist) {
-            toast('Kursname existiert bereits', {type: 'error'});
-            handleClose();
-            return
-        }
-        changeCourse.name = name
-        setCourses([...courses])
-        handleClose();
-    };
 
+    // tested
+    const handleRename = async (newName) => {
+        try {
+            const changeCourse = courses.find(course => course.id === selectedCourseId)
+            // nothing to do
+            if (changeCourse.cName === newName) {
+                handleClose();
+                return
+            }
+            const exist = courses.find(course => course.cName === newName)
+            if (exist) {
+                throw new Error('Kursname existiert bereits')
+            }       
+            await overviewService.updateCourse(selectedCourseId, newName)  
+            changeCourse.cName = newName
+            setCourses([...courses])     
+        } catch (error) {
+            toast(error.message, { type: 'error' });
+        } finally {
+            handleClose();
+        }          
+    };
     
         return (
             <div>
@@ -156,9 +171,7 @@ export default function CourseOverview({props}) {
             </header>
             <Box b={1} mt={5} />
             <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-                <Grid container>
                 <Grid item xs={12} sm={6}>
-                    <Box sx={{ display: 'flex', justifyContent: 'center' }}>
                     <List>
                         {courses.map((course) => (
                         <ListItem key={course.id}
@@ -178,8 +191,6 @@ export default function CourseOverview({props}) {
                         </ListItem>
                         ))}
                     </List>
-                    </Box>
-                </Grid>
                 </Grid>
             </Box>
             <MoreVertMenu
