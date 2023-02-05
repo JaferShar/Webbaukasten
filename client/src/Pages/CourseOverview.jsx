@@ -11,6 +11,7 @@ import { toast } from 'react-toastify';
 import overviewService from '../features/course/overviewService';
 import MoreVertMenu from '../Components/CourseOverviewComponents/MoreVertMenu';
 import SearchBar from  '../Components/CourseOverviewComponents/SearchBar';
+import ResponsiveAppBar from '../Components/ResponsiveAppBar';
 
 export default function CourseOverview({props}) {
     const [anchorEl, setAnchorEl] = React.useState(null);
@@ -98,7 +99,6 @@ export default function CourseOverview({props}) {
             await overviewService.updateCourse(selectedCourseId, newName)  
             changeCourse.cName = newName
             setCourses([...courses]) 
-            //originalCourses = courses;   
         } catch (error) {
             toast(error.message, { type: 'error' });
         } finally {
@@ -108,7 +108,7 @@ export default function CourseOverview({props}) {
     
     return (
         <div>
-        <SearchBar onSearch={handleSearch} searchTerm={searchTerm}/>
+        <ResponsiveAppBar handleSearch={handleSearch} searchTerm={searchTerm}/>
         <Box b={1} mt={5} />
         <Box sx={{ display: 'flex', justifyContent: 'center' }}>
             <Grid item xs={12} sm={6}>
