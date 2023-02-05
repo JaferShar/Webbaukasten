@@ -62,18 +62,25 @@ const getAllCourses = asyncHandler(async (req, res) => {
 });
 
 const updateCourse = asyncHandler(async (req, res) => {
-    const course = await Course.findById(req.params.id)
-
-    if (!course) {
-        res.status(400)
-        throw new Error('Course not found')
-    } else if (course.account != req.account.id) {
-        res.status(401)
-        throw new Error('Acces denied')
+    try {
+        const course = await Course.findById(req.params.id)
+        const courseName = req.body.courseName
+        if (!courseName) {
+            throw new Error('Please add course name')
+        }    
+        if (!course) {
+            throw new Error('Course not found')
+        } else if (course.account != req.account.id) {
+            res.status(401)
+            throw new Error('Acces denied')
+        }   
+        console.log(courseName, 'thats the course name')
+        const updatedCourse = await Course.findByIdAndUpdate(req.params.id, {"courseName": courseName}, { new: true})
+        console.log(updatedCourse, 'thats the updated course')
+        res.status(200).json(updatedCourse)
+    } catch (error) {
+        res.status(400).json({error: error.message})
     }
-
-    const updatedCourse = await Course.findByIdAndUpdate(req.params.id, req.body, { new: true})
-    res.status(200).json(updatedCourse)
 })
 
 const deleteCourse = asyncHandler(async (req, res) => {

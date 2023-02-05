@@ -12,6 +12,9 @@ import '../Styling/ButtonStyling/PopUpButtonPicture.css'
 import PopUpButtonPicture from '../Components/PopUpButtonPicture';
 import PopUpButtonPixabay from '../Components/PopUpButtonPixabay';
 import ProgressBar from '../Components/ProgressBar';
+import H5PContainer from '../Components/H5PContainer';
+import '../Styling/SiteStyling/H5PContainer.css'
+import MultilineTextFields from '../Components/Test';
 
 const WelcomeTemplate = () => (
       <div className="welcomeTemplate">
@@ -21,12 +24,14 @@ const WelcomeTemplate = () => (
         <div className='nextButton'>
           <NextButton />
         </div>
-        <p>WelcomeScreen</p>
-        <div className="textContainer">
-          <div className="textContainer">
-            <PopUpButtonText />
+          
+          <div>
+            <div className='test'>
+              <MultilineTextFields></MultilineTextFields>
+              <PopUpButtonText />
+            </div>
           </div>
-        </div>
+ 
           <div className="picContainer">
             <p>Insert picture here.</p>
             <div className='addButton'>
@@ -39,6 +44,20 @@ const WelcomeTemplate = () => (
         <div>
           <ProgressBar current={30} total={100} />
         </div>
+        <div className="h5PContainer1">
+            <p>Insert h5p here.</p>
+            <div className='addButton'>
+              <AddButton />
+            </div>
+            
+          </div>
+          <div className="h5PContainer2">
+            <p>Insert h5p here.</p>
+            <div className='addButton'>
+              <AddButton />
+            </div>
+            
+          </div>
       </div>
 
 );

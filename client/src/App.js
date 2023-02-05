@@ -6,6 +6,7 @@ import Login from './Pages/Login'
 import LogoutTest from './Pages/LogoutTest'
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Test from './Components/Test';
 
 
 function App() {
@@ -17,6 +18,7 @@ function App() {
           <Route path='/kurs' element={<Course />} />
           <Route path='/login' element={<Login />} />
           <Route path='/logout' element={<LogoutTest />} />
+          <Route path='/test' element={<Test />} />
         </Routes>
       </BrowserRouter>
       <ToastContainer />
