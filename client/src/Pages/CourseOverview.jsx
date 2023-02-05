@@ -10,16 +10,24 @@ import '../Styling/SiteStyling/CourseOverview.css'
 import { toast } from 'react-toastify';
 import overviewService from '../features/course/overviewService';
 import MoreVertMenu from '../Components/CourseOverviewComponents/MoreVertMenu';
+import SearchBar from  '../Components/CourseOverviewComponents/SearchBar';
 
 export default function CourseOverview({props}) {
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [selectedCourseId, setSelectedCourseId] = React.useState(null);
     const [courses, setCourses] = useState([]);
+    const [searchTerm, setSearchTerm] = useState("");
     const navigate = useNavigate();
 
     const handleClose = () => {
         setAnchorEl(null);
     }; 
+
+    const handleSearch = (event) => {
+        setSearchTerm(event.target.value);
+        const filteredCourses = courses.filter(course => course.cName.toLowerCase().includes(searchTerm.toLowerCase()));
+        setCourses(filteredCourses);
+    };
 
     const handleClickMoreVertIcon = (event, courseId) => {
         setAnchorEl(event.currentTarget);
@@ -101,6 +109,7 @@ export default function CourseOverview({props}) {
     
     return (
         <div>
+        <SearchBar />
         <Box b={1} mt={5} />
         <Box sx={{ display: 'flex', justifyContent: 'center' }}>
             <Grid item xs={12} sm={6}>
