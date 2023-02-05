@@ -74,7 +74,9 @@ const updateCourse = asyncHandler(async (req, res) => {
             res.status(401)
             throw new Error('Acces denied')
         }   
-        const updatedCourse = await Course.findByIdAndUpdate(req.params.id, courseName, { new: true})
+        console.log(courseName, 'thats the course name')
+        const updatedCourse = await Course.findByIdAndUpdate(req.params.id, {"courseName": courseName}, { new: true})
+        console.log(updatedCourse, 'thats the updated course')
         res.status(200).json(updatedCourse)
     } catch (error) {
         res.status(400).json({error: error.message})

@@ -16,8 +16,8 @@ import { logout, reset } from '../features/auth/authSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
-const pages = ['Products', 'Pricing', 'Blog'];
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+const pages = ['Kursübersicht'];
+const settings = ['Profile', 'Logout'];
 
 function ResponsiveAppBar() {
   const navigate = useNavigate();
@@ -55,7 +55,7 @@ function ResponsiveAppBar() {
     <AppBar position="static">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
+          
           <Typography
             variant="h6"
             noWrap
