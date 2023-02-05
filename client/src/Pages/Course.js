@@ -30,10 +30,25 @@ import{ useState } from 'react';
 import '../Styling/SiteStyling/ProgressBar.css'
 import WelcomeTemplate from './WelcomeTemplate';
 import '../Styling/SiteStyling/WelcomeTemplate.css'
+import BeginTemplate from '../Components/BeginTemplate';
 
 
 
 
+
+const beginTemplate = <div>
+  <BeginTemplate>
+
+  </BeginTemplate>
+</div>;
+
+const welcomeTemplate = <div>
+  <WelcomeTemplate>
+
+  </WelcomeTemplate>
+</div>;
+
+let changeableTemplate = beginTemplate;
 
 function Course () {
   return (
@@ -47,11 +62,7 @@ function Course () {
         <Buttons>AiOutlineCheckSquare</Buttons>
       </div>
 
-      <div>
-        <WelcomeTemplate>
-
-        </WelcomeTemplate>
-      </div>
+      {changeableTemplate}
       
     </div><div>
         <ScreenContainer>

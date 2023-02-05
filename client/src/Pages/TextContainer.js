@@ -3,9 +3,7 @@ import axios from "axios";
 import '../Styling/SiteStyling/TextContainer.css';
 import { EditorState, Editor } from 'draft-js';
 
-const TextContainer = ({ text }) => (
-  <div className="TextContainer">{text}</div>
-);
+const TextContainer = ({ text }) => <div>{text}</div>;
 
 export default function PopUpButtonText() {
   const [showEditor, setShowEditor] = useState(false);

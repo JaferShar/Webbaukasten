@@ -1,16 +1,4 @@
-.h5PContainer1 {
-    display: flex;
-    position: absolute;
-    justify-content: flex-end;
-    top: 55%;
-    right: 54%;
-    width: 40%;
-    height: 25%;
-    background-color: rgb(49, 204, 111);
-    border: 1px solid black;
-    border-radius: 10px;
-    padding: 20px;
-  }
+
 
   .h5PContainer2 {
     display: flex;

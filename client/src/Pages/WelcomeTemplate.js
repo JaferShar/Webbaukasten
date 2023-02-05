@@ -14,6 +14,7 @@ import PopUpButtonPixabay from '../Components/PopUpButtonPixabay';
 import ProgressBar from '../Components/ProgressBar';
 import H5PContainer from '../Components/H5PContainer';
 import '../Styling/SiteStyling/H5PContainer.css'
+import MultilineTextFields from '../Components/Test';
 
 const WelcomeTemplate = () => (
       <div className="welcomeTemplate">
@@ -23,11 +24,14 @@ const WelcomeTemplate = () => (
         <div className='nextButton'>
           <NextButton />
         </div>
-        <div className="textContainer">
-          <div className="textContainer">
-            <PopUpButtonText />
+          
+          <div>
+            <div className='test'>
+              <MultilineTextFields></MultilineTextFields>
+              <PopUpButtonText />
+            </div>
           </div>
-        </div>
+ 
           <div className="picContainer">
             <p>Insert picture here.</p>
             <div className='addButton'>
