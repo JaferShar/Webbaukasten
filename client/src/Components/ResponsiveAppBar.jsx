@@ -15,6 +15,7 @@ import AdbIcon from '@mui/icons-material/Adb';
 import { logout, reset } from '../features/auth/authSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import SearchBar from './CourseOverviewComponents/SearchBar';
 
 const pages = ['Kursübersicht'];
 const settings = ['Profile', 'Logout'];
@@ -33,17 +34,15 @@ function ResponsiveAppBar() {
     setAnchorElUser(event.currentTarget);
     console.log('handleOpenUserMenu');
     console.log(account);
-    
   };
 
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
-
   };
 
-  const handleCloseUserMenu = async(clickedSetting) => {
+  const handleCloseUserMenu = async (clickedSetting) => {
     if (clickedSetting === 'Logout') {
-      localStorage.removeItem("account");
+      localStorage.removeItem('account');
       await dispatch(reset());
       await dispatch(logout());
       navigate('/login');
@@ -55,98 +54,19 @@ function ResponsiveAppBar() {
     <AppBar position="static">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          
-          <Typography
-            variant="h6"
-            noWrap
-            component="a"
-            href="/"
-            sx={{
-              mr: 2,
-              display: { xs: 'none', md: 'flex' },
-              fontFamily: 'monospace',
-              fontWeight: 700,
-              letterSpacing: '.3rem',
-              color: 'inherit',
-              textDecoration: 'none',
-            }}
-          >
-            LOGO
-          </Typography>
-
-          <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
-            <IconButton
-              size="large"
-              aria-label="account of current user"
-              aria-controls="menu-appbar"
-              aria-haspopup="true"
-              onClick={handleOpenNavMenu}
-              color="inherit"
-            >
-              <MenuIcon />
-            </IconButton>
-            <Menu
-              id="menu-appbar"
-              anchorEl={anchorElNav}
-              anchorOrigin={{
-                vertical: 'bottom',
-                horizontal: 'left',
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'left',
-              }}
-              open={Boolean(anchorElNav)}
-              onClose={handleCloseNavMenu}
-              sx={{
-                display: { xs: 'block', md: 'none' },
-              }}
-            >
-              {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">{page}</Typography>
-                </MenuItem>
-              ))}
-            </Menu>
+          <Box display="flex" flexGrow={1}>
+            {/* whatever is on the left side */}
+            <h1 style={{ color: 'white' }}>Kursübersicht</h1>
           </Box>
-          <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
-          <Typography
-            variant="h5"
-            noWrap
-            component="a"
-            href=""
-            sx={{
-              mr: 2,
-              display: { xs: 'flex', md: 'none' },
-              flexGrow: 1,
-              fontFamily: 'monospace',
-              fontWeight: 700,
-              letterSpacing: '.3rem',
-              color: 'inherit',
-              textDecoration: 'none',
-            }}
-          >
-            LOGO
-          </Typography>
-          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-            {pages.map((page) => (
-              <Button
-                key={page}
-                onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: 'white', display: 'block' }}
-              >
-                {page}
-              </Button>
-            ))}
-          </Box>
+          <div style={{marginRight: "20px"}}>
+            <SearchBar />
+          </div>
 
+          {/* This is the profile Button and menu */}
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" 
-                src={account ? account.picture : ''}
-                />
+                <Avatar alt="Remy Sharp" src={account ? account.picture : ''} />
               </IconButton>
             </Tooltip>
             <Menu
@@ -166,7 +86,10 @@ function ResponsiveAppBar() {
               onClose={handleCloseUserMenu}
             >
               {settings.map((setting) => (
-                <MenuItem key={setting} onClick={() => handleCloseUserMenu(setting)}>
+                <MenuItem
+                  key={setting}
+                  onClick={() => handleCloseUserMenu(setting)}
+                >
                   <Typography textAlign="center">{setting}</Typography>
                 </MenuItem>
               ))}
