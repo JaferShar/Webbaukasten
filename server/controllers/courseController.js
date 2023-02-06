@@ -8,7 +8,7 @@ const Screen = require("../models/Screen");
 const getCourse = asyncHandler(async (req, res) => {
   try {
     // get course and populate screens
-    const course = await Course.findById(req.params.id).populate('screens');
+    const course = await Course.findById(req.params.id).populate("screens");
     if (!course) {
       return res.status(404).json({ error: "Course not found." });
     } else if (course.account != req.account.id) {
@@ -118,9 +118,6 @@ const deleteCourse = asyncHandler(async (req, res) => {
   }
 });
 
-/**
- * To DO: share
- */
 const shareCourse = asyncHandler(async (req, res) => {
   try {
     const { email } = req.body;
