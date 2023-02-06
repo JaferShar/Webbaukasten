@@ -27,7 +27,6 @@ const setCourse = asyncHandler(async (req, res) => {
     const accountId  = req.account.id
     try {
         if (!courseName) {
-            res.status(400)
             throw new Error('Please add course name')
         }
 
@@ -55,6 +54,9 @@ const setCourse = asyncHandler(async (req, res) => {
 const getAllCourses = asyncHandler(async (req, res) => {
     try {
         const courses = await Course.find({ account: req.account.id})
+        if (!courses) {
+            throw new Error('No courses found')
+        }
         res.status(200).json({courses})
     } catch (error) {
         res.status(400).json({error: error.message})
@@ -71,8 +73,7 @@ const updateCourse = asyncHandler(async (req, res) => {
         if (!course) {
             throw new Error('Course not found')
         } else if (course.account != req.account.id) {
-            res.status(401)
-            throw new Error('Acces denied')
+            return res.status(401).json({error: 'Acces denied'})
         }
         const updatedCourse = await Course.findByIdAndUpdate(req.params.id, {"courseName": courseName}, { new: true})
         res.status(200).json(updatedCourse)
@@ -86,26 +87,21 @@ const deleteCourse = asyncHandler(async (req, res) => {
         const course = await Course.findById(req.params.id)
 
         if (!course) {
-            res.status(400)
             throw new Error('Course not found')
         } else if (course.account != req.account.id) {
-            res.status(401)
-            throw new Error('Acces denied')
+            return res.status(401).json({error: 'Acces denied'})
         }
-        /**
-         * TO DO: delete elements of all screens
-         */
-
         await course.remove()
         res.status(200).json({message: `Deleted course ${req.params.id}`})
     } catch (error) {
         res.status(400).json({error: error.message})
+        
     }
 })
 
 /**
  * To DO: share
- */
+ 
 const shareCourse = asyncHandler( async (req, res) => {
     //api/share/:id/:email
     const email = req.body
@@ -118,7 +114,7 @@ const shareCourse = asyncHandler( async (req, res) => {
     }
 
     
-})
+})*/
 
 module.exports = {
     getCourse,
@@ -126,7 +122,6 @@ module.exports = {
     getAllCourses,
     updateCourse, 
     deleteCourse,
-    shareCourse,
 }
 
 
