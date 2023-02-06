@@ -3,7 +3,7 @@ const asyncHandler = require("express-async-handler");
 
 const Course = require("../models/Course");
 const Account = require("../models/Account");
-const Screen = require("../models/Screen").Screen;
+const Screen = require("../models/Screen");
 
 const getCourse = asyncHandler(async (req, res) => {
   try {
