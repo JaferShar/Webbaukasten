@@ -20,7 +20,7 @@ import SearchBar from './CourseOverviewComponents/SearchBar';
 const pages = ['Kursübersicht'];
 const settings = ['Profile', 'Logout'];
 
-function ResponsiveAppBar() {
+function ResponsiveAppBar({ searchTerm, onSearch, handleSearch }) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { account } = useSelector((state) => state.auth);
@@ -59,7 +59,7 @@ function ResponsiveAppBar() {
             <h1 style={{ color: 'white' }}>Kursübersicht</h1>
           </Box>
           <div style={{marginRight: "20px"}}>
-            <SearchBar />
+            <SearchBar onSearch={handleSearch} searchTerm={searchTerm}/>
           </div>
 
           {/* This is the profile Button and menu */}

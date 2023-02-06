@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { Box, List, ListItem, ListItemAvatar, ListItemText, ListItemSecondaryAction} from '@mui/material';
 import { Avatar, Button, IconButton, Grid } from '@mui/material';
 import FolderIcon from '@mui/icons-material/Folder';
@@ -11,12 +11,13 @@ import { toast } from 'react-toastify';
 import overviewService from '../features/course/overviewService';
 import MoreVertMenu from '../Components/CourseOverviewComponents/MoreVertMenu';
 import SearchBar from  '../Components/CourseOverviewComponents/SearchBar';
+import ResponsiveAppBar from '../Components/ResponsiveAppBar';
 
 export default function CourseOverview({props}) {
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [selectedCourseId, setSelectedCourseId] = React.useState(null);
-    const [courses, setCourses] = useState([]);
-    const [searchTerm, setSearchTerm] = useState("");
+    const [courses, setCourses] = React.useState([]);
+    const [searchTerm, setSearchTerm] = React.useState("");
     const navigate = useNavigate();
 
     const handleClose = () => {
@@ -25,8 +26,6 @@ export default function CourseOverview({props}) {
 
     const handleSearch = (event) => {
         setSearchTerm(event.target.value);
-        const filteredCourses = courses.filter(course => course.cName.toLowerCase().includes(searchTerm.toLowerCase()));
-        setCourses(filteredCourses);
     };
 
     const handleClickMoreVertIcon = (event, courseId) => {
@@ -50,26 +49,26 @@ export default function CourseOverview({props}) {
         let counter = 1;
         let courseName = "neuer Kurs";
         while (courses.find(course => course.cName === courseName)) {
-          courseName = `neuer Kurs ${counter}`;
-          counter += 1;
+            courseName = `neuer Kurs ${counter}`;
+            counter += 1;
         }    
         try {
-          const courseId = await overviewService.createCourse(courseName);
-          setCourses([...courses, { id: courseId, cName: courseName }]);
+            const courseId = await overviewService.createCourse(courseName);
+            setCourses([...courses, { id: courseId, cName: courseName }]);
         } catch (error) {
-          toast(error.message, { type: 'error' });
+            toast(error.message, { type: 'error' });
         }
     };
     
     // tested
     const handleDelete = async () => {
         try {
-          await overviewService.deleteCourse(selectedCourseId)
-          setCourses(courses.filter(course => course.id !== selectedCourseId));
+            await overviewService.deleteCourse(selectedCourseId)
+            setCourses(courses.filter(course => course.id !== selectedCourseId));
         } catch (error) {
-          toast(error.message, { type: 'error' });
+            toast(error.message, { type: 'error' });
         } finally {
-          handleClose();
+            handleClose();
         }
     };
 
@@ -99,7 +98,7 @@ export default function CourseOverview({props}) {
             }       
             await overviewService.updateCourse(selectedCourseId, newName)  
             changeCourse.cName = newName
-            setCourses([...courses])     
+            setCourses([...courses]) 
         } catch (error) {
             toast(error.message, { type: 'error' });
         } finally {
@@ -109,12 +108,12 @@ export default function CourseOverview({props}) {
     
     return (
         <div>
-        <SearchBar />
+        <ResponsiveAppBar handleSearch={handleSearch} searchTerm={searchTerm}/>
         <Box b={1} mt={5} />
         <Box sx={{ display: 'flex', justifyContent: 'center' }}>
             <Grid item xs={12} sm={6}>
                 <List>
-                    {courses.map((course) => (
+                    {courses.filter(course => course.cName.toLowerCase().includes(searchTerm.toLowerCase())).map((course) => (
                     <ListItem key={course.id}
                     button
                     component={Link} to={`/kurs`}>
