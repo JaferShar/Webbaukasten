@@ -1,11 +1,11 @@
 import React from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import CourseOverview from './Pages/CourseOverview'
-import Course from './Pages/Course'
+import Course from './Pages/CourseEditor'
 import Login from './Pages/Login'
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import Test from './Components/Test';
+import Test from './Components/CourseEditorComponents/FixComponents/Test';
 
 
 function App() {

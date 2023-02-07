@@ -1,5 +1,5 @@
 import React from 'react';
-import '../Styling/SiteStyling/PictureContainer.css'
+import '../../../Styling/SiteStyling/PictureContainer.css'
 
 function PictureContainer() {
   return (

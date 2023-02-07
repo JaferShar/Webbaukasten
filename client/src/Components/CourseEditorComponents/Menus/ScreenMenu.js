@@ -7,9 +7,9 @@ import Popper from '@mui/material/Popper';
 import MenuItem from '@mui/material/MenuItem';
 import MenuList from '@mui/material/MenuList';
 import Stack from '@mui/material/Stack';
-import AddButton from '../Components/addButton.js';
-import "../Styling/ButtonStyling/addButton.css"
-import WelcomeTemplate from '../Pages/WelcomeTemplate.js';
+import AddButton from '../Buttons/addButton.js';
+import "../../../Styling/ButtonStyling/addButton.css"
+import WelcomeTemplate from '../Templates/WelcomeTemplate.js';
 
 
 const welcomeTemplate = <div>

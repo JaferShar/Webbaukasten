@@ -1,4 +1,4 @@
-import '../Styling/SiteStyling/ProgressBar.css';
+import '../../../Styling/SiteStyling/ProgressBar.css';
 import React from 'react';
 import{ useState } from 'react';
 

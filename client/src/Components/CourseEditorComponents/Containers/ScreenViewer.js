@@ -1,5 +1,5 @@
 import React from 'react';
-import '../Styling/SiteStyling/ScreenContainer.css'
+import '../../../Styling/SiteStyling/ScreenContainer.css'
 
 function ScreenContainer() {
     return (

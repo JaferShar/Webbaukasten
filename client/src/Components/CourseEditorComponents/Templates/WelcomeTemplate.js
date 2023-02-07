@@ -1,20 +1,17 @@
 import React from 'react';
-import TextContainer from './TextContainer';
-import PictureContainer from '../Components/PictureContainer';
-import '../Styling/SiteStyling/WelcomeTemplate.css'
-import AddButton from '../Components/addButton.js';
-import "../Styling/ButtonStyling/addButton.css"
-import NextButton from '../Components/NextButton.js';
-import "../Styling/ButtonStyling/nextButton.css"
-import PopUpButtonText from '../Components/PopUpButtonText'
-import '../Styling/ButtonStyling/PopUpButtonText.css'
-import '../Styling/ButtonStyling/PopUpButtonPicture.css'
-import PopUpButtonPicture from '../Components/PopUpButtonPicture';
-import PopUpButtonPixabay from '../Components/PopUpButtonPixabay';
-import ProgressBar from '../Components/ProgressBar';
-import H5PContainer from '../Components/H5PContainer';
-import '../Styling/SiteStyling/H5PContainer.css'
-import MultilineTextFields from '../Components/Test';
+import '../../../Styling/SiteStyling/WelcomeTemplate.css'
+import AddButton from '../Buttons/addButton.js';
+import "../../../Styling/ButtonStyling/addButton.css"
+import NextButton from '../Buttons/NextButton.js';
+import "../../../Styling/ButtonStyling/nextButton.css"
+import PopUpButtonText from '../Buttons/PopUpButtonText'
+import '../../../Styling/ButtonStyling/PopUpButtonText.css'
+import '../../../Styling/ButtonStyling/PopUpButtonPicture.css'
+import PopUpButtonPicture from '../Buttons/PopUpButtonPicture';
+import PopUpButtonPixabay from '../Buttons/PopUpButtonPixabay';
+import ProgressBar from '../FixComponents/ProgressBar';
+import '../../../Styling/SiteStyling/H5PContainer.css'
+import MultilineTextFields from '../FixComponents/Test';
 
 const WelcomeTemplate = () => (
       <div className="welcomeTemplate">

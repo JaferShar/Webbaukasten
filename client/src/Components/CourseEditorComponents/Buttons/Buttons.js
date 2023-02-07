@@ -1,10 +1,9 @@
 import React from 'react';
-import App from '../App';
 import {Link} from 'react-router-dom';
 import {AiOutlineCheckSquare} from "react-icons/ai";
 import {AiTwotoneHome} from "react-icons/ai";
-import "../Styling/ButtonStyling/homeButton.css"
-import "../Styling/ButtonStyling/saveButton.css"
+import "../../../Styling/ButtonStyling/saveButton.css"
+import "../../../Styling/ButtonStyling/homeButton.css"
 
 function Buttons(){
     return (

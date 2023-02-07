@@ -1,10 +1,8 @@
-import React, { useEffect, useState } from "react";
-import { Editor } from "react-draft-wysiwyg";
-import { EditorState } from "draft-js";
-import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
-import { withTheme } from "@emotion/react";
+import React, { useState } from "react";
+import '../../../Styling/SiteStyling/TextContainer.css';
+import { EditorState, Editor } from 'draft-js';
 
-
+const TextContainer = ({ text }) => <div>{text}</div>;
 
 export default function PopUpButtonText() {
   const [showEditor, setShowEditor] = useState(false);
@@ -33,7 +31,8 @@ export default function PopUpButtonText() {
           <button onClick={handleSave}>Save</button>
         </div>
       )}
-      <div>{textContent}</div>
+      <TextContainer text={textContent} />
     </div>
   );
 }
+
