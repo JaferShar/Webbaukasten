@@ -8,10 +8,11 @@ import AddIcon from '@mui/icons-material/Add';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import '../Styling/SiteStyling/CourseOverview.css'       
 import { toast } from 'react-toastify';
-import overviewService from '../features/course/overviewService';
+//import overviewService from '../features/course/overviewService';
 import MoreVertMenu from '../Components/CourseOverviewComponents/MoreVertMenu';
-import SearchBar from  '../Components/CourseOverviewComponents/SearchBar';
 import ResponsiveAppBar from '../Components/ResponsiveAppBar';
+import { useDispatch } from 'react-redux';
+import { createCourse } from '../features/courseOverview/courseOverViewSlice';
 
 export default function CourseOverview({props}) {
     const [anchorEl, setAnchorEl] = React.useState(null);
@@ -19,6 +20,7 @@ export default function CourseOverview({props}) {
     const [courses, setCourses] = React.useState([]);
     const [searchTerm, setSearchTerm] = React.useState("");
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     const handleClose = () => {
         setAnchorEl(null);
@@ -34,6 +36,7 @@ export default function CourseOverview({props}) {
     };
 
     // load courses tested
+    /*
     useEffect(() => {
         try {
             overviewService.getAllCourses().then((courses) => {
@@ -43,6 +46,7 @@ export default function CourseOverview({props}) {
             toast('Kurse konnten nicht geladen werden', { type: 'error' });
         }      
     }, []);
+    */
 
     // tested
     const handleCreateCourse = async () => {
@@ -53,14 +57,18 @@ export default function CourseOverview({props}) {
             counter += 1;
         }    
         try {
-            const courseId = await overviewService.createCourse(courseName);
+            dispatch(createCourse({courseName}))
+            const courseId = courses.length + 1;
             setCourses([...courses, { id: courseId, cName: courseName }]);
+            return;
+            //const courseId = await overviewService.createCourse(courseName);
         } catch (error) {
             toast(error.message, { type: 'error' });
         }
     };
     
     // tested
+    /*
     const handleDelete = async () => {
         try {
             await overviewService.deleteCourse(selectedCourseId)
@@ -71,8 +79,11 @@ export default function CourseOverview({props}) {
             handleClose();
         }
     };
+    */
+
 
     // tested
+    /*
     const handleEdit = () => {
         navigate('/kurs')
     };
@@ -105,6 +116,7 @@ export default function CourseOverview({props}) {
             handleClose();
         }          
     };
+    */
     
     return (
         <div>
@@ -136,11 +148,11 @@ export default function CourseOverview({props}) {
         <MoreVertMenu
             anchorEl={anchorEl}
             handleClose={handleClose}
-            handleDelete={() => handleDelete()}
-            handleEdit={handleEdit}
-            handleShare={handleShare}
-            handlePublish={handlePublish}
-            handleRename={handleRename}
+            //handleDelete={() => handleDelete()}
+            //handleEdit={handleEdit}
+            //handleShare={handleShare}
+            //handlePublish={handlePublish}
+            //handleRename={handleRename}
         />
         <Box sx={{ display: 'flex', justifyContent: 'center', marginTop: '20px' }}>
             <Button variant="contained" color="primary" onClick={handleCreateCourse}>

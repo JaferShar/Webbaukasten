@@ -3,7 +3,7 @@ const asyncHandler = require("express-async-handler");
 
 const Course = require("../models/Course");
 const Account = require("../models/Account");
-const Screen = require("../models/Screen");
+const Screen = require("../models/Screen").Screen;
 
 const getCourse = asyncHandler(async (req, res) => {
   try {
@@ -44,15 +44,20 @@ const setCourse = asyncHandler(async (req, res) => {
       courseName: courseName,
     });
 
+    console.log('before screencreate');
     // create Welcome screen
-    const screen = await Screen.create({ template: "Welcome" });
+    const screen = await Screen.create({template: "Welcome"});
 
+    console.log(screen, 'before push');
     // push screen
     course.screens.push(screen);
+
+    console.log(screen, 'after push');
     course.save();
 
     res.status(201).json(course._id);
   } catch (error) {
+    console.log(error.message);
     res.status(500).json({ error: error.message });
   }
 });
