@@ -40,7 +40,6 @@ function ScreenViewer({changeTemplate}) {
 
     const handleAddClick = (event) => {
         setAnchorEl(event.currentTarget);
-        setScreens([...screens, {name: "Screen " + (screens.length + 1), template: ''}]);
     }
 
     const handleClose = () => {
@@ -48,29 +47,22 @@ function ScreenViewer({changeTemplate}) {
     }; 
 
     const handleWelcome = () => {
-        const newScreens = [...screens];
-        newScreens[newScreens.length - 1].template = 'Welcome';
-        setScreens(newScreens);
+        setScreens([...screens, {name: "Screen " + (screens.length + 1), template: 'Welcome'}]);
         setSelectedScreen(screens.length - 1);
         changeTemplate('Welcome');
         handleClose();
     }
 
     const handleStandard = () => {
-        const newScreens = [...screens];
-        newScreens[newScreens.length - 1].template = 'Standard';
-        setScreens(newScreens);
+        setScreens([...screens, {name: "Screen " + (screens.length + 1), template: 'Standard'}]);
         setSelectedScreen(screens.length - 1);
         changeTemplate('Standard');
         handleClose();
     }
 
     const handleEnd = () => {
-        const newScreens = [...screens];
-        newScreens[newScreens.length - 1].template = 'End';
-        setScreens(newScreens);
+        setScreens([...screens, {name: "Screen " + (screens.length + 1), template: 'End'}]);
         setSelectedScreen(screens.length - 1);
-        console.log('hi')
         changeTemplate('End');
         handleClose();
     }
@@ -81,7 +73,7 @@ function ScreenViewer({changeTemplate}) {
             <Paper style={{marginBottom: '200px'}}>
           <List>
             {screens.map((screen, index) => (
-              <ListItem key={index} className="rectangle-list-item" style={{marginBottom: '30px', flexDirection: 'column'}}>
+              <ListItem key={index} button className="rectangle-list-item" style={{marginBottom: '30px', flexDirection: 'column'}}>
                 <Article style={{fontSize: 100}}/>
                 <ListItemText primaryTypographyProps={{variant: "body2"}} primary={index + 1} style={{marginTop: '60px'}}/>
               </ListItem>
@@ -93,7 +85,7 @@ function ScreenViewer({changeTemplate}) {
         </Paper>
         <AddScreenMenu 
             anchorEl={anchorEl}
-            onClose={handleClose}
+            handleClose={handleClose}
             handleWelcome={handleWelcome}
             handleStandard={handleStandard}
             handleEnd={handleEnd}
