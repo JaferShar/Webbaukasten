@@ -1,0 +1,29 @@
+
+  .endTemplate {
+    width: 55%;
+    height: 65%;
+    margin: 0 auto;
+    position: absolute;
+    top: 60%;
+    right: auto;
+    bottom: auto;
+    left: 50%;
+    padding: 20px;
+    background-color: #dbc08b29;
+    border-radius: 10px;
+    transform: translateY(-50%) translateX(-50%);
+}
+
+.h5PContainerEnd {
+    display: flex;
+    position: absolute;
+    justify-content: flex-end;
+    top: 15%;
+    right: 10%;
+    width: 40%;
+    height: 25%;
+    background-color: rgb(142, 68, 138);
+    border: 1px solid black;
+    border-radius: 10px;
+    padding: 20px;
+  }
