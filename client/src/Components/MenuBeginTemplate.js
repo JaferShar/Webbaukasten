@@ -12,9 +12,13 @@ import "../Styling/ButtonStyling/addButton.css"
 import WelcomeTemplate from '../Pages/WelcomeTemplate.js';
 
 
+const welcomeTemplate = <div>
+  <WelcomeTemplate>
 
+  </WelcomeTemplate>
+</div>;
 
-export default function MenuBeginTemplate() {
+export default function MenuBeginTemplate({changeTemplate}) {
   const [open, setOpen] = React.useState(false);
   const anchorRef = React.useRef(null);
 
@@ -49,6 +53,11 @@ export default function MenuBeginTemplate() {
 
     prevOpen.current = open;
   }, [open]);
+
+  const handleClickWelcome = () => {
+    changeTemplate(welcomeTemplate);
+    handleClose()
+  }
 
   return (
     <Stack direction="row" spacing={2}>
@@ -90,7 +99,7 @@ export default function MenuBeginTemplate() {
                     aria-labelledby="composition-button"
                     onKeyDown={handleListKeyDown}
                   >
-                    <MenuItem onClick={handleClose}>Willkommen Template</MenuItem>
+                    <MenuItem onClick={handleClickWelcome}>Willkommen Template</MenuItem>
                     <MenuItem onClick={handleClose}>Standard Template</MenuItem>
                     <MenuItem onClick={handleClose}>End Template</MenuItem>
                   </MenuList>
