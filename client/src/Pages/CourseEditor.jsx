@@ -19,7 +19,10 @@ import { useState } from "react";
 import "../Styling/SiteStyling/ProgressBar.css";
 import "../Styling/SiteStyling/WelcomeTemplate.css";
 import BeginTemplate from "../Components/CourseEditorComponents/Templates/BeginTemplate";
-import MenuBeginTemplate from "../Components/CourseEditorComponents/Menus/ScreenMenu";
+import ScreenMenu from "../Components/CourseEditorComponents/Menus/ScreenMenu";
+import WelcomeTemplate from "../Components/CourseEditorComponents/Templates/WelcomeTemplate";
+//import StandardTemplate from "../Components/CourseEditorComponents/Templates/StandardTemplate";
+import EndTemplate from "../Components/CourseEditorComponents/Templates/EndTemplate";
 
 const beginTemplate = (
   <div>
@@ -27,11 +30,39 @@ const beginTemplate = (
   </div>
 );
 
+const welcomeTemplate = (
+  <div>
+    <WelcomeTemplate></WelcomeTemplate>
+  </div>
+);
+
+/*const standardTemplate = (
+  <div>
+    <StandardTemplate></StandardTemplate>
+  </div>
+);*/
+
+const endTemplate = (
+  <div>
+    <EndTemplate></EndTemplate>
+  </div>
+);
+
 function Course() {
   const [changeableTemplate, setChangeableTemplate] = useState(beginTemplate);
 
+  // you have to change the ScreenMenu now because
+  // i changed the method that does not require sub classes to know the template declaration
   const changeTemplate = (template) => {
-    setChangeableTemplate(template);
+    if (template === "Welcome") {
+      setChangeableTemplate(welcomeTemplate);
+    } 
+    // add standard template here
+    /*else if (template == "Standard") {
+      setChangeableTemplate(standardTemplate);
+    }*/ else if (template === "End") {
+      setChangeableTemplate(endTemplate);
+    }
   };
 
   return (
@@ -40,7 +71,7 @@ function Course() {
         <h1 Course="header">Kurs</h1>
 
         <div className="course">
-          <MenuBeginTemplate changeTemplate={changeTemplate} />
+          <ScreenMenu changeTemplate={changeTemplate} />
         </div>
         <div className="buttons">
           <Buttons>AiOutlineCheckSquare</Buttons>
@@ -49,7 +80,7 @@ function Course() {
         {changeableTemplate}
       </div>
       <div>
-        <ScreenViewer />
+        <ScreenViewer changeTemplate={changeTemplate} />
       </div>
 
       <div>

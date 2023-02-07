@@ -9,6 +9,7 @@ import {
   ListItemText,
   Grid,
 } from "@mui/material";
+import AddScreenMenu from "../Menus/AddScreenMenu";
 
 function AddScreenItem({ onAddClick }) {
     return (
@@ -19,25 +20,60 @@ function AddScreenItem({ onAddClick }) {
   }
 
 
-function ScreenViewer() {
+function ScreenViewer({changeTemplate}) {
   const [selectedScreen, setSelectedScreen] = useState(0);
   const [screens, setScreens] = useState([]);
+  const [anchorEl, setAnchorEl] = useState(null);
   var quantity = 20;
 
   useEffect(() => {
     const newScreens = [];
-    for (let i = 0; i < quantity; i++) {
+    newScreens.push({name: "Screen 1", template: 'Welcome'})
+    for (let i = 1; i < quantity; i++) {
       newScreens.push({
         name: "Screen " + (i + 1),
+        template: 'Standard'
       });
     }
     setScreens(newScreens);
   }, [quantity]);
 
-    const handleAddClick = () => {
-        setScreens([...screens, {name: "Screen " + (screens.length + 1)}]);
+    const handleAddClick = (event) => {
+        setAnchorEl(event.currentTarget);
+        setScreens([...screens, {name: "Screen " + (screens.length + 1), template: ''}]);
     }
 
+    const handleClose = () => {
+        setAnchorEl(null);
+    }; 
+
+    const handleWelcome = () => {
+        const newScreens = [...screens];
+        newScreens[newScreens.length - 1].template = 'Welcome';
+        setScreens(newScreens);
+        setSelectedScreen(screens.length - 1);
+        changeTemplate('Welcome');
+        handleClose();
+    }
+
+    const handleStandard = () => {
+        const newScreens = [...screens];
+        newScreens[newScreens.length - 1].template = 'Standard';
+        setScreens(newScreens);
+        setSelectedScreen(screens.length - 1);
+        changeTemplate('Standard');
+        handleClose();
+    }
+
+    const handleEnd = () => {
+        const newScreens = [...screens];
+        newScreens[newScreens.length - 1].template = 'End';
+        setScreens(newScreens);
+        setSelectedScreen(screens.length - 1);
+        console.log('hi')
+        changeTemplate('End');
+        handleClose();
+    }
   return (
     <Grid className="ScreenViewer">
 
@@ -50,11 +86,18 @@ function ScreenViewer() {
                 <ListItemText primaryTypographyProps={{variant: "body2"}} primary={index + 1} style={{marginTop: '60px'}}/>
               </ListItem>
             ))}
-            <AddScreenItem onAddClick={() => {handleAddClick()}} />
+            <AddScreenItem onAddClick={(event) => {handleAddClick(event)}} />
             <ListItem sytele={{visibility:'hidden'}} />
           </List>
           </Paper>
         </Paper>
+        <AddScreenMenu 
+            anchorEl={anchorEl}
+            onClose={handleClose}
+            handleWelcome={handleWelcome}
+            handleStandard={handleStandard}
+            handleEnd={handleEnd}
+        />
     </Grid>
   );
 }
