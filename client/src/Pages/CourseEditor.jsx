@@ -56,6 +56,10 @@ function Course() {
   const changeTemplate = (template) => {
     if (template === "Welcome") {
       setChangeableTemplate(welcomeTemplate);
+
+      <div className="course">
+      <ScreenMenu changeTemplate={changeTemplate} />
+    </div>
     } 
     // add standard template here
     /*else if (template == "Standard") {
@@ -70,9 +74,6 @@ function Course() {
       <div className="background">
         <h1 Course="header">Kurs</h1>
 
-        <div className="course">
-          <ScreenMenu changeTemplate={changeTemplate} />
-        </div>
         <div className="buttons">
           <Buttons>AiOutlineCheckSquare</Buttons>
         </div>
@@ -81,6 +82,7 @@ function Course() {
       </div>
       <div>
         <ScreenViewer changeTemplate={changeTemplate} />
+        
       </div>
 
       <div>
