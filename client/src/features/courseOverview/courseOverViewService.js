@@ -10,9 +10,21 @@ const createCourse = async (courseData, token) => {
     return response.data;
 };
 
+const getAllCourses = async (token) => {
+    const config = {
+        headers: { Authorization: `Bearer ${token}` },
+    };
+    const response = await axios.get(API_URL + '/all', config);
+    return response.data;
+    
+};
+
+
 
 const courseOverviewService = {
     createCourse,
+    getAllCourses,
+
 };
 
 
