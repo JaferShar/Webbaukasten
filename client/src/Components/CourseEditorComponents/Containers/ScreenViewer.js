@@ -14,7 +14,7 @@ import TitleIcon from '@mui/icons-material/Title';
 import ExplicitIcon from "@mui/icons-material/Explicit";
 import AddScreenMenu from "../Menus/AddScreenMenu";
 import { useDispatch } from 'react-redux';
-import { createScreen } from "../../../features/courseEditor/courseEditorSlice";
+import { createScreen } from '../../../features/courseEditor/courseEditorSlice'
 
 function AddScreenItem({ onAddClick }) {
     return (
@@ -53,29 +53,29 @@ function ScreenViewer({changeTemplate}) {
     }; 
 
     const handleWelcome = () => {
-        let cTemplate = 'Welcome';
-        setScreens([...screens, {name: "Screen " + (screens.length + 1), template: cTemplate}]);
+        let template = 'Welcome';
+        setScreens([...screens, {name: "Screen " + (screens.length + 1), template: template}]);
         setSelectedScreen(screens.length - 1);
-        changeTemplate(cTemplate);
-        dispatch(createScreen({cTemplate}))
+        changeTemplate(template);
+        dispatch()
         handleClose();
     }
 
     const handleStandard = () => {
-        let cTemplate = 'Standard';
-        setScreens([...screens, {name: "Screen " + (screens.length + 1), template: cTemplate}]);
+        let template = 'Standard';
+        setScreens([...screens, {name: "Screen " + (screens.length + 1), template: template}]);
         setSelectedScreen(screens.length - 1);
-        changeTemplate(cTemplate);
-        dispatch(createScreen({cTemplate}))
+        changeTemplate(template);
+        dispatch()
         handleClose();
     }
 
     const handleEnd = () => {
-      let cTemplate = 'End';
-        setScreens([...screens, {name: "Screen " + (screens.length + 1), template: cTemplate}]);
+      let template = 'End';
+        setScreens([...screens, {name: "Screen " + (screens.length + 1), template: template}]);
         setSelectedScreen(screens.length - 1);
-        changeTemplate(cTemplate);
-        dispatch(createScreen({cTemplate}))
+        changeTemplate(template);
+        dispatch()
         handleClose();
     }
   return (
