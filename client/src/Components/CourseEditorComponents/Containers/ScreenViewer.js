@@ -7,9 +7,14 @@ import {
   List,
   ListItem,
   ListItemText,
+  ListItemButton,
   Grid,
 } from "@mui/material";
+import TitleIcon from '@mui/icons-material/Title';
+import ExplicitIcon from "@mui/icons-material/Explicit";
 import AddScreenMenu from "../Menus/AddScreenMenu";
+import { useDispatch } from 'react-redux';
+import { createScreen } from "../../../features/courseEditor/courseEditorSlice";
 
 function AddScreenItem({ onAddClick }) {
     return (
@@ -21,6 +26,7 @@ function AddScreenItem({ onAddClick }) {
 
 
 function ScreenViewer({changeTemplate}) {
+  const dispatch = useDispatch();
   const [selectedScreen, setSelectedScreen] = useState(0);
   const [screens, setScreens] = useState([]);
   const [anchorEl, setAnchorEl] = useState(null);
@@ -47,41 +53,50 @@ function ScreenViewer({changeTemplate}) {
     }; 
 
     const handleWelcome = () => {
-        setScreens([...screens, {name: "Screen " + (screens.length + 1), template: 'Welcome'}]);
+        let cTemplate = 'Welcome';
+        setScreens([...screens, {name: "Screen " + (screens.length + 1), template: cTemplate}]);
         setSelectedScreen(screens.length - 1);
-        changeTemplate('Welcome');
+        changeTemplate(cTemplate);
+        dispatch(createScreen({cTemplate}))
         handleClose();
     }
 
     const handleStandard = () => {
-        setScreens([...screens, {name: "Screen " + (screens.length + 1), template: 'Standard'}]);
+        let cTemplate = 'Standard';
+        setScreens([...screens, {name: "Screen " + (screens.length + 1), template: cTemplate}]);
         setSelectedScreen(screens.length - 1);
-        changeTemplate('Standard');
+        changeTemplate(cTemplate);
+        dispatch(createScreen({cTemplate}))
         handleClose();
     }
 
     const handleEnd = () => {
-        setScreens([...screens, {name: "Screen " + (screens.length + 1), template: 'End'}]);
+      let cTemplate = 'End';
+        setScreens([...screens, {name: "Screen " + (screens.length + 1), template: cTemplate}]);
         setSelectedScreen(screens.length - 1);
-        changeTemplate('End');
+        changeTemplate(cTemplate);
+        dispatch(createScreen({cTemplate}))
         handleClose();
     }
   return (
     <Grid className="ScreenViewer">
 
         <Paper style={{ display: 'flex', justifyContent: 'center', maxHeight: '100%', maxWidth: '100%', overflow: "auto" }}>
-            <Paper style={{marginBottom: '200px'}}>
+            
           <List>
             {screens.map((screen, index) => (
-              <ListItem key={index} button className="rectangle-list-item" style={{marginBottom: '30px', flexDirection: 'column'}}>
-                <Article style={{fontSize: 100}}/>
+                <ListItemButton key={index} className="rectangle-list-item" style={{flexDirection: 'column', border: '1px solid #d9dddd'}} sx={{mb: 2}}>
+                {screen.template === "Welcome" && <TitleIcon style={{fontSize: 100}}/>}
+                {screen.template === "Standard" && <Article style={{fontSize: 100}}/>}
+                {screen.template === "End" && <ExplicitIcon style={{fontSize: 100}}/>}
                 <ListItemText primaryTypographyProps={{variant: "body2"}} primary={index + 1} style={{marginTop: '60px'}}/>
-              </ListItem>
+              </ListItemButton>
+              
             ))}
             <AddScreenItem onAddClick={(event) => {handleAddClick(event)}} />
-            <ListItem sytele={{visibility:'hidden'}} />
+            <ListItem sytele={{display: 'none'}} />
           </List>
-          </Paper>
+ 
         </Paper>
         <AddScreenMenu 
             anchorEl={anchorEl}

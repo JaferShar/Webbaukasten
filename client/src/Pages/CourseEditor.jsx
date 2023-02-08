@@ -72,7 +72,7 @@ function Course() {
   return (
     <>
       <div className="background">
-        <h1 Course="header">Kurs</h1>
+        <h1 course="header">Kurs</h1>
 
         <div className="buttons">
           <Buttons>AiOutlineCheckSquare</Buttons>
