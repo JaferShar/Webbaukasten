@@ -3,7 +3,7 @@ import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
-import axios from 'axios';
+import axios from "axios";
 import PixabayView from './PixabayView';
 
 class PixabaySearch extends Component {
