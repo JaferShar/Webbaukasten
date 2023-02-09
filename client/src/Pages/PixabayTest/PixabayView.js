@@ -27,16 +27,16 @@ class PixabayView extends Component {
                     <img
                       src={`${item.largeImageURL}?w=248&fit=crop&auto=format`}
                       srcSet={`${item.largeImageURL}?w=248&fit=crop&auto=format&dpr=2 2x`}
-                      alt={item.title}
+                      alt={item.tags}
                       loading="lazy"
                     />
                     <ImageListItemBar
-                      title={item.title}
+                      title={item.tags}
                       subtitle={item.author}
                       actionIcon={
                         <IconButton
                           sx={{ color: 'rgba(255, 255, 255, 0.54)' }}
-                          aria-label={`info about ${item.title}`}
+                          aria-label={`info about ${item.tags}`}
                         >
                           <InfoIcon />
                         </IconButton>
