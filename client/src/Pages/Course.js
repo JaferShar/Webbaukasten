@@ -31,6 +31,7 @@ import '../Styling/SiteStyling/ProgressBar.css'
 import WelcomeTemplate from './WelcomeTemplate';
 import '../Styling/SiteStyling/WelcomeTemplate.css'
 import BeginTemplate from '../Components/BeginTemplate';
+import { useParams } from 'react-router-dom';
 
 const beginTemplate = <div>
   <BeginTemplate>
@@ -47,7 +48,7 @@ const welcomeTemplate = <div>
 let changeableTemplate = beginTemplate;
 
 function Course () {
-  let { id } = useParams();
+  let { id } = useParams(); //in case we need the ID from the actual route
   return (
   <><div className="background">
       <h1 Course="header">Kurs</h1>
