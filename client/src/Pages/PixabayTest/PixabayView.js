@@ -39,7 +39,8 @@ class PixabayView extends Component {
         }
         return (
             <div>
-
+                {imageListContent}
+                
             </div>
         );
     }
