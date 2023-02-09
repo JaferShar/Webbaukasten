@@ -14,7 +14,7 @@ import TitleIcon from '@mui/icons-material/Title';
 import ExplicitIcon from "@mui/icons-material/Explicit";
 import AddScreenMenu from "../Menus/AddScreenMenu";
 import { useDispatch } from 'react-redux';
-import { createScreen } from '../../../features/courseEditor/courseEditorSlice'
+//import { createScreen } from '../../../features/courseEditor/courseEditorSlice'
 
 function AddScreenItem({ onAddClick }) {
     return (
@@ -57,7 +57,6 @@ function ScreenViewer({changeTemplate}) {
         setScreens([...screens, {name: "Screen " + (screens.length + 1), template: template}]);
         setSelectedScreen(screens.length - 1);
         changeTemplate(template);
-        dispatch()
         handleClose();
     }
 
@@ -66,7 +65,6 @@ function ScreenViewer({changeTemplate}) {
         setScreens([...screens, {name: "Screen " + (screens.length + 1), template: template}]);
         setSelectedScreen(screens.length - 1);
         changeTemplate(template);
-        dispatch()
         handleClose();
     }
 
@@ -75,7 +73,6 @@ function ScreenViewer({changeTemplate}) {
         setScreens([...screens, {name: "Screen " + (screens.length + 1), template: template}]);
         setSelectedScreen(screens.length - 1);
         changeTemplate(template);
-        dispatch()
         handleClose();
     }
   return (

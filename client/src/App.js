@@ -18,7 +18,7 @@ function App() {
     <div>
       <BrowserRouter>
         <Routes>
-          <Route path='pixabay' element={<PixabayTestPage />}/>
+          <Route path='/pixabay' element={<PixabayTestPage />}/>
           <Route path='/' element={<H5PTest />} />
           <Route path='/kursuebersicht' element={<CourseOverview />} />
           <Route path='/kurs/:id' element={<Course />} />

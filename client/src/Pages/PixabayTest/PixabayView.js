@@ -6,7 +6,7 @@ import IconButton from "@mui/material/IconButton";
 import ZoomIn from '@mui/icons-material/ZoomIn'
 import Dialog from '@mui/material/Dialog';
 
-class PixabayView extends Component() {
+class PixabayView extends Component {
     render() {
         let imageListContent;
         const { images } = this.props;
