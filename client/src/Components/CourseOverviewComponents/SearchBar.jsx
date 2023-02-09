@@ -47,7 +47,6 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   }));
 
 export default function SearchBar({ searchTerm, onSearch}) {
-    //const [searchTerm, setSearchTerm] = useState('');
     const handleChange = (event) => {
         onSearch(event);
     };
