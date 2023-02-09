@@ -15,15 +15,35 @@ const getAllCourses = async (token) => {
         headers: { Authorization: `Bearer ${token}` },
     };
     const response = await axios.get(API_URL + '/all', config);
-    return response.data;    
+    return response.data;
+    
 };
+
+const deleteCourse = async (courseId, token) => {
+    const config = {
+        headers: { Authorization: `Bearer ${token}`},
+    };
+    const response = await axios.delete(API_URL + `/${courseId}`, config)
+    return response.data;
+}
+
+const renameCourse = async (courseData, token) => {
+    console.log(courseData.courseId, courseData.courseName, 'insieskdjfaklsgkjakjahdfgiah')
+    const config = {
+        headers: { Authorization: `Bearer ${token}`},
+    };
+    const response = await axios.put(API_URL + `/${courseData.courseId}`, courseData, config)
+    return response.data;
+}
+
 
 
 
 const courseOverviewService = {
     createCourse,
-    getAllCourses,
 
+    renameCourse,    getAllCourses,
+    deleteCourse,
 };
 
 

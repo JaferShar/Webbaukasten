@@ -10,8 +10,9 @@ import { toast } from 'react-toastify';
 import MoreVertMenu from '../Components/CourseOverviewComponents/MoreVertMenu';
 import ResponsiveAppBar from '../Components/ResponsiveAppBar';
 import { useDispatch, useSelector } from 'react-redux';
-import { createCourse, getAllCourses} from '../features/courseOverview/courseOverViewSlice';
+import { createCourse, getAllCourses, deleteCourse, renameCourse} from '../features/courseOverview/courseOverViewSlice';
 import {v4} from 'uuid'
+import { useEffect } from 'react';
 
 
 export default function CourseOverview() {
@@ -54,7 +55,7 @@ export default function CourseOverview() {
         } catch (error) {
             toast('Kurse konnten nicht geladen werden', { type: 'error' });
         }      
-    }, [account, navigate, dispatch, isError, message]);
+    }, [account, navigate, dispatch, isError, message, deleteCourse]);
     
 
     // tested
@@ -74,6 +75,40 @@ export default function CourseOverview() {
             toast(error.message, { type: 'error' });
         }
     };
+
+    const handleDelete = async () => {
+        try {
+            dispatch(deleteCourse(selectedCourseId))            
+        } catch (error) {
+            toast(error.message, { type: 'error' });
+        } finally {
+            handleClose();
+        }
+    }
+
+    const handleRename = async (newName) => {
+        try {
+            const changeCourse = coursesState.find(course => course._id === selectedCourseId)
+            // nothing to do
+            if (changeCourse.courseName === newName) {
+                handleClose();
+                return
+            }
+            const exist = coursesState.find(course => course.courseName === newName)
+            if (exist) {
+                throw new Error('Kursname existiert bereits')
+            } 
+            const courseData = {
+                courseId: selectedCourseId,
+                courseName: newName
+            }
+            dispatch(renameCourse(courseData))
+        } catch (error) {
+            toast(error.message, { type: 'error' });
+        } finally {
+            handleClose();
+        }          
+    };   
     
     return (
         <div>
@@ -100,6 +135,14 @@ export default function CourseOverview() {
                 </List>
             </Grid>
         </Box>
+        <MoreVertMenu
+            anchorEl={anchorEl}
+            handleClose={handleClose}
+            handleDelete={handleDelete}
+            //handleShare={handleShare}
+            //handlePublish={handlePublish}
+            handleRename={handleRename}
+        />
         <Box sx={{ display: 'flex', justifyContent: 'center', marginTop: '20px' }}>
             <Button variant="contained" color="primary" onClick={handleCreateCourse}>
             <AddIcon />

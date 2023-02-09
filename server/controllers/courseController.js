@@ -61,7 +61,6 @@ const setCourse = asyncHandler(async (req, res) => {
 
 const getAllCourses = asyncHandler(async (req, res) => {
   try {
-    console.log(req.account.id, 'insideee allll');
     const courses = await Course.find({ account: req.account.id });
     if (courses.length === 0) {
       return res.status(404).json({ error: "No courses found." });
@@ -101,7 +100,8 @@ const updateCourse = asyncHandler(async (req, res) => {
 
 const deleteCourse = asyncHandler(async (req, res) => {
   try {
-    const course = await Course.findById(req.params.id);
+    const courseId = req.params.id;
+    const course = await Course.findById(courseId);
     if (!course) {
       return res.status(404).json({ error: "Course not found." });
     } else if (course.account.toString() !== req.account.id) {
@@ -113,9 +113,7 @@ const deleteCourse = asyncHandler(async (req, res) => {
     // remove course
     await course.remove();
 
-    res.status(200).json({
-      message: `Deleted course ${req.params.id} and its associated screens.`,
-    });
+    res.status(200).json({id: courseId});   
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
