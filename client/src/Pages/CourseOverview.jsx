@@ -55,7 +55,7 @@ export default function CourseOverview() {
         } catch (error) {
             toast('Kurse konnten nicht geladen werden', { type: 'error' });
         }      
-    }, [account, navigate, dispatch, isError, message, deleteCourse]);
+    }, [account, navigate, dispatch, isError, message]);
     
 
     // tested
@@ -117,7 +117,7 @@ export default function CourseOverview() {
         <Box sx={{ display: 'flex', justifyContent: 'center' }}>
             <Grid item xs={12} sm={6}>
                 <List>
-                    {coursesState.map((course) => (
+                    {coursesState.filter(course => course.courseName.toLowerCase().includes(searchTerm.toLowerCase())).map((course) => (
                     <ListItem button key={course._id} >
                         <ListItemAvatar>
                         <Avatar>
