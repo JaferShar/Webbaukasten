@@ -128,7 +128,7 @@ export default function CourseOverview({props}) {
                     {courses.filter(course => course.cName.toLowerCase().includes(searchTerm.toLowerCase())).map((course) => (
                     <ListItem key={course.id}
                     button
-                    component={Link} to={`/kurs`}>
+                    component={Link} to={`/kurs/${course.id}`}>
                         <ListItemAvatar>
                         <Avatar>
                             <FolderIcon />
