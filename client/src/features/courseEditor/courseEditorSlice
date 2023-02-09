@@ -9,7 +9,7 @@ const initialState = {
     message: "",
 };
 
-const createScreen = createAsyncThunk('', async (screenData, thunkAPI) => {
+export const createScreen = createAsyncThunk('', async (screenData, thunkAPI) => {
     try {
         const token = thunkAPI.getState().auth.account.token;
         return courseEditorService.createScreen(screenData, token)
@@ -20,7 +20,7 @@ const createScreen = createAsyncThunk('', async (screenData, thunkAPI) => {
 });
 
 
-const courseEditorSlice = createSlice({
+export const courseEditorSlice = createSlice({
     name: "courseEditor",
     initialState,
     reducers: {
@@ -46,6 +46,6 @@ const courseEditorSlice = createSlice({
     
 });
 
-const { reset } = courseEditorSlice.actions;
+export const { reset } = courseEditorSlice.actions;
 
 export default courseEditorSlice.reducer;

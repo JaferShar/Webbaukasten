@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useEffect } from 'react';
 import { Box, List, ListItem, ListItemAvatar, ListItemText, ListItemSecondaryAction} from '@mui/material';
 import { Avatar, Button, IconButton, Grid } from '@mui/material';
 import FolderIcon from '@mui/icons-material/Folder';
@@ -8,13 +7,12 @@ import AddIcon from '@mui/icons-material/Add';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import '../Styling/SiteStyling/CourseOverview.css'       
 import { toast } from 'react-toastify';
-//import overviewService from '../features/course/overviewService';
 import MoreVertMenu from '../Components/CourseOverviewComponents/MoreVertMenu';
 import ResponsiveAppBar from '../Components/ResponsiveAppBar';
 import { useDispatch } from 'react-redux';
 import { createCourse } from '../features/courseOverview/courseOverViewSlice';
 
-export default function CourseOverview({props}) {
+export default function CourseOverview() {
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [selectedCourseId, setSelectedCourseId] = React.useState(null);
     const [courses, setCourses] = React.useState([]);
@@ -35,19 +33,6 @@ export default function CourseOverview({props}) {
         setSelectedCourseId(courseId);
     };
 
-    // load courses tested
-    /*
-    useEffect(() => {
-        try {
-            overviewService.getAllCourses().then((courses) => {
-                setCourses(courses);
-            });
-        } catch (error) {
-            toast('Kurse konnten nicht geladen werden', { type: 'error' });
-        }      
-    }, []);
-    */
-
     // tested
     const handleCreateCourse = async () => {
         let counter = 1;
@@ -61,62 +46,10 @@ export default function CourseOverview({props}) {
             const courseId = courses.length + 1;
             setCourses([...courses, { id: courseId, cName: courseName }]);
             return;
-            //const courseId = await overviewService.createCourse(courseName);
         } catch (error) {
             toast(error.message, { type: 'error' });
         }
     };
-    
-    // tested
-    /*
-    const handleDelete = async () => {
-        try {
-            await overviewService.deleteCourse(selectedCourseId)
-            setCourses(courses.filter(course => course.id !== selectedCourseId));
-        } catch (error) {
-            toast(error.message, { type: 'error' });
-        } finally {
-            handleClose();
-        }
-    };
-    */
-
-
-    // tested
-    /*
-    const handleEdit = () => {
-        navigate('/kurs')
-    };
-
-    // To DO
-    const handleShare = () => {
-    };
-    const handlePublish = () => {
-    };
-
-    // tested
-    const handleRename = async (newName) => {
-        try {
-            const changeCourse = courses.find(course => course.id === selectedCourseId)
-            // nothing to do
-            if (changeCourse.cName === newName) {
-                handleClose();
-                return
-            }
-            const exist = courses.find(course => course.cName === newName)
-            if (exist) {
-                throw new Error('Kursname existiert bereits')
-            }       
-            await overviewService.updateCourse(selectedCourseId, newName)  
-            changeCourse.cName = newName
-            setCourses([...courses]) 
-        } catch (error) {
-            toast(error.message, { type: 'error' });
-        } finally {
-            handleClose();
-        }          
-    };
-    */
     
     return (
         <div>
