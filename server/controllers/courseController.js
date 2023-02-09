@@ -44,18 +44,15 @@ const setCourse = asyncHandler(async (req, res) => {
       courseName: courseName,
     });
 
-    console.log('before screencreate');
     // create Welcome screen
     const screen = await Screen.create({template: "Welcome"});
 
-    console.log(screen, 'before push');
     // push screen
     course.screens.push(screen);
 
-    console.log(screen, 'after push');
     course.save();
 
-    res.status(201).json(course._id);
+    res.status(201).json(course);
   } catch (error) {
     console.log(error.message);
     res.status(500).json({ error: error.message });
@@ -64,6 +61,7 @@ const setCourse = asyncHandler(async (req, res) => {
 
 const getAllCourses = asyncHandler(async (req, res) => {
   try {
+    console.log(req.account.id, 'insideee allll');
     const courses = await Course.find({ account: req.account.id });
     if (courses.length === 0) {
       return res.status(404).json({ error: "No courses found." });

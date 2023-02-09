@@ -15,8 +15,7 @@ const getAllCourses = async (token) => {
         headers: { Authorization: `Bearer ${token}` },
     };
     const response = await axios.get(API_URL + '/all', config);
-    return response.data;
-    
+    return response.data;    
 };
 
 
