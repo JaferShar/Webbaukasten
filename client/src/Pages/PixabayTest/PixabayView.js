@@ -18,12 +18,12 @@ class PixabayView extends Component {
 
         if (images) {
             imageListContent = (
-                <ImageList sx={{ width: 2500, height: 1000 }}>
-                <ImageListItem key="Subheader" cols={2}>
+                <ImageList sx={{ width: 2500, height: 1000 }} cols={4}>
+                <ImageListItem key="Subheader" cols={4}>
                   <ListSubheader component="div">Bilder</ListSubheader>
                 </ImageListItem>
                 {images.map((item) => (
-                  <ImageListItem key={item.img}>
+                  <ImageListItem key={item.id}>
                     <img
                       src={`${item.largeImageURL}?w=248&fit=crop&auto=format`}
                       srcSet={`${item.largeImageURL}?w=248&fit=crop&auto=format&dpr=2 2x`}
