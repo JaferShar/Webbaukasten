@@ -44,18 +44,15 @@ const setCourse = asyncHandler(async (req, res) => {
       courseName: courseName,
     });
 
-    console.log('before screencreate');
     // create Welcome screen
     const screen = await Screen.create({template: "Welcome"});
 
-    console.log(screen, 'before push');
     // push screen
     course.screens.push(screen);
 
-    console.log(screen, 'after push');
     course.save();
 
-    res.status(201).json(course._id);
+    res.status(201).json(course);
   } catch (error) {
     console.log(error.message);
     res.status(500).json({ error: error.message });
@@ -103,7 +100,8 @@ const updateCourse = asyncHandler(async (req, res) => {
 
 const deleteCourse = asyncHandler(async (req, res) => {
   try {
-    const course = await Course.findById(req.params.id);
+    const courseId = req.params.id;
+    const course = await Course.findById(courseId);
     if (!course) {
       return res.status(404).json({ error: "Course not found." });
     } else if (course.account.toString() !== req.account.id) {
@@ -115,9 +113,7 @@ const deleteCourse = asyncHandler(async (req, res) => {
     // remove course
     await course.remove();
 
-    res.status(200).json({
-      message: `Deleted course ${req.params.id} and its associated screens.`,
-    });
+    res.status(200).json({id: courseId});   
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
