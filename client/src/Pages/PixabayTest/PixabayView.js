@@ -5,6 +5,11 @@ import { PropTypes } from 'prop-types';
 import IconButton from "@mui/material/IconButton";
 import ZoomIn from '@mui/icons-material/ZoomIn'
 import Dialog from '@mui/material/Dialog';
+import ImageList from '@mui/material/ImageList';
+import ImageListItem from '@mui/material/ImageListItem';
+import ImageListItemBar from '@mui/material/ImageListItemBar';
+import InfoIcon from '@mui/icons-material/Info';
+import ListSubheader from '@mui/material/ListSubheader';
 
 class PixabayView extends Component {
     render() {
@@ -13,33 +18,41 @@ class PixabayView extends Component {
 
         if (images) {
             imageListContent = (
-                <Grid cols={3}>
-                    {images.map(img => (
-                        <ListItem
-                            title={img.tags}
-                            key={img.id}
-                            subtitle={
-                                <span>
-                                    by <strong>{img.user}</strong>
-                                </span>
-                            }
-                            actionIcon={
-                                <IconButton>
-                                    <ZoomIn color='white' />
-                                </IconButton>
-                            }
+                <ImageList sx={{ width: 2500, height: 1000 }}>
+                <ImageListItem key="Subheader" cols={2}>
+                  <ListSubheader component="div">Bilder</ListSubheader>
+                </ImageListItem>
+                {images.map((item) => (
+                  <ImageListItem key={item.img}>
+                    <img
+                      src={`${item.largeImageURL}?w=248&fit=crop&auto=format`}
+                      srcSet={`${item.largeImageURL}?w=248&fit=crop&auto=format&dpr=2 2x`}
+                      alt={item.tags}
+                      loading="lazy"
+                    />
+                    <ImageListItemBar
+                      title={item.tags}
+                      subtitle={item.author}
+                      actionIcon={
+                        <IconButton
+                          sx={{ color: 'rgba(255, 255, 255, 0.54)' }}
+                          aria-label={`info about ${item.tags}`}
                         >
-                            <img src={img.largeImageURL} alt="" />
-                        </ListItem>
-                    ))}
-                </Grid>
+                          <InfoIcon />
+                        </IconButton>
+                      }
+                    />
+                  </ImageListItem>
+                ))}
+              </ImageList>
             )
         } else {
             imageListContent = null;
         }
         return (
             <div>
-
+                {imageListContent}
+                
             </div>
         );
     }
