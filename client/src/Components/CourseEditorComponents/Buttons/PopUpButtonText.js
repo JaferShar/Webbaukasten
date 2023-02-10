@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import axios from "axios";
-import '../Styling/SiteStyling/TextContainer.css';
-import { EditorState, Editor } from 'draft-js';
+import { Editor } from "react-draft-wysiwyg";
+import { EditorState } from "draft-js";
+import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 
-const TextContainer = ({ text }) => <div>{text}</div>;
+
 
 export default function PopUpButtonText() {
   const [showEditor, setShowEditor] = useState(false);
@@ -32,8 +32,7 @@ export default function PopUpButtonText() {
           <button onClick={handleSave}>Save</button>
         </div>
       )}
-      <TextContainer text={textContent} />
+      <div>{textContent}</div>
     </div>
   );
 }
-

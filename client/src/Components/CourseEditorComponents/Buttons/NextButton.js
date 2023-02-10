@@ -1,7 +1,6 @@
 import React from 'react';
-import App from '../App';
 import {AiOutlineArrowRight} from "react-icons/ai";
-import '../Styling/ButtonStyling/nextButton.css'
+import '../../../Styling/ButtonStyling/nextButton.css'
 
 
 function NextButton(){

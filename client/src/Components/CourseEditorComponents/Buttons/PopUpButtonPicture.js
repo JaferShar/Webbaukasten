@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "../Styling/ButtonStyling/PopUpButtonPicture.css";
+import "../../../Styling/ButtonStyling/PopUpButtonPicture.css";
 
 function PopUpButtonPicture() {
   const [selectedFile, setSelectedFile] = useState(null);

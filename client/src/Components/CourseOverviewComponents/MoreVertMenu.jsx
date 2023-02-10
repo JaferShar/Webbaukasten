@@ -7,7 +7,7 @@ import PublishIcon from '@mui/icons-material/Publish';
 import DriveFileRenameOutlineIcon from '@mui/icons-material/DriveFileRenameOutline';
 import Container from '@mui/material/Container';
 
-export default function MoreVertMenu({ anchorEl, handleClose, handleDelete, handleEdit, handleShare, handlePublish, handleRename }) {
+export default function MoreVertMenu({ anchorEl, handleClose, handleDelete, handleShare, handlePublish, handleRename }) {
     const [modalOpen, setModalOpen] = useState(false);
     const [newName, setNewName] = useState('');
     const [anchor, setAnchor] = React.useState(null);
@@ -35,8 +35,7 @@ export default function MoreVertMenu({ anchorEl, handleClose, handleDelete, hand
                 anchorEl={anchorEl}
                 keepMounted
                 open={Boolean(anchorEl)}
-                onClose={handleClose}>       
-                <MenuItem onClick={handleEdit}><EditIcon /> Editieren</MenuItem>
+                onClose={handleClose}>
                 <MenuItem onClick={handleClickRename}><DriveFileRenameOutlineIcon />Umbenennen</MenuItem>
                 <MenuItem onClick={handleShare}><ShareIcon />Teilen</MenuItem>
                 <MenuItem onClick={handlePublish}><PublishIcon />Veröffentlichen</MenuItem>

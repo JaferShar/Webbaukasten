@@ -1,7 +1,6 @@
 import React from 'react';
-import App from '../App';
 import {AiOutlinePlus} from "react-icons/ai";
-import '../Styling/ButtonStyling/addButton.css'
+import '../../../Styling/ButtonStyling/addButton.css'
 
 
 function AddButton(){

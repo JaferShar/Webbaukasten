@@ -7,14 +7,18 @@ import Popper from '@mui/material/Popper';
 import MenuItem from '@mui/material/MenuItem';
 import MenuList from '@mui/material/MenuList';
 import Stack from '@mui/material/Stack';
-import AddButton from '../Components/addButton.js';
-import "../Styling/ButtonStyling/addButton.css"
-import WelcomeTemplate from '../Pages/WelcomeTemplate.js';
+import AddButton from '../Buttons/addButton.js';
+import "../../../Styling/ButtonStyling/addButton.css"
+import WelcomeTemplate from '../Templates/WelcomeTemplate.js';
 
 
+const welcomeTemplate = <div>
+  <WelcomeTemplate>
 
+  </WelcomeTemplate>
+</div>;
 
-export default function MenuBeginTemplate() {
+export default function MenuBeginTemplate({changeTemplate}) {
   const [open, setOpen] = React.useState(false);
   const anchorRef = React.useRef(null);
 
@@ -49,6 +53,11 @@ export default function MenuBeginTemplate() {
 
     prevOpen.current = open;
   }, [open]);
+
+  const handleClickWelcome = () => {
+    changeTemplate(welcomeTemplate);
+    handleClose()
+  }
 
   return (
     <Stack direction="row" spacing={2}>
@@ -90,7 +99,7 @@ export default function MenuBeginTemplate() {
                     aria-labelledby="composition-button"
                     onKeyDown={handleListKeyDown}
                   >
-                    <MenuItem onClick={handleClose}>Willkommen Template</MenuItem>
+                    <MenuItem onClick={handleClickWelcome}>Willkommen Template</MenuItem>
                     <MenuItem onClick={handleClose}>Standard Template</MenuItem>
                     <MenuItem onClick={handleClose}>End Template</MenuItem>
                   </MenuList>
