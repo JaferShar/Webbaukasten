@@ -62,12 +62,9 @@ const setCourse = asyncHandler(async (req, res) => {
 const getAllCourses = asyncHandler(async (req, res) => {
   try {
     const courses = await Course.find({ account: req.account.id });
-    if (courses.length === 0) {
-      return res.status(404).json({ error: "No courses found." });
-    }
     res.status(200).json(courses);
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    res.status(500).json({ error: error.message });
   }
 });
 

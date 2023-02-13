@@ -22,6 +22,19 @@ export const getCourse = createAsyncThunk("", async (courseId, thunkAPI) => {
   }
 });
 
+export const createScreen = createAsyncThunk("/scren", async (screenData, thunkAPI) => {
+  try {
+    const token = thunkAPI.getState().auth.account.token;
+    return courseEditorService.createScreen(screenData, token);
+  } catch (error) {
+    const message =
+      (error.response && error.response.data && error.response.data.message) ||
+      error.message ||
+      error.toString();
+    return thunkAPI.rejectWithValue(message);
+  }
+});
+
 export const courseSlice = createSlice({
   name: "courseEditor",
   initialState,
@@ -43,7 +56,20 @@ export const courseSlice = createSlice({
         state.isError = true;
         state.message = action.payload;
         state.course = {};
-      });
+      })
+      .addCase(createScreen.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(createScreen.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.course = action.payload;
+      })
+      .addCase(createScreen.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
+      })
   },
 });
 

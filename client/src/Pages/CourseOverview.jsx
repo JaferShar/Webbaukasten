@@ -34,11 +34,8 @@ export default function CourseOverview() {
   const [searchTerm, setSearchTerm] = React.useState("");
 
   const { account } = useSelector((state) => state.auth);
-  const { coursesState, isLoading, isError, message } = useSelector(
+  const { coursesState, isError, message } = useSelector(
     (state) => state.courseOverview
-  );
-  const { course } = useSelector(
-    (state) => state.courseEditor
   );
 
   const handleClose = () => {
@@ -129,7 +126,7 @@ export default function CourseOverview() {
 
   const handleListItemClick = (courseId) => {
     dispatch(getCourse(courseId));
-    navigate(`/course/${courseId}`);
+    navigate(`/kurs`);
   };
 
   return (

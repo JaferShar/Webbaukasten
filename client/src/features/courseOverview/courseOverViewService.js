@@ -27,11 +27,6 @@ const deleteCourse = async (courseId, token) => {
 };
 
 const renameCourse = async (courseData, token) => {
-  console.log(
-    courseData.courseId,
-    courseData.courseName,
-    "insieskdjfaklsgkjakjahdfgiah"
-  );
   const config = {
     headers: { Authorization: `Bearer ${token}` },
   };

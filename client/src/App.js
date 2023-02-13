@@ -21,7 +21,7 @@ function App() {
           <Route path='/pixabay' element={<PixabayTestPage />}/>
           <Route path='/' element={<H5PTest />} />
           <Route path='/kursuebersicht' element={<CourseOverview />} />
-          <Route path='/kurs/:id' element={<Course />} />
+          <Route path='/kurs' element={<Course />} />
           <Route path='/login' element={<Login />} />
           <Route path='/test' element={<Test />} />
         </Routes>
