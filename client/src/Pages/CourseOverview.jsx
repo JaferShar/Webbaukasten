@@ -60,7 +60,6 @@ export default function CourseOverview() {
         return;
       }
       dispatch(getAllCourses());
-      console.log(coursesState, "courseOverview from redux inside useEffect");
     } catch (error) {
       toast("Kurse konnten nicht geladen werden", { type: "error" });
     }
@@ -79,11 +78,8 @@ export default function CourseOverview() {
     }
 
     try {
-      const response = dispatch(createCourse({ courseName }));
-      console.log(response + "response dispatch sajkhdbglkjfhdn");
-      return;
+      dispatch(createCourse({ courseName }));
     } catch (error) {
-      //const courseId = await overviewService.createCourse(courseName);
       console.log(error, "error inseide overview");
       toast(error.message, { type: "error" });
     }
