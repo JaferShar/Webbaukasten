@@ -274,16 +274,22 @@ const updateScreen = asyncHandler(async (req, res) => {
 
 const deleteScreen = asyncHandler(async (req, res) => {
   try {
+    const courseId = req.query.param1;
+    const screenId = req.query.param2;
     // delete screen on course first
-    const course = await Course.findById(req.params.courseId);
-    if (!course.screens.id(req.params.screenId)) {
+    const course = await Course.findById(courseId);
+    if (!course) {
+      return res.status(404).json({ error: "Course not found" });
+    }
+    const screen = course.screens.find((screen) => screen._id.toString() === screenId);
+    if (!screen) {
       return res.status(404).json({ error: "Screen not found" });
     }
-    course.screens.id(req.params.screenId).remove();
+    course.screens.pull(screenId);
 
     // save changes and delete screen afterwards
     await course.save();
-    await Screen.findByIdAndDelete(req.params.screenId);
+    await Screen.findByIdAndDelete(screenId);
 
     res.status(200).json(course);
   } catch (error) {
@@ -308,6 +314,7 @@ const deleteSection = asyncHandler(async (req, res) => {
 
 const deleteElement = asyncHandler(async (req, res) => {
   try {
+    
     const screen = await Screen.findById(req.params.screenId);
     if (!screen) {
       return res.status(404).json({ error: "Screen not found" });

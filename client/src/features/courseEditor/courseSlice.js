@@ -9,7 +9,7 @@ const initialState = {
   message: "",
 };
 
-export const getCourse = createAsyncThunk("", async (courseId, thunkAPI) => {
+export const getCourse = createAsyncThunk("get", async (courseId, thunkAPI) => {
   try {
     const token = thunkAPI.getState().auth.account.token;
     return courseEditorService.getCourse(courseId, token);
@@ -22,10 +22,23 @@ export const getCourse = createAsyncThunk("", async (courseId, thunkAPI) => {
   }
 });
 
-export const createScreen = createAsyncThunk("/scren", async (screenData, thunkAPI) => {
+export const createScreen = createAsyncThunk("/create", async (screenData, thunkAPI) => {
   try {
     const token = thunkAPI.getState().auth.account.token;
     return courseEditorService.createScreen(screenData, token);
+  } catch (error) {
+    const message =
+      (error.response && error.response.data && error.response.data.message) ||
+      error.message ||
+      error.toString();
+    return thunkAPI.rejectWithValue(message);
+  }
+});
+
+export const deleteScreen = createAsyncThunk("/delete", async (screenData, thunkAPI) => {
+  try {
+    const token = thunkAPI.getState().auth.account.token;
+    return courseEditorService.deleteScreen(screenData, token);
   } catch (error) {
     const message =
       (error.response && error.response.data && error.response.data.message) ||
@@ -66,6 +79,19 @@ export const courseSlice = createSlice({
         state.course = action.payload;
       })
       .addCase(createScreen.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
+      })
+      .addCase(deleteScreen.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(deleteScreen.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.course = action.payload;
+      })
+      .addCase(deleteScreen.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload;

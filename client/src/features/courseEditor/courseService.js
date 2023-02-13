@@ -19,9 +19,18 @@ const createScreen = async (screenData, token) => {
     return response.data;
 };
 
+const deleteScreen = async (screenData, token) => {
+    const config = {
+        headers: { Authorization: `Bearer ${token}` },
+    };
+    const response = await axios.delete(SCREEN_URL + `?param1=${screenData.courseId}&param2=${screenData.screenId}`, config);
+    return response.data;
+};
+
 const courseEditorService = {
     getCourse,
     createScreen,
+    deleteScreen,
 };
 
 

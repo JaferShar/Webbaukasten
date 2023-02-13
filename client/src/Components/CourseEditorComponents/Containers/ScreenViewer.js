@@ -15,7 +15,9 @@ import TitleIcon from "@mui/icons-material/Title";
 import ExplicitIcon from "@mui/icons-material/Explicit";
 import AddScreenMenu from "../Menus/AddScreenMenu";
 import { useDispatch, useSelector } from "react-redux";
-import { createScreen } from "../../../features/courseEditor/courseSlice";
+import { createScreen, deleteScreen } from "../../../features/courseEditor/courseSlice";
+import { toast } from "react-toastify";
+import DeleteScreenMenu from "../Menus/DeleteScreenMenu";
 
 function AddScreenItem({ onAddClick }) {
   return (
@@ -30,6 +32,8 @@ function ScreenViewer({ changeTemplate }) {
   const course = useSelector((state) => state.courseEditor.course);
   const dispatch = useDispatch();
   const [anchorEl, setAnchorEl] = useState(null);
+  const [deleteAnchorEl, setDeleteAnchorEl] = useState(null);
+  const [selectedScreen, setSelectedScreen] = useState(null);
 
   const handleAddClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -39,15 +43,33 @@ function ScreenViewer({ changeTemplate }) {
     setAnchorEl(null);
   };
 
+  const handleDelete = () => {
+    dispatch(deleteScreen({ courseId: course._id, screenId: selectedScreen }));
+    handleCloseContextMenu();
+  };
+
   const handleCreate = (template) => {
     try {
+      if (template === "Welcome") {
+        throw new Error("Welcome screen cannot be created");
+      }
       dispatch(createScreen({ template: template, courseId: course._id }));
       changeTemplate(template);
     } catch (error) {
-      console.log(error);
+      toast(error.message, { type: "error" });
     } finally {
       handleClose();
     }
+  };
+
+  const handleContextMenu = (event, screen) => {
+    event.preventDefault();
+    setDeleteAnchorEl(event.currentTarget);
+    setSelectedScreen(screen);
+  };
+
+  const handleCloseContextMenu = () => {
+    setDeleteAnchorEl(null);
   };
 
   return (
@@ -67,8 +89,12 @@ function ScreenViewer({ changeTemplate }) {
               <ListItemButton
                 key={screen}
                 className="rectangle-list-item"
-                style={{ flexDirection: "column", border: "1px solid #d9dddd" }}
+                style={{ flexDirection: "column", border: "1px solid #d9dddd", cursor: 'context-menu' }}
                 sx={{ mb: 2 }}
+                onClick={() => {}}
+                onContextMenu={(event) => {
+                  handleContextMenu(event, screen);
+                }}
               >
                 <Article style={{ fontSize: 100 }} />
                 <ListItemText
@@ -83,9 +109,14 @@ function ScreenViewer({ changeTemplate }) {
               handleAddClick(event);
             }}
           />
-          <ListItem sytele={{ display: "none" }} />
+          <ListItem style={{ display: "none" }} />
         </List>
       </Paper>
+      <DeleteScreenMenu
+        anchorEl={deleteAnchorEl}
+        handleClose={handleCloseContextMenu}
+        handleDelete={handleDelete}
+      />
       <AddScreenMenu
         anchorEl={anchorEl}
         handleClose={handleClose}
