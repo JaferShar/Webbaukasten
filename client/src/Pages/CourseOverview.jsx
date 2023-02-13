@@ -25,6 +25,7 @@ import {
 import { useEffect } from "react";
 import { getCourse } from "../features/courseEditor/courseSlice";
 
+
 export default function CourseOverview() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -127,7 +128,7 @@ export default function CourseOverview() {
   };
 
   const handleListItemClick = (courseId) => {
-    //dispatch(getCourse(courseId));
+    dispatch(getCourse(courseId));
     navigate(`/course/${courseId}`);
   };
 

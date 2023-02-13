@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import courseEditorService from "../courseOverview/courseEditorService";
+import courseEditorService from "../courseEditor/courseService";
 
 const initialState = {
   course: {},
