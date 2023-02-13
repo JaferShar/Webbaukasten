@@ -17,8 +17,6 @@ const registerAccount = asyncHandler(async (req, res) => {
   const accountExists = await Account.findOne({ email });
 
   if (accountExists) {
-    //res.status(400)
-    //throw new Error('Account already exists')
     loginAccount(req, res);
     return;
   }
@@ -62,7 +60,7 @@ const loginAccount = asyncHandler(async (req, res) => {
       lastName: account.lastName,
       email: account.email,
       picture: account.picture,
-      token: generateToken(Account.id),
+      token: generateToken(account.id),
     });
   } else {
     res.status(400);

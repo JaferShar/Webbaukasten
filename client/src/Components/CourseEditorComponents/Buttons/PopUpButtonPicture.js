@@ -3,9 +3,11 @@ import "../../../Styling/ButtonStyling/PopUpButtonPicture.css";
 
 function PopUpButtonPicture() {
   const [selectedFile, setSelectedFile] = useState(null);
+  const [previewUrl, setPreviewUrl] = useState(null);
 
   const handleFileChange = (event) => {
     setSelectedFile(event.target.files[0]);
+    setPreviewUrl(URL.createObjectURL(event.target.files[0]));
   };
 
   return (
@@ -19,7 +21,8 @@ function PopUpButtonPicture() {
         onChange={handleFileChange}
         style={{ display: "none" }}
       />
-       {selectedFile && <p>{selectedFile.name}</p>}
+       <img src={previewUrl} alt={selectedFile && selectedFile.name} width="300" height="200" />
+       
     </div>
   );
 }
