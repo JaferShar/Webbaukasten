@@ -7,14 +7,14 @@ const Screen = require("../models/Screen").Screen;
 
 const getCourse = asyncHandler(async (req, res) => {
   try {
-    // get course and populate screens
-    const course = await Course.findById(req.params.id).populate("screens");
+    // get course
+    const course = await Course.findById(req.params.id);
     if (!course) {
       return res.status(404).json({ error: "Course not found." });
     } else if (course.account != req.account.id) {
       return res.status(401).json({ error: "Access denied." });
     }
-
+    
     res.status(200).json(course);
   } catch (error) {
     res.status(500).json({ error: error.message });

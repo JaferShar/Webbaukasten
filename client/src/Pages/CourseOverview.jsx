@@ -1,12 +1,11 @@
 import * as React from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import {
   Box,
   List,
-  ListItem,
+  ListItemButton,
   ListItemAvatar,
   ListItemText,
-  ListItemSecondaryAction,
 } from "@mui/material";
 import { Avatar, Button, IconButton, Grid } from "@mui/material";
 import FolderIcon from "@mui/icons-material/Folder";
@@ -24,6 +23,7 @@ import {
   renameCourse,
 } from "../features/courseOverview/courseOverViewSlice";
 import { useEffect } from "react";
+import { getCourse } from "../features/courseEditor/courseSlice";
 
 export default function CourseOverview() {
   const navigate = useNavigate();
@@ -35,6 +35,9 @@ export default function CourseOverview() {
   const { account } = useSelector((state) => state.auth);
   const { coursesState, isLoading, isError, message } = useSelector(
     (state) => state.courseOverview
+  );
+  const { course } = useSelector(
+    (state) => state.courseEditor
   );
 
   const handleClose = () => {
@@ -123,6 +126,11 @@ export default function CourseOverview() {
     }
   };
 
+  const handleListItemClick = (courseId) => {
+    //dispatch(getCourse(courseId));
+    navigate(`/course/${courseId}`);
+  };
+
   return (
     <div>
       <ResponsiveAppBar handleSearch={handleSearch} searchTerm={searchTerm} />
@@ -137,11 +145,10 @@ export default function CourseOverview() {
                   .includes(searchTerm.toLowerCase())
               )
               .map((course) => (
-                <ListItem
-                  button
+                <ListItemButton
                   key={course._id}
-                  component={Link}
-                  to={"/kurs/:id"}
+                  onClick={() => handleListItemClick(course._id)}
+                  sx={{ py: 2 }}
                 >
                   <ListItemAvatar>
                     <Avatar>
@@ -149,18 +156,19 @@ export default function CourseOverview() {
                     </Avatar>
                   </ListItemAvatar>
                   <ListItemText primary={course.courseName} />
-                  <ListItemSecondaryAction>
-                    <IconButton
-                      edge="end"
-                      aria-label="more"
-                      onClick={(event) =>
-                        handleClickMoreVertIcon(event, course._id)
-                      }
-                    >
-                      <MoreVertIcon />
-                    </IconButton>
-                  </ListItemSecondaryAction>
-                </ListItem>
+                  <Box sx={{ ml: "auto" }}>
+                      <IconButton
+                        edge="end"
+                        aria-label="more"
+                        onClick={(event) => {
+                          event.stopPropagation(); // stop the event from propagating to the parent
+                          handleClickMoreVertIcon(event, course._id);
+                        }}
+                      >
+                        <MoreVertIcon />
+                      </IconButton>
+                  </Box>
+                </ListItemButton>
               ))}
           </List>
         </Grid>
