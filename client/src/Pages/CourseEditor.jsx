@@ -23,6 +23,7 @@ import ScreenMenu from "../Components/CourseEditorComponents/Menus/ScreenMenu";
 import WelcomeTemplate from "../Components/CourseEditorComponents/Templates/WelcomeTemplate";
 //import StandardTemplate from "../Components/CourseEditorComponents/Templates/StandardTemplate";
 import EndTemplate from "../Components/CourseEditorComponents/Templates/EndTemplate";
+import HeaderEditor from "../Components/HeaderEditor";
 
 const beginTemplate = (
   <div>
@@ -71,23 +72,24 @@ function Course() {
 
   return (
     <>
-      <div className="background">
-        <h1 course="header">Kurs</h1>
+      {/* <div className="background">
+         <h1 course="header">Kurs</h1>
 
         <div className="buttons">
           <Buttons>AiOutlineCheckSquare</Buttons>
-        </div>
+        </div> 
 
+      </div> */}
+      <HeaderEditor></HeaderEditor>
         {changeableTemplate}
-      </div>
       <div>
         <ScreenViewer changeTemplate={changeTemplate} />
         
       </div>
 
-      <div>
+      {/* <div>
         <TemplateContainer></TemplateContainer>
-      </div>
+      </div> */}
 
       <div>
         <Menu></Menu>
