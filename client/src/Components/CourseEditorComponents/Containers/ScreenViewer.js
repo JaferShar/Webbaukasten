@@ -11,14 +11,19 @@ import {
   ListItemButton,
   Grid,
 } from "@mui/material";
-import TitleIcon from "@mui/icons-material/Title";
-import ExplicitIcon from "@mui/icons-material/Explicit";
 import AddScreenMenu from "../Menus/AddScreenMenu";
 import { useDispatch, useSelector } from "react-redux";
 import { createScreen, deleteScreen } from "../../../features/courseEditor/courseSlice";
+import { getScreen } from "../../../features/courseEditor/screenSlice";
 import { toast } from "react-toastify";
 import DeleteScreenMenu from "../Menus/DeleteScreenMenu";
 
+/**
+ * This Module is responsible for displaying an add screen button in the Screen Viewer.
+ * 
+ * @param {*} onAddClick This is a callback function that handles the logic for clicking the add screen button.
+ * @returns Item that displays an add screen button.
+ */
 function AddScreenItem({ onAddClick }) {
   return (
     <ListItemButton onClick={onAddClick} className="rectangle-list-item">
@@ -27,9 +32,16 @@ function AddScreenItem({ onAddClick }) {
   );
 }
 
+/**
+ * This Module is responsible for displaying the screens of a course in the Screen Viewer.
+ * 
+ * @param {*} changeTemplate This is a callback function that handles the logic for changing a displayed screen template. 
+ * @returns List of screens.
+ */
 function ScreenViewer({ changeTemplate }) {
   const screens = useSelector((state) => state.courseEditor.course.screens);
   const course = useSelector((state) => state.courseEditor.course);
+  const screen = useSelector((state) => state.screenEditor.screen);
   const dispatch = useDispatch();
   const [anchorEl, setAnchorEl] = useState(null);
   const [deleteAnchorEl, setDeleteAnchorEl] = useState(null);
@@ -48,6 +60,12 @@ function ScreenViewer({ changeTemplate }) {
     handleCloseContextMenu();
   };
 
+  /**
+   * This method creates a new screen based on the template selected.
+   * It handles the logic for clicking the AddScreenMenu component.
+   * 
+   * @param {*} template the template of the screen to be created.
+   */
   const handleCreate = (template) => {
     try {
       if (template === "Welcome") {
@@ -62,14 +80,19 @@ function ScreenViewer({ changeTemplate }) {
     }
   };
 
-  const handleContextMenu = (event, screen) => {
+  const handleContextMenu = (event, screenId) => {
     event.preventDefault();
     setDeleteAnchorEl(event.currentTarget);
-    setSelectedScreen(screen);
+    setSelectedScreen(screenId);
   };
 
   const handleCloseContextMenu = () => {
     setDeleteAnchorEl(null);
+  };
+
+  const handleOnClickScreen = (screenId) => {
+    dispatch(getScreen(screenId));
+    changeTemplate(screen.template);
   };
 
   return (
@@ -85,15 +108,16 @@ function ScreenViewer({ changeTemplate }) {
       >
         <List>
           {screens &&
-            screens.map((screen, index) => (
+            screens.map((screenId, index) => (
               <ListItemButton
-                key={screen}
+                key={screenId}
                 className="rectangle-list-item"
                 style={{ flexDirection: "column", border: "1px solid #d9dddd", cursor: 'context-menu' }}
                 sx={{ mb: 2 }}
-                onClick={() => {}}
+                onClick={() => 
+                  handleOnClickScreen(screenId)}
                 onContextMenu={(event) => {
-                  handleContextMenu(event, screen);
+                  handleContextMenu(event, screenId);
                 }}
               >
                 <Article style={{ fontSize: 100 }} />
