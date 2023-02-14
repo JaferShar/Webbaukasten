@@ -11,7 +11,6 @@ export const store = configureStore({
         auth: authReducer,
         courseOverview: courseOverViewReducer,
         courseEditor: courseEditorReducer,
-        screen: screenReudcer,
+        screenEditor: screenReudcer,
     },
 });
-

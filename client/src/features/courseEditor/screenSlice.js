@@ -23,7 +23,7 @@ export const getScreen = createAsyncThunk("get", async (screenId, thunkAPI) => {
 });
 
 export const screenSlice = createSlice({
-  name: "screen",
+  name: "screenEditor",
   initialState,
   reducers: {
     reset: (state) => initialState,
