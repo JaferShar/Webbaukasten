@@ -2,14 +2,14 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import screenService from "../courseEditor/screenService";
 
 const initialState = {
-  screen: {},
+  screen: {template: "Welcome"},
   isError: false,
   isLoading: false,
   isSuccess: false,
   message: "",
 };
 
-export const getScreen = createAsyncThunk("get", async (screenId, thunkAPI) => {
+export const getScreen = createAsyncThunk("getScreen", async (screenId, thunkAPI) => {
   try {
     const token = thunkAPI.getState().auth.account.token;
     return screenService.getScreen(screenId, token);

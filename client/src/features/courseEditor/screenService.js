@@ -11,6 +11,7 @@ const getScreen = async (screenId, token) => {
 };
 
 const courseEditorService = {
+    getScreen,
 };
 
 

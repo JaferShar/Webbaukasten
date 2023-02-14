@@ -52,7 +52,8 @@ function ScreenViewer({ changeTemplate }) {
 
   useEffect(() => {
     dispatch(getCourse(courseId));
-  }, [dispatch, courseId]);
+    changeTemplate(screen.template);
+  }, [dispatch, courseId, screen.template, changeTemplate]);
 
   const handleAddClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -98,8 +99,7 @@ function ScreenViewer({ changeTemplate }) {
   };
 
   const handleOnClickScreen = (screenId) => {
-    dispatch(getScreen(screenId));
-    changeTemplate(screen.template);
+    dispatch(getScreen(screenId))
   };
 
   return (
