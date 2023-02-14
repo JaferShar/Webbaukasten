@@ -15,6 +15,7 @@ import AddScreenMenu from "../Menus/AddScreenMenu";
 import { useDispatch, useSelector } from "react-redux";
 import { createScreen, deleteScreen } from "../../../features/courseEditor/courseSlice";
 import { getScreen } from "../../../features/courseEditor/screenSlice";
+import { getCourse } from "../../../features/courseEditor/courseSlice";
 import { toast } from "react-toastify";
 import DeleteScreenMenu from "../Menus/DeleteScreenMenu";
 
@@ -42,10 +43,16 @@ function ScreenViewer({ changeTemplate }) {
   const screens = useSelector((state) => state.courseEditor.course.screens);
   const course = useSelector((state) => state.courseEditor.course);
   const screen = useSelector((state) => state.screenEditor.screen);
+  const params = new URLSearchParams(window.location.search);
+  const courseId = params.get("courseId");
   const dispatch = useDispatch();
   const [anchorEl, setAnchorEl] = useState(null);
   const [deleteAnchorEl, setDeleteAnchorEl] = useState(null);
   const [selectedScreen, setSelectedScreen] = useState(null);
+
+  useEffect(() => {
+    dispatch(getCourse(courseId));
+  }, [dispatch, courseId]);
 
   const handleAddClick = (event) => {
     setAnchorEl(event.currentTarget);

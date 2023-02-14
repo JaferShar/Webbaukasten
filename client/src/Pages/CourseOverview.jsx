@@ -126,7 +126,7 @@ export default function CourseOverview() {
 
   const handleListItemClick = (courseId) => {
     dispatch(getCourse(courseId));
-    navigate(`/kurs`);
+    navigate(`/kurs?courseId=${courseId}`);
   };
 
   return (
