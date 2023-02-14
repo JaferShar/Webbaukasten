@@ -18,8 +18,8 @@ class PixabayView extends Component {
 
         if (images) {
             imageListContent = (
-                <ImageList sx={{ width: 2500, height: 1000 }} cols={4}>
-                <ImageListItem key="Subheader" cols={4}>
+                <ImageList sx={{ width: 1400, height: 900 }} cols={2}>
+                <ImageListItem key="Subheader" cols={2}>
                   <ListSubheader component="div">Bilder</ListSubheader>
                 </ImageListItem>
                 {images.map((item) => (
