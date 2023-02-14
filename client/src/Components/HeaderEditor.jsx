@@ -12,10 +12,9 @@ import MenuItem from '@mui/material/MenuItem';
 import { logout, reset } from '../features/auth/authSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import Button from '@mui/material/Button';
 import CloudDoneIcon from '@mui/icons-material/CloudDone';
-import SearchBar from './CourseOverviewComponents/SearchBar';
 import HomeIcon from '@mui/icons-material/Home';
+import { toast } from "react-toastify";
 
 
 const settings = ['Profile', 'Logout'];
@@ -44,7 +43,7 @@ function ResponsiveAppBar({ searchTerm, onSearch, handleSearch }) {
 
   return (
     <AppBar position="static">
-      <Container maxWidth="xl">
+      <Container maxWidth="100%">
         <Toolbar disableGutters>
           <Box display="flex" flexGrow={1}>
             {/* whatever is on the left side */}
@@ -52,10 +51,10 @@ function ResponsiveAppBar({ searchTerm, onSearch, handleSearch }) {
           </Box>
           {/* this is on the right side*/}
           <div style={{marginRight: "40px"}}>
-          <CloudDoneIcon/>
+          <CloudDoneIcon onClick={() => {toast.success('Your changes have been saved.');}} style={{ cursor: 'pointer' }} />
           </div>
           <div style={{marginRight: "40px"}}>
-          <HomeIcon />
+          <HomeIcon onClick={() => {navigate('/kursuebersicht');}} style={{ cursor: 'pointer' }} />
           </div>
 
           {/* This is the profile Button and menu  */}
