@@ -40,15 +40,12 @@ const renameCourse = async (courseData, token) => {
 
 const shareCourse = async (data, token) => {
   try {
-    console.log(data);
     const config = {
       headers: { Authorization: `Bearer ${token}` },
     };
-    console.log(data)
-    console.log(API_URL + `/share/${data.courseId}`)
     const response = await axios.post(
       API_URL + `/share/${data.courseId}`,
-      data.email,
+      data,
       config
     );
     return response.data;

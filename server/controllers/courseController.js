@@ -54,7 +54,6 @@ const setCourse = asyncHandler(async (req, res) => {
 
     res.status(201).json(course);
   } catch (error) {
-    console.log(error.message);
     res.status(500).json({ error: error.message });
   }
 });
@@ -132,11 +131,12 @@ const shareCourse = asyncHandler(async (req, res) => {
     } else if (course.account != req.account.id) {
       return res.status(401).json({ error: "Access denied" });
     }
-    console.log(course)
 
     const account = await Account.findOne({ email: email });
     if (!account) {
       return res.status(404).json({ error: "Account not found." });
+    } else if (account._id.toString() == course.account._id.toString()) {
+      return res.status(400).json({ error: "You can't share with yourself." });
     }
 
     const newSections = course.sections.map((section) => {
@@ -164,7 +164,6 @@ const shareCourse = asyncHandler(async (req, res) => {
         return newScreen;
       })
     );
-    console.log(newScreens)
 
     // push screens to course
     newCourse.screens = newScreens;

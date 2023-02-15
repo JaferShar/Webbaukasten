@@ -128,6 +128,7 @@ export default function CourseOverview() {
   const handleShare = async (email) => {
     try {
       dispatch(shareCourse({ courseId: selectedCourseId, email: email}))
+      dispatch(getAllCourses());
       toast.success('course was shared with ' + email)
     } catch (error) {
       toast(error.message, { type: "error" });
