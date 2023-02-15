@@ -6,6 +6,7 @@ const {
   getAllCourses,
   deleteCourse,
   updateCourse,
+  shareCourse,
 } = require("../controllers/courseController");
 const { protect } = require("../middleware/authMiddleware");
 
@@ -16,5 +17,6 @@ router
   .get(protect, getCourse)
   .delete(protect, deleteCourse)
   .put(protect, updateCourse);
+router.route("/share/:id").post(protect, shareCourse);
 
 module.exports = router;

@@ -116,6 +116,7 @@ const deleteCourse = asyncHandler(async (req, res) => {
   }
 });
 
+// tested
 const shareCourse = asyncHandler(async (req, res) => {
   try {
     const { email } = req.body;
@@ -125,26 +126,34 @@ const shareCourse = asyncHandler(async (req, res) => {
         .json({ error: "Please provide an email address." });
     }
 
-    const course = await Course.findById(req.params.id);
+    const course = await Course.findById(req.params.id).populate('screens');
     if (!course) {
       return res.status(404).json({ error: "Course not found." });
     } else if (course.account != req.account.id) {
       return res.status(401).json({ error: "Access denied" });
     }
 
-    const account = Account.findOne({ email: email });
+    
+    const account = await Account.findOne({ email: email });
     if (!account) {
       return res.status(404).json({ error: "Account not found." });
     }
 
-    // first I just add the course to the account if the email is found may add accept or decline later
+    const newSections = course.sections.map((section) => {
+      return {
+        _id: new mongoose.Types.ObjectId(),
+        sectionName: section.sectionName,
+        index: section.index
+      };
+    });
+
     // create new course with data
     const newCourse = await Course.create({
       account: account._id,
       courseName: course.courseName,
-      sections: course.sections,
+      sections: newSections,
     });
-
+    
     // create new screens with data
     const newScreens = await Promise.all(
       course.screens.map(async (screen) => {
@@ -155,12 +164,14 @@ const shareCourse = asyncHandler(async (req, res) => {
         return newScreen;
       })
     );
+    console.log(newScreens)
 
     // push screens to course
     newCourse.screens = newScreens;
     await newCourse.save();
 
-    res.status(201).json({ message: `Course shared with ${email}` });
+    // res.status(201).json({ message: `Course shared with ${email}` });
+    res.status(201).json(newCourse);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -172,4 +183,5 @@ module.exports = {
   getAllCourses,
   updateCourse,
   deleteCourse,
+  shareCourse,
 };
