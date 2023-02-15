@@ -40,7 +40,7 @@ function ResponsiveAppBar({ searchTerm, onSearch, handleSearch }) {
 
   return (
     <AppBar position="static">
-      <Container maxWidth="xl">
+      <Container maxWidth="100%">
         <Toolbar disableGutters>
           <Box display="flex" flexGrow={1}>
             {/* whatever is on the left side */}
