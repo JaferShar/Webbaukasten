@@ -132,8 +132,8 @@ const shareCourse = asyncHandler(async (req, res) => {
     } else if (course.account != req.account.id) {
       return res.status(401).json({ error: "Access denied" });
     }
+    console.log(course)
 
-    
     const account = await Account.findOne({ email: email });
     if (!account) {
       return res.status(404).json({ error: "Account not found." });

@@ -27,14 +27,6 @@ const deleteScreen = async (screenData, token) => {
     return response.data;
 };
 
-const shareCourse = async (courseId, token) => {
-    const config = {
-        headers: { Authorization: `Bearer ${token}` },
-    };
-    const response = await axios.post(API_URL + `/share/${courseId}`, config);
-    return response.data;
-};
-
 const courseEditorService = {
     getCourse,
     createScreen,
