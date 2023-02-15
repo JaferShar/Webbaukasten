@@ -134,6 +134,18 @@ export default function CourseOverview() {
     }
   };
 
+  const handlePublish = async () => {
+    try {
+      const pageUrl = new URL(`/student/view?courseId=${selectedCourseId}`, window.location.origin).href;
+      navigator.clipboard.writeText(pageUrl);
+      toast.success('URL was copied to clipboard')
+    } catch (error) {
+      toast(error.message, { type: "error" });
+    } finally {
+      handleClose();
+    }
+  };
+
   const handleListItemClick = (courseId) => {
     dispatch(getCourse(courseId));
     navigate(`/kurs?courseId=${courseId}`);
@@ -186,7 +198,7 @@ export default function CourseOverview() {
         handleClose={handleClose}
         handleDelete={handleDelete}
         //handleShare={handleShare}
-        //handlePublish={handlePublish}
+        handlePublish={handlePublish}
         handleRename={handleRename}
       />
       <Box
