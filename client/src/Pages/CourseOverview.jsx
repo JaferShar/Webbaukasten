@@ -1,165 +1,196 @@
-import * as React from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { useEffect } from 'react';
-import { Box, List, ListItem, ListItemAvatar, ListItemText, ListItemSecondaryAction} from '@mui/material';
-import { Avatar, Button, IconButton, Grid } from '@mui/material';
-import FolderIcon from '@mui/icons-material/Folder';
-import AddIcon from '@mui/icons-material/Add';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
-import '../Styling/SiteStyling/CourseOverview.css'       
-import { toast } from 'react-toastify';
-//import overviewService from '../features/course/overviewService';
-import MoreVertMenu from '../Components/CourseOverviewComponents/MoreVertMenu';
-import ResponsiveAppBar from '../Components/ResponsiveAppBar';
-import { useDispatch } from 'react-redux';
-import { createCourse } from '../features/courseOverview/courseOverViewSlice';
-
-export default function CourseOverview({props}) {
-    const [anchorEl, setAnchorEl] = React.useState(null);
-    const [selectedCourseId, setSelectedCourseId] = React.useState(null);
-    const [courses, setCourses] = React.useState([]);
-    const [searchTerm, setSearchTerm] = React.useState("");
-    const navigate = useNavigate();
-    const dispatch = useDispatch();
-
-    const handleClose = () => {
-        setAnchorEl(null);
-    }; 
-
-    const handleSearch = (event) => {
-        setSearchTerm(event.target.value);
-    };
-
-    const handleClickMoreVertIcon = (event, courseId) => {
-        setAnchorEl(event.currentTarget);
-        setSelectedCourseId(courseId);
-    };
-
-    // load courses tested
-    /*
-    useEffect(() => {
-        try {
-            overviewService.getAllCourses().then((courses) => {
-                setCourses(courses);
-            });
-        } catch (error) {
-            toast('Kurse konnten nicht geladen werden', { type: 'error' });
-        }      
-    }, []);
-    */
-
-    // tested
-    const handleCreateCourse = async () => {
-        let counter = 1;
-        let courseName = "neuer Kurs";
-        while (courses.find(course => course.cName === courseName)) {
-            courseName = `neuer Kurs ${counter}`;
-            counter += 1;
-        }    
-        try {
-            dispatch(createCourse({courseName}))
-            const courseId = courses.length + 1;
-            setCourses([...courses, { id: courseId, cName: courseName }]);
-            return;
-            //const courseId = await overviewService.createCourse(courseName);
-        } catch (error) {
-            toast(error.message, { type: 'error' });
-        }
-    };
-    
-    // tested
-    /*
-    const handleDelete = async () => {
-        try {
-            await overviewService.deleteCourse(selectedCourseId)
-            setCourses(courses.filter(course => course.id !== selectedCourseId));
-        } catch (error) {
-            toast(error.message, { type: 'error' });
-        } finally {
-            handleClose();
-        }
-    };
-    */
+import * as React from "react";
+import { useNavigate } from "react-router-dom";
+import {
+  Box,
+  List,
+  ListItemButton,
+  ListItemAvatar,
+  ListItemText,
+} from "@mui/material";
+import { Avatar, Button, IconButton, Grid } from "@mui/material";
+import FolderIcon from "@mui/icons-material/Folder";
+import AddIcon from "@mui/icons-material/Add";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
+import "../Styling/SiteStyling/CourseOverview.css";
+import { toast } from "react-toastify";
+import MoreVertMenu from "../Components/CourseOverviewComponents/MoreVertMenu";
+import ResponsiveAppBar from "../Components/ResponsiveAppBar";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  createCourse,
+  getAllCourses,
+  deleteCourse,
+  renameCourse,
+} from "../features/courseOverview/courseOverViewSlice";
+import { useEffect } from "react";
+import { getCourse } from "../features/courseEditor/courseSlice";
 
 
-    // tested
-    /*
-    const handleEdit = () => {
-        navigate('/kurs')
-    };
+export default function CourseOverview() {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [selectedCourseId, setSelectedCourseId] = React.useState(null);
+  const [searchTerm, setSearchTerm] = React.useState("");
 
-    // To DO
-    const handleShare = () => {
-    };
-    const handlePublish = () => {
-    };
+  const { account } = useSelector((state) => state.auth);
+  const { coursesState, isError, message } = useSelector(
+    (state) => state.courseOverview
+  );
 
-    // tested
-    const handleRename = async (newName) => {
-        try {
-            const changeCourse = courses.find(course => course.id === selectedCourseId)
-            // nothing to do
-            if (changeCourse.cName === newName) {
-                handleClose();
-                return
-            }
-            const exist = courses.find(course => course.cName === newName)
-            if (exist) {
-                throw new Error('Kursname existiert bereits')
-            }       
-            await overviewService.updateCourse(selectedCourseId, newName)  
-            changeCourse.cName = newName
-            setCourses([...courses]) 
-        } catch (error) {
-            toast(error.message, { type: 'error' });
-        } finally {
-            handleClose();
-        }          
-    };
-    */
-    
-    return (
-        <div>
-        <ResponsiveAppBar handleSearch={handleSearch} searchTerm={searchTerm}/>
-        <Box b={1} mt={5} />
-        <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-            <Grid item xs={12} sm={6}>
-                <List>
-                    {courses.filter(course => course.cName.toLowerCase().includes(searchTerm.toLowerCase())).map((course) => (
-                    <ListItem key={course.id}
-                    button
-                    component={Link} to={`/kurs`}>
-                        <ListItemAvatar>
-                        <Avatar>
-                            <FolderIcon />
-                        </Avatar>
-                        </ListItemAvatar>
-                        <ListItemText primary={course.cName}/>
-                        <ListItemSecondaryAction>
-                        <IconButton edge="end" aria-label="more" onClick={(event) => handleClickMoreVertIcon(event, course.id)}>
-                            <MoreVertIcon />
-                        </IconButton>
-                        </ListItemSecondaryAction>
-                    </ListItem>
-                    ))}
-                </List>
-            </Grid>
-        </Box>
-        <MoreVertMenu
-            anchorEl={anchorEl}
-            handleClose={handleClose}
-            //handleDelete={() => handleDelete()}
-            //handleEdit={handleEdit}
-            //handleShare={handleShare}
-            //handlePublish={handlePublish}
-            //handleRename={handleRename}
-        />
-        <Box sx={{ display: 'flex', justifyContent: 'center', marginTop: '20px' }}>
-            <Button variant="contained" color="primary" onClick={handleCreateCourse}>
-            <AddIcon />
-            Kurs erstellen
-            </Button>
-        </Box>
-        </div>
-    );  
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const handleSearch = (event) => {
+    setSearchTerm(event.target.value);
+  };
+
+  const handleClickMoreVertIcon = (event, courseId) => {
+    setAnchorEl(event.currentTarget);
+    setSelectedCourseId(courseId);
+  };
+
+  useEffect(() => {
+    try {
+      if (isError) {
+        console.log(message);
+      }
+      if (!account) {
+        navigate("/login");
+        return;
+      }
+      dispatch(getAllCourses());
+    } catch (error) {
+      toast("Kurse konnten nicht geladen werden", { type: "error" });
+    }
+  }, [account, navigate, dispatch, isError, message]);
+
+  // tested
+  const handleCreateCourse = async () => {
+    const existingCourseNames = new Set(
+      coursesState.map((course) => course.courseName)
+    );
+    let counter = 1;
+    let courseName = "neuer Kurs";
+
+    while (existingCourseNames.has(courseName)) {
+      courseName = `neuer Kurs ${counter++}`;
+    }
+
+    try {
+      dispatch(createCourse({ courseName }));
+    } catch (error) {
+      console.log(error, "error inseide overview");
+      toast(error.message, { type: "error" });
+    }
+  };
+
+  const handleDelete = async () => {
+    try {
+      dispatch(deleteCourse(selectedCourseId));
+    } catch (error) {
+      toast(error.message, { type: "error" });
+    } finally {
+      handleClose();
+    }
+  };
+
+  const handleRename = async (newName) => {
+    try {
+      const changeCourse = coursesState.find(
+        (course) => course._id === selectedCourseId
+      );
+      // nothing to do
+      if (changeCourse.courseName === newName) {
+        handleClose();
+        return;
+      }
+      const exist = coursesState.find(
+        (course) => course.courseName === newName
+      );
+      if (exist) {
+        throw new Error("Kursname existiert bereits");
+      }
+      const courseData = {
+        courseId: selectedCourseId,
+        courseName: newName,
+      };
+      dispatch(renameCourse(courseData));
+    } catch (error) {
+      toast(error.message, { type: "error" });
+    } finally {
+      handleClose();
+    }
+  };
+
+  const handleListItemClick = (courseId) => {
+    dispatch(getCourse(courseId));
+    navigate(`/kurs?courseId=${courseId}`);
+  };
+
+  return (
+    <div>
+      <ResponsiveAppBar handleSearch={handleSearch} searchTerm={searchTerm} />
+      <Box b={1} mt={5} />
+      <Box sx={{ display: "flex", justifyContent: "center" }}>
+        <Grid item xs={12} sm={6}>
+          <List>
+            {coursesState
+              .filter((course) =>
+                course.courseName
+                  .toLowerCase()
+                  .includes(searchTerm.toLowerCase())
+              )
+              .map((course) => (
+                <ListItemButton
+                  key={course._id}
+                  onClick={() => handleListItemClick(course._id)}
+                  sx={{ py: 2 }}
+                >
+                  <ListItemAvatar>
+                    <Avatar>
+                      <FolderIcon />
+                    </Avatar>
+                  </ListItemAvatar>
+                  <ListItemText primary={course.courseName} />
+                  <Box sx={{ ml: "auto" }}>
+                      <IconButton
+                        edge="end"
+                        aria-label="more"
+                        onClick={(event) => {
+                          event.stopPropagation(); // stop the event from propagating to the parent
+                          handleClickMoreVertIcon(event, course._id);
+                        }}
+                      >
+                        <MoreVertIcon />
+                      </IconButton>
+                  </Box>
+                </ListItemButton>
+              ))}
+          </List>
+        </Grid>
+      </Box>
+      <MoreVertMenu
+        anchorEl={anchorEl}
+        handleClose={handleClose}
+        handleDelete={handleDelete}
+        //handleShare={handleShare}
+        //handlePublish={handlePublish}
+        handleRename={handleRename}
+      />
+      <Box
+        sx={{ display: "flex", justifyContent: "center", marginTop: "20px" }}
+      >
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={handleCreateCourse}
+        >
+          <AddIcon />
+          Kurs erstellen
+        </Button>
+      </Box>
+    </div>
+  );
 }

@@ -8,10 +8,12 @@ import Container from "@mui/material/Container";
 export default function AddScreenMenu({
   anchorEl,
   handleClose,
-  handleWelcome,
-  handleStandard,
-  handleEnd,
+  handleCreate
 }) {
+  const handleClick = (template) => {
+    handleCreate(template);
+    handleClose();
+  };
   return (
     <Container>
       <Menu
@@ -21,14 +23,17 @@ export default function AddScreenMenu({
         open={Boolean(anchorEl)}
         onClose={handleClose}
       >
-        <MenuItem onClick={handleWelcome}>
+        <MenuItem onClick={() => {
+          handleClick("Welcome")}}>
           <TitleIcon /> Wilkommen
         </MenuItem>
-        <MenuItem onClick={handleStandard}>
+        <MenuItem onClick={() => {
+          handleClick("Standard")}}>
           <SourceIcon />
           Standard
         </MenuItem>
-        <MenuItem onClick={handleEnd}>
+        <MenuItem onClick={() => {
+          handleClick("End")}}>
           <ExplicitIcon />
           Ende
         </MenuItem>

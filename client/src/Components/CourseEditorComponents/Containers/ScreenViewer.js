@@ -1,95 +1,158 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import "../../../Styling/SiteStyling/ScreenViewer.css";
-import Article from '@mui/icons-material/Article';
-import NoteAdd from '@mui/icons-material/NoteAdd';
+import Article from "@mui/icons-material/Article";
+import NoteAdd from "@mui/icons-material/NoteAdd";
 import {
   Paper,
   List,
   ListItem,
   ListItemText,
+  ListItemButton,
   Grid,
 } from "@mui/material";
 import AddScreenMenu from "../Menus/AddScreenMenu";
+import { useDispatch, useSelector } from "react-redux";
+import { createScreen, deleteScreen } from "../../../features/courseEditor/courseSlice";
+import { getScreen } from "../../../features/courseEditor/screenSlice";
+import { getCourse } from "../../../features/courseEditor/courseSlice";
+import { toast } from "react-toastify";
+import DeleteScreenMenu from "../Menus/DeleteScreenMenu";
 
+/**
+ * This Module is responsible for displaying an add screen button in the Screen Viewer.
+ * 
+ * @param {*} onAddClick This is a callback function that handles the logic for clicking the add screen button.
+ * @returns Item that displays an add screen button.
+ */
 function AddScreenItem({ onAddClick }) {
-    return (
-      <ListItem button onClick={onAddClick} className="rectangle-list-item">
-        <NoteAdd style={{fontSize: 100}}/>
-      </ListItem>
-    );
-  }
+  return (
+    <ListItemButton onClick={onAddClick} className="rectangle-list-item">
+      <NoteAdd style={{ fontSize: 100 }} />
+    </ListItemButton>
+  );
+}
 
-
-function ScreenViewer({changeTemplate}) {
-  const [selectedScreen, setSelectedScreen] = useState(0);
-  const [screens, setScreens] = useState([]);
+/**
+ * This Module is responsible for displaying the screens of a course in the Screen Viewer.
+ * 
+ * @param {*} changeTemplate This is a callback function that handles the logic for changing a displayed screen template. 
+ * @returns List of screens.
+ */
+function ScreenViewer({ changeTemplate }) {
+  const screens = useSelector((state) => state.courseEditor.course.screens);
+  const course = useSelector((state) => state.courseEditor.course);
+  const screen = useSelector((state) => state.screenEditor.screen);
+  const params = new URLSearchParams(window.location.search);
+  const courseId = params.get("courseId");
+  const dispatch = useDispatch();
   const [anchorEl, setAnchorEl] = useState(null);
-  var quantity = 20;
+  const [deleteAnchorEl, setDeleteAnchorEl] = useState(null);
+  const [selectedScreen, setSelectedScreen] = useState(null);
 
   useEffect(() => {
-    const newScreens = [];
-    newScreens.push({name: "Screen 1", template: 'Welcome'})
-    for (let i = 1; i < quantity; i++) {
-      newScreens.push({
-        name: "Screen " + (i + 1),
-        template: 'Standard'
-      });
-    }
-    setScreens(newScreens);
-  }, [quantity]);
+    dispatch(getCourse(courseId));
+    changeTemplate(screen.template);
+  }, [dispatch, courseId, screen.template, changeTemplate]);
 
-    const handleAddClick = (event) => {
-        setAnchorEl(event.currentTarget);
-    }
+  const handleAddClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
 
-    const handleClose = () => {
-        setAnchorEl(null);
-    }; 
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
 
-    const handleWelcome = () => {
-        setScreens([...screens, {name: "Screen " + (screens.length + 1), template: 'Welcome'}]);
-        setSelectedScreen(screens.length - 1);
-        changeTemplate('Welcome');
-        handleClose();
-    }
+  const handleDelete = () => {
+    dispatch(deleteScreen({ courseId: course._id, screenId: selectedScreen }));
+    handleCloseContextMenu();
+  };
 
-    const handleStandard = () => {
-        setScreens([...screens, {name: "Screen " + (screens.length + 1), template: 'Standard'}]);
-        setSelectedScreen(screens.length - 1);
-        changeTemplate('Standard');
-        handleClose();
+  /**
+   * This method creates a new screen based on the template selected.
+   * It handles the logic for clicking the AddScreenMenu component.
+   * 
+   * @param {*} template the template of the screen to be created.
+   */
+  const handleCreate = (template) => {
+    try {
+      if (template === "Welcome") {
+        throw new Error("Welcome screen cannot be created");
+      }
+      dispatch(createScreen({ template: template, courseId: course._id }));
+      changeTemplate(template);
+    } catch (error) {
+      toast(error.message, { type: "error" });
+    } finally {
+      handleClose();
     }
+  };
 
-    const handleEnd = () => {
-        setScreens([...screens, {name: "Screen " + (screens.length + 1), template: 'End'}]);
-        setSelectedScreen(screens.length - 1);
-        changeTemplate('End');
-        handleClose();
-    }
+  const handleContextMenu = (event, screenId) => {
+    event.preventDefault();
+    setDeleteAnchorEl(event.currentTarget);
+    setSelectedScreen(screenId);
+  };
+
+  const handleCloseContextMenu = () => {
+    setDeleteAnchorEl(null);
+  };
+
+  const handleOnClickScreen = (screenId) => {
+    dispatch(getScreen(screenId))
+  };
+
   return (
     <Grid className="ScreenViewer">
-
-        <Paper style={{ display: 'flex', justifyContent: 'center', maxHeight: '100%', maxWidth: '100%', overflow: "auto" }}>
-            <Paper style={{marginBottom: '200px'}}>
-          <List>
-            {screens.map((screen, index) => (
-              <ListItem key={index} button className="rectangle-list-item" style={{marginBottom: '30px', flexDirection: 'column'}}>
-                <Article style={{fontSize: 100}}/>
-                <ListItemText primaryTypographyProps={{variant: "body2"}} primary={index + 1} style={{marginTop: '60px'}}/>
-              </ListItem>
+      <Paper
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          maxHeight: "100%",
+          maxWidth: "100%",
+          overflow: "auto",
+        }}
+      >
+        <List>
+          {screens &&
+            screens.map((screenId, index) => (
+              <ListItemButton
+                key={screenId}
+                className="rectangle-list-item"
+                style={{ flexDirection: "column", border: "1px solid #d9dddd", cursor: 'context-menu' }}
+                sx={{ mb: 2 }}
+                onClick={() => 
+                  handleOnClickScreen(screenId)}
+                onContextMenu={(event) => {
+                  handleContextMenu(event, screenId);
+                }}
+              >
+                <Article style={{ fontSize: 100 }} />
+                <ListItemText
+                  primaryTypographyProps={{ variant: "body2" }}
+                  primary={index + 1}
+                  style={{ marginTop: "60px" }}
+                />
+              </ListItemButton>
             ))}
-            <AddScreenItem onAddClick={(event) => {handleAddClick(event)}} />
-            <ListItem sytele={{visibility:'hidden'}} />
-          </List>
-          </Paper>
-        </Paper>
-        <AddScreenMenu 
-            anchorEl={anchorEl}
-            handleClose={handleClose}
-            handleWelcome={handleWelcome}
-            handleStandard={handleStandard}
-            handleEnd={handleEnd}
-        />
+          <AddScreenItem
+            onAddClick={(event) => {
+              handleAddClick(event);
+            }}
+          />
+          <ListItem style={{ display: "none" }} />
+        </List>
+      </Paper>
+      <DeleteScreenMenu
+        anchorEl={deleteAnchorEl}
+        handleClose={handleCloseContextMenu}
+        handleDelete={handleDelete}
+      />
+      <AddScreenMenu
+        anchorEl={anchorEl}
+        handleClose={handleClose}
+        handleCreate={handleCreate}
+      />
     </Grid>
   );
 }

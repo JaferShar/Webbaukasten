@@ -6,12 +6,11 @@ const Course = require("../models/Course");
 const { Screen, Picture, TextField, H5P } = require("../models/Screen");
 
 const setScreen = asyncHandler(async (req, res) => {
+  const  { template } = req.body;
   try {
-    const template = req.body.template;
     if (!template || template.toString() === "Welcome") {
       return res.status(400).json({ error: "Please select a valid template" });
     }
-
     const course = await Course.findById(req.params.courseId);
     if (!course) {
       return res.status(404).json({ error: "Course not found" });
@@ -20,7 +19,6 @@ const setScreen = asyncHandler(async (req, res) => {
     course.screens.push(screen);
     await course.save();
 
-    // may change to screen later
     res.status(201).json(course);
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -143,6 +141,19 @@ const setH5P = asyncHandler(async (req, res) => {
     screen.save();
 
     res.status(201).json(screen);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+const getScreen = asyncHandler(async (req, res) => {
+  try {
+    const screen = await Screen.findById(req.params.screenId);
+    if (!screen) {
+      return res.status(404).json({ error: "Screen not found" });
+    }
+
+    res.status(200).json(screen);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -276,16 +287,22 @@ const updateScreen = asyncHandler(async (req, res) => {
 
 const deleteScreen = asyncHandler(async (req, res) => {
   try {
+    const courseId = req.query.param1;
+    const screenId = req.query.param2;
     // delete screen on course first
-    const course = await Course.findById(req.params.courseId);
-    if (!course.screens.id(req.params.screenId)) {
+    const course = await Course.findById(courseId);
+    if (!course) {
+      return res.status(404).json({ error: "Course not found" });
+    }
+    const screen = course.screens.find((screen) => screen._id.toString() === screenId);
+    if (!screen) {
       return res.status(404).json({ error: "Screen not found" });
     }
-    course.screens.id(req.params.screenId).remove();
+    course.screens.pull(screenId);
 
     // save changes and delete screen afterwards
     await course.save();
-    await Screen.findByIdAndDelete(req.params.screenId);
+    await Screen.findByIdAndDelete(screenId);
 
     res.status(200).json(course);
   } catch (error) {
@@ -310,6 +327,7 @@ const deleteSection = asyncHandler(async (req, res) => {
 
 const deleteElement = asyncHandler(async (req, res) => {
   try {
+    
     const screen = await Screen.findById(req.params.screenId);
     if (!screen) {
       return res.status(404).json({ error: "Screen not found" });
@@ -329,6 +347,7 @@ module.exports = {
   setTextField,
   setPicture,
   setH5P,
+  getScreen,
   updateScreenPosition,
   updateSection,
   updateScreen,
