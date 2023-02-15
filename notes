@@ -1,12 +1,12 @@
 14.02. To Do:
 1. create screen slice and screen service for redux ✅
-2.1. add on click screen
-2.2. fetch screen data from backend
+other To Dos:
+2.1. add on click screen ✅
+2.2. fetch screen data from backend ✅
 3. display screen data based on templates
 -> May include rewriting some template code
-4.prevent deleting redux states on refresh
+4.prevent deleting redux states on refresh (✅)
 
-other To Dos:
 -integrate H5P
 -integrate Pixabay
 -integrate Elements on Screen
