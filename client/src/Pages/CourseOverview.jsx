@@ -21,6 +21,7 @@ import {
   getAllCourses,
   deleteCourse,
   renameCourse,
+  shareCourse,
 } from "../features/courseOverview/courseOverViewSlice";
 import { useEffect } from "react";
 import { getCourse } from "../features/courseEditor/courseSlice";
@@ -124,9 +125,10 @@ export default function CourseOverview() {
     }
   };
 
-  const handleShare = async () => {
+  const handleShare = async (email) => {
     try {
-      // TODO
+      dispatch(shareCourse({ courseId: selectedCourseId, email: email}))
+      toast.success('course was shared with ' + email)
     } catch (error) {
       toast(error.message, { type: "error" });
     } finally {
@@ -197,7 +199,7 @@ export default function CourseOverview() {
         anchorEl={anchorEl}
         handleClose={handleClose}
         handleDelete={handleDelete}
-        //handleShare={handleShare}
+        handleShare={handleShare}
         handlePublish={handlePublish}
         handleRename={handleRename}
       />
