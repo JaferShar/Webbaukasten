@@ -61,7 +61,7 @@ function ResponsiveAppBar({ searchTerm, onSearch, handleSearch }) {
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src={account ? account.picture : ''} referrerpolicy="no-referrer"/>
+                <Avatar alt="Remy Sharp" src={account ? account.picture : ''} referrerPolicy="no-referrer"/>
               </IconButton>
             </Tooltip>
             <Menu
