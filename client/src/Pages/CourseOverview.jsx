@@ -124,6 +124,16 @@ export default function CourseOverview() {
     }
   };
 
+  const handleShare = async () => {
+    try {
+      // TODO
+    } catch (error) {
+      toast(error.message, { type: "error" });
+    } finally {
+      handleClose();
+    }
+  };
+
   const handleListItemClick = (courseId) => {
     dispatch(getCourse(courseId));
     navigate(`/kurs?courseId=${courseId}`);
