@@ -146,6 +146,19 @@ const setH5P = asyncHandler(async (req, res) => {
   }
 });
 
+const getScreen = asyncHandler(async (req, res) => {
+  try {
+    const screen = await Screen.findById(req.params.screenId);
+    if (!screen) {
+      return res.status(404).json({ error: "Screen not found" });
+    }
+
+    res.status(200).json(screen);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
 const updateScreenPosition = asyncHandler(async (req, res) => {
   try {
     const { screenId, newIndex } = req.body;
@@ -334,6 +347,7 @@ module.exports = {
   setTextField,
   setPicture,
   setH5P,
+  getScreen,
   updateScreenPosition,
   updateSection,
   updateScreen,

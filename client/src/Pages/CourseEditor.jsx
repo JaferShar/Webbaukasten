@@ -23,6 +23,7 @@ import ScreenMenu from "../Components/CourseEditorComponents/Menus/ScreenMenu";
 import WelcomeTemplate from "../Components/CourseEditorComponents/Templates/WelcomeTemplate";
 //import StandardTemplate from "../Components/CourseEditorComponents/Templates/StandardTemplate";
 import EndTemplate from "../Components/CourseEditorComponents/Templates/EndTemplate";
+import HeaderEditor from "../Components/HeaderEditor";
 
 const beginTemplate = (
   <div>
@@ -51,43 +52,43 @@ const endTemplate = (
 function Course() {
   const [changeableTemplate, setChangeableTemplate] = useState(beginTemplate);
 
-  // you have to change the ScreenMenu now because
-  // i changed the method that does not require sub classes to know the template declaration
   const changeTemplate = (template) => {
-    if (template === "Welcome") {
-      setChangeableTemplate(welcomeTemplate);
-
-      <div className="course">
-      <ScreenMenu changeTemplate={changeTemplate} />
-    </div>
-    } 
-    // add standard template here
-    /*else if (template == "Standard") {
-      setChangeableTemplate(standardTemplate);
-    }*/ else if (template === "End") {
-      setChangeableTemplate(endTemplate);
+    switch (template) {
+      case "Begin":
+        setChangeableTemplate(beginTemplate);
+        break;
+      case "Welcome":
+        setChangeableTemplate(welcomeTemplate);
+        break;
+      /*case "Standard":
+        setChangeableTemplate(standardTemplate);
+        break;*/
+      case "End":
+        setChangeableTemplate(endTemplate);
+        break;
+      default:
+        break;
     }
   };
 
   return (
     <>
-      <div className="background">
-        <h1 course="header">Kurs</h1>
-
+      {/* <div className="background">
+         <h1 course="header">Kurs</h1>
         <div className="buttons">
           <Buttons>AiOutlineCheckSquare</Buttons>
-        </div>
+        </div> 
 
+      </div> */}
+      <HeaderEditor></HeaderEditor>
         {changeableTemplate}
-      </div>
       <div>
         <ScreenViewer changeTemplate={changeTemplate} />
-        
       </div>
 
-      <div>
+      {/* <div>
         <TemplateContainer></TemplateContainer>
-      </div>
+      </div> */}
 
       <div>
         <Menu></Menu>

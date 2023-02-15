@@ -12,7 +12,10 @@ import MenuItem from '@mui/material/MenuItem';
 import { logout, reset } from '../features/auth/authSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import SearchBar from './CourseOverviewComponents/SearchBar';
+import CloudDoneIcon from '@mui/icons-material/CloudDone';
+import HomeIcon from '@mui/icons-material/Home';
+import { toast } from "react-toastify";
+
 
 const settings = ['Profile', 'Logout'];
 
@@ -44,17 +47,21 @@ function ResponsiveAppBar({ searchTerm, onSearch, handleSearch }) {
         <Toolbar disableGutters>
           <Box display="flex" flexGrow={1}>
             {/* whatever is on the left side */}
-            <h1 style={{ color: 'white' }}>Kursübersicht</h1>
+            <h1 style={{ color: 'white' }}>Kurs</h1>
           </Box>
-          <div style={{marginRight: "20px"}}>
-            <SearchBar onSearch={handleSearch} searchTerm={searchTerm}/>
+          {/* this is on the right side*/}
+          <div style={{marginRight: "40px"}}>
+          <CloudDoneIcon onClick={() => {toast.success('Your changes have been saved.');}} style={{ cursor: 'pointer' }} />
+          </div>
+          <div style={{marginRight: "40px"}}>
+          <HomeIcon onClick={() => {navigate('/kursuebersicht');}} style={{ cursor: 'pointer' }} />
           </div>
 
-          {/* This is the profile Button and menu */}
+          {/* This is the profile Button and menu  */}
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src={account ? account.picture : ''} referrerPolicy="no-referrer" />
+                <Avatar alt="Remy Sharp" src={account ? account.picture : ''} referrerPolicy="no-referrer"/>
               </IconButton>
             </Tooltip>
             <Menu

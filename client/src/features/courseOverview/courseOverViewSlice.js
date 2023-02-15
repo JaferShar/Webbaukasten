@@ -50,7 +50,19 @@ export const renameCourse = createAsyncThunk('/rename', async (courseData, thunk
     }
 })
 
-
+export const shareCourse = createAsyncThunk("/share", async (data, thunkAPI) => {
+    try {
+      const token = thunkAPI.getState().auth.account.token;
+      return courseOverViewService.shareCourse(data, token);
+    } catch (error) {
+      const message =
+        (error.response && error.response.data && error.response.data.message) ||
+        error.message ||
+        error.toString();
+        throw new Error(message);
+      //return thunkAPI.rejectWithValue(message);
+    }
+  });
 
 export const courseOverViewSlice = createSlice({
     name: "courseOverview",

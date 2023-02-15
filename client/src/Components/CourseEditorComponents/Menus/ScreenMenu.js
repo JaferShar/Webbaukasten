@@ -57,6 +57,7 @@ export default function MenuBeginTemplate({changeTemplate}) {
   const handleClickWelcome = () => {
     changeTemplate(welcomeTemplate);
     handleClose()
+    return
   }
 
   return (
