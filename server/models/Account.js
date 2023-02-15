@@ -2,7 +2,6 @@ const mongoose = require("mongoose");
 
 const accountSchema = mongoose.Schema(
   {
-    //googleId: String,
     firstName: {
       type: String,
       required: [true, "Please add a firstName"],

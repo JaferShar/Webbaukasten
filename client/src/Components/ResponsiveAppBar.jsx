@@ -40,7 +40,7 @@ function ResponsiveAppBar({ searchTerm, onSearch, handleSearch }) {
 
   return (
     <AppBar position="static">
-      <Container maxWidth="xl">
+      <Container maxWidth="100%">
         <Toolbar disableGutters>
           <Box display="flex" flexGrow={1}>
             {/* whatever is on the left side */}
@@ -54,7 +54,7 @@ function ResponsiveAppBar({ searchTerm, onSearch, handleSearch }) {
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src={account ? account.picture : ''} />
+                <Avatar alt="Remy Sharp" src={account ? account.picture : ''} referrerPolicy="no-referrer" />
               </IconButton>
             </Tooltip>
             <Menu

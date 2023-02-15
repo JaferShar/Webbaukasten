@@ -21,6 +21,7 @@ import {
   getAllCourses,
   deleteCourse,
   renameCourse,
+  shareCourse,
 } from "../features/courseOverview/courseOverViewSlice";
 import { useEffect } from "react";
 import { getCourse } from "../features/courseEditor/courseSlice";
@@ -124,6 +125,29 @@ export default function CourseOverview() {
     }
   };
 
+  const handleShare = async (email) => {
+    try {
+      dispatch(shareCourse({ courseId: selectedCourseId, email: email}))
+      toast.success('course was shared with ' + email)
+    } catch (error) {
+      toast(error.message, { type: "error" });
+    } finally {
+      handleClose();
+    }
+  };
+
+  const handlePublish = async () => {
+    try {
+      const pageUrl = new URL(`/student/view?courseId=${selectedCourseId}`, window.location.origin).href;
+      navigator.clipboard.writeText(pageUrl);
+      toast.success('URL was copied to clipboard')
+    } catch (error) {
+      toast(error.message, { type: "error" });
+    } finally {
+      handleClose();
+    }
+  };
+
   const handleListItemClick = (courseId) => {
     dispatch(getCourse(courseId));
     navigate(`/kurs?courseId=${courseId}`);
@@ -175,8 +199,8 @@ export default function CourseOverview() {
         anchorEl={anchorEl}
         handleClose={handleClose}
         handleDelete={handleDelete}
-        //handleShare={handleShare}
-        //handlePublish={handlePublish}
+        handleShare={handleShare}
+        handlePublish={handlePublish}
         handleRename={handleRename}
       />
       <Box

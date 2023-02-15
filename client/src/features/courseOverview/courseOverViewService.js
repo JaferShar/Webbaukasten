@@ -38,11 +38,31 @@ const renameCourse = async (courseData, token) => {
   return response.data;
 };
 
+const shareCourse = async (data, token) => {
+  try {
+    console.log(data);
+    const config = {
+      headers: { Authorization: `Bearer ${token}` },
+    };
+    console.log(data)
+    console.log(API_URL + `/share/${data.courseId}`)
+    const response = await axios.post(
+      API_URL + `/share/${data.courseId}`,
+      data.email,
+      config
+    );
+    return response.data;
+  } catch (error) {
+    throw new Error(error.message);
+  }
+};
+
 const courseOverviewService = {
   createCourse,
   renameCourse,
   getAllCourses,
   deleteCourse,
+  shareCourse,
 };
 
 export default courseOverviewService;
