@@ -7,6 +7,10 @@ other To Dos:
 -> May include rewriting some template code
 4.prevent deleting redux states on refresh (✅)
 
+BIG BUGS:
+- Redux Coursestate is empty after clicking on course
+
+
 -integrate H5P
 -integrate Pixabay
 -integrate Elements on Screen
