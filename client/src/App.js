@@ -8,6 +8,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import Test from './Components/CourseEditorComponents/FixComponents/Test';
 import H5PTest from './Pages/H5PTest';
 import PixabayTestPage from './Pages/PixabayTest/PixabayTestPage';
+import StudentView from './Pages/StudentView';
 
 // import PixabayTestPage from './Pages/PixabayTest/PixabayTestPage';
 //  <Route path='/pixabay' element={<PixabayTestPage />}/>
@@ -24,6 +25,7 @@ function App() {
           <Route path='/kurs' element={<Course />} />
           <Route path='/login' element={<Login />} />
           <Route path='/test' element={<Test />} />
+          <Route path='/student/view' element={<StudentView />} />
         </Routes>
       </BrowserRouter>
       <ToastContainer />
