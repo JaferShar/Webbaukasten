@@ -1,5 +1,5 @@
 import react from "react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useLayoutEffect, useRef } from "react";
 import { toast } from "react-toastify";
 import {
   Box,
@@ -89,10 +89,10 @@ function ElementList() {
 }
 
 function Element({ element }) {
+
   if (element.type === "text") {
     return (
       <ListItem>
-        {/* <ListItemText primary={element.data} /> */}
         <TextField defaultValue={element.data} multiline="true" style={{width: '100%'}} />
       </ListItem>
     );
@@ -113,8 +113,32 @@ function Element({ element }) {
   } else if (element.type === "h5p") {
     return (
       <ListItem>
-         <iframe src={element.data} width="100%" frameborder="0" title={element.title}/>
+        <H5PIframe src={element.data} />
       </ListItem>
     );
   }
 }
+
+const H5PIframe = ({ src }) => {
+  const iframeRef = useRef(null);
+
+  useEffect(() => {
+    if (!window.H5P) return;
+    window.H5P.externalDispatcher.on('xAPI', () => {
+      const iframe = iframeRef.current;
+      if (!iframe) return;
+      iframe.style.height = `${iframe.contentWindow.document.body.scrollHeight}px`;
+    });
+  }, [iframeRef]);
+
+  return (
+    <iframe
+      ref={iframeRef}
+      src={src}
+      frameBorder="0"
+      width="100%"
+      title="H5P Content"
+    />
+  );
+};
+
