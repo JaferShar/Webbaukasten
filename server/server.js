@@ -17,8 +17,8 @@ app.use("/api/course", require("./routes/courseRoutes"));
 app.use("/api/account", require("./routes/accountRoutes"));
 app.use("/api/screen", require("./routes/screenRoutes"));
 app.use("/api/section", require("./routes/sectionRoutes"));
-app.use("api/element", require("./routes/elementRoutes"));
-app.use("api/student", require("./routes/studentRoutes"));
+app.use("/api/element", require("./routes/elementRoutes"));
+app.use("/api/student", require("./routes/studentRoutes"));
 
 app.use(errorHandler);
 
