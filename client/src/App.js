@@ -6,34 +6,27 @@ import Login from './Pages/Login'
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Test from './Components/CourseEditorComponents/FixComponents/Test';
-import Screen from './Pages/ScreenTest';
 import H5PPage from './Pages/H5PTestFolder/H5PPage'
 import PixabayTestPage from './Pages/PixabayTest/PixabayTestPage';
 import StudentView from './Pages/StudentView';
-
-// import PixabayTestPage from './Pages/PixabayTest/PixabayTestPage';
-//  <Route path='/pixabay' element={<PixabayTestPage />}/>
-
 
 function App() {
   return (
     <div>
       <BrowserRouter>
         <Routes>
-          <Route path='/h5p' element={<H5PPage/>}/>
-          <Route path='/pixabay' element={<PixabayTestPage />}/>
-          <Route path='/' element={<Screen />} />
           <Route path='/kursuebersicht' element={<CourseOverview />} />
           <Route path='/kurs' element={<Course />} />
           <Route path='/login' element={<Login />} />
-          <Route path='/test' element={<Test />} />
           <Route path='/student/view' element={<StudentView />} />
+          <Route path='/pixabay' element={<PixabayTestPage />}/>
+          <Route path='/h5p' element={<H5PPage/>}/>
+          <Route path='/test' element={<Test />} />
         </Routes>
       </BrowserRouter>
       <ToastContainer />
     </div>
   );
 }
-
 
 export default App;
