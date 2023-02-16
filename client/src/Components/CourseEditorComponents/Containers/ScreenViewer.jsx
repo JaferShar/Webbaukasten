@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import "../../../Styling/SiteStyling/ScreenViewer.css";
 import Article from "@mui/icons-material/Article";
 import NoteAdd from "@mui/icons-material/NoteAdd";
@@ -13,7 +12,10 @@ import {
 } from "@mui/material";
 import AddScreenMenu from "../Menus/AddScreenMenu";
 import { useDispatch, useSelector } from "react-redux";
-import { createScreen, deleteScreen } from "../../../features/courseEditor/courseSlice";
+import {
+  createScreen,
+  deleteScreen,
+} from "../../../features/courseEditor/courseSlice";
 import { getScreen } from "../../../features/courseEditor/screenSlice";
 import { getCourse } from "../../../features/courseEditor/courseSlice";
 import { toast } from "react-toastify";
@@ -21,13 +23,13 @@ import DeleteScreenMenu from "../Menus/DeleteScreenMenu";
 
 /**
  * This Module is responsible for displaying an add screen button in the Screen Viewer.
- * 
+ *
  * @param {*} onAddClick This is a callback function that handles the logic for clicking the add screen button.
  * @returns Item that displays an add screen button.
  */
 function AddScreenItem({ onAddClick }) {
   return (
-    <ListItemButton onClick={onAddClick} className="rectangle-list-item">
+    <ListItemButton onClick={onAddClick} className='rectangle-list-item'>
       <NoteAdd style={{ fontSize: 100 }} />
     </ListItemButton>
   );
@@ -35,8 +37,8 @@ function AddScreenItem({ onAddClick }) {
 
 /**
  * This Module is responsible for displaying the screens of a course in the Screen Viewer.
- * 
- * @param {*} changeTemplate This is a callback function that handles the logic for changing a displayed screen template. 
+ *
+ * @param {*} changeTemplate This is a callback function that handles the logic for changing a displayed screen template.
  * @returns List of screens.
  */
 function ScreenViewer({ changeTemplate }) {
@@ -71,7 +73,7 @@ function ScreenViewer({ changeTemplate }) {
   /**
    * This method creates a new screen based on the template selected.
    * It handles the logic for clicking the AddScreenMenu component.
-   * 
+   *
    * @param {*} template the template of the screen to be created.
    */
   const handleCreate = (template) => {
@@ -99,11 +101,11 @@ function ScreenViewer({ changeTemplate }) {
   };
 
   const handleOnClickScreen = (screenId) => {
-    dispatch(getScreen(screenId))
+    dispatch(getScreen(screenId));
   };
 
   return (
-    <Grid className="ScreenViewer">
+    <Grid className='ScreenViewer'>
       <Paper
         style={{
           display: "flex",
@@ -118,11 +120,14 @@ function ScreenViewer({ changeTemplate }) {
             screens.map((screenId, index) => (
               <ListItemButton
                 key={screenId}
-                className="rectangle-list-item"
-                style={{ flexDirection: "column", border: "1px solid #d9dddd", cursor: 'context-menu' }}
+                className='rectangle-list-item'
+                style={{
+                  flexDirection: "column",
+                  border: "1px solid #d9dddd",
+                  cursor: "context-menu",
+                }}
                 sx={{ mb: 2 }}
-                onClick={() => 
-                  handleOnClickScreen(screenId)}
+                onClick={() => handleOnClickScreen(screenId)}
                 onContextMenu={(event) => {
                   handleContextMenu(event, screenId);
                 }}
