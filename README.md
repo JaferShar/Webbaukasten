@@ -1,2 +1,13 @@
-# Webbaukasten
-PSE Projekt - Webbaukasten für die Erstellung von Onlinekurse
+Guideline
+
+npm installments
+
+Login
+
+create course
+
+save
+
+Profile
+
+adding content
