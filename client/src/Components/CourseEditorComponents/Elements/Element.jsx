@@ -54,7 +54,7 @@ const H5PIframe = ({ src }) => {
       src={src}
       width='100%'
       title='H5P Content'
-      frameborder={0}
+      frameBorder={0}
     />
   );
 };

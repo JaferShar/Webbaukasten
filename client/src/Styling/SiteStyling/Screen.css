@@ -1,12 +1,14 @@
 .Screen {
-    width: 55%;
     height: 65%;
+    width: 55%;
     margin: 0 auto;
     position: absolute;
     top: 60%;
     right: auto;
     bottom: auto;
+    border-radius: 4px;
     left: 50%;
     padding: 20px;
     transform: translateY(-50%) translateX(-50%);
+    border: 1px solid #d9dddd;
 }

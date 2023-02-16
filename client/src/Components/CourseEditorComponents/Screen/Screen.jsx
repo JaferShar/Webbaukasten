@@ -11,7 +11,6 @@ const Screen = ({ template }) => {
           display: "flex",
           flexDirection: "column",
           alignItems: "auto",
-          border: "1px solid black",
           overflow: "auto",
         }}
       >

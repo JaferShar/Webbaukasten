@@ -1,16 +1,13 @@
 .ScreenViewer {
-    position: absolute;
-    left: 0px;
     width: 15vw;
-    height: 70%;
-    background-color: transparent;
-    border-radius: 10px;
-    top: 50%;
-    transform: translateY(-35%);
+    height: 68%;
+    position: absolute;
+    top: 60%;
+    border-radius: 4px;
+    transform: translateY(-50%);
+    border: 1px solid #d9dddd;
 }
 
 .rectangle-list-item {
-    background-color: white;
-    border: 1px solid #d9dddd;
     height: 200px;
 }

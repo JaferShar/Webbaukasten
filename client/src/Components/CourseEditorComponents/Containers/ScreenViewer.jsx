@@ -110,9 +110,11 @@ function ScreenViewer({ changeTemplate }) {
         style={{
           display: "flex",
           justifyContent: "center",
+          height: "1000px",
           maxHeight: "100%",
           maxWidth: "100%",
           overflow: "auto",
+          backgroundColor: "transparent",
         }}
       >
         <List>
@@ -134,7 +136,6 @@ function ScreenViewer({ changeTemplate }) {
               >
                 <Article style={{ fontSize: 100 }} />
                 <ListItemText
-                  primaryTypographyProps={{ variant: "body2" }}
                   primary={index + 1}
                   style={{ marginTop: "60px" }}
                 />
@@ -145,7 +146,7 @@ function ScreenViewer({ changeTemplate }) {
               handleAddClick(event);
             }}
           />
-          <ListItem style={{ display: "none" }} />
+          <ListItem />
         </List>
       </Paper>
       <DeleteScreenMenu
