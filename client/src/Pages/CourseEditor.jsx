@@ -21,7 +21,7 @@ import "../Styling/SiteStyling/WelcomeTemplate.css";
 import BeginTemplate from "../Components/CourseEditorComponents/Templates/BeginTemplate";
 import ScreenMenu from "../Components/CourseEditorComponents/Menus/ScreenMenu";
 import WelcomeTemplate from "../Components/CourseEditorComponents/Templates/WelcomeTemplate";
-//import StandardTemplate from "../Components/CourseEditorComponents/Templates/StandardTemplate";
+import StandardTemplate from "../Components/CourseEditorComponents/Templates/StandardTemplate";
 import EndTemplate from "../Components/CourseEditorComponents/Templates/EndTemplate";
 import HeaderEditor from "../Components/HeaderEditor";
 
@@ -37,11 +37,11 @@ const welcomeTemplate = (
   </div>
 );
 
-/*const standardTemplate = (
+const standardTemplate = (
   <div>
     <StandardTemplate></StandardTemplate>
   </div>
-);*/
+);
 
 const endTemplate = (
   <div>
@@ -60,9 +60,9 @@ function Course() {
       case "Welcome":
         setChangeableTemplate(welcomeTemplate);
         break;
-      /*case "Standard":
+      case "Standard":
         setChangeableTemplate(standardTemplate);
-        break;*/
+        break;
       case "End":
         setChangeableTemplate(endTemplate);
         break;
