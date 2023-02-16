@@ -34,6 +34,7 @@ const Screen = ({ template }) => {
           flexDirection: "column",
           alignItems: "auto",
           border: "1px solid black",
+          overflow: "auto",
         }}
       >
         {templates[template]}
@@ -92,7 +93,7 @@ function Element({ element }) {
     return (
       <ListItem>
         {/* <ListItemText primary={element.data} /> */}
-        <TextField defaultValue={element.data} style={{width: '100%'}} />
+        <TextField defaultValue={element.data} multiline="true" style={{width: '100%'}} />
       </ListItem>
     );
   } else if (element.type === "pic") {
