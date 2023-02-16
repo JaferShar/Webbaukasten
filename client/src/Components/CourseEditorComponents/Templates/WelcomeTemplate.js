@@ -19,11 +19,7 @@ const WelcomeTemplate = ({ changeTemplate }) => {
       <div className="welcomeTemplate">
         <h5 className="h5P">Welcome Page</h5>
 
-        <div className="popup">
-          <PopUpButtonText />
-          <PopUpButtonPicture />
-          <PopUpButtonPixabay />
-        </div>
+        
 
         <div className="buttons">
           <AddButton />
@@ -39,6 +35,11 @@ const WelcomeTemplate = ({ changeTemplate }) => {
 
         <div className="text">
           <MultilineTextFields />
+        </div>
+        <div className="popup">
+          <PopUpButtonText />
+          <PopUpButtonPicture />
+          <PopUpButtonPixabay />
         </div>
       </div>
     </>

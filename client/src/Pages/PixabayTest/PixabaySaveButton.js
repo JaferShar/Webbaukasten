@@ -21,7 +21,7 @@ export const PixabaySaveButton = () => (
     variant="contained"
     startIcon={<SaveIcon/>}
   >
-    Save
+    Speichern
   </Button>
   </ThemeProvider>
 );

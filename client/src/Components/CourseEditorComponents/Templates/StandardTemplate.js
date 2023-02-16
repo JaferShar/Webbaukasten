@@ -5,7 +5,7 @@ import "../../../Styling/ButtonStyling/nextButton.css";
 import "../../../Styling/SiteStyling/BeginTemplate.css";
 import MenuBeginTemplate from "../Menus/ScreenMenu";
 
-const BeginTemplate = () => (
+const StandardTemplate = () => (
   <div className="beginTemplate">
     <div className="nextButton">
       <NextButton />
@@ -16,4 +16,4 @@ const BeginTemplate = () => (
   </div>
 );
 
-export default BeginTemplate;
+export default StandardTemplate;
