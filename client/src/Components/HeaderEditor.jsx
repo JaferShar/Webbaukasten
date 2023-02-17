@@ -37,6 +37,8 @@ function ResponsiveAppBar({ searchTerm, onSearch, handleSearch }) {
       await dispatch(reset());
       await dispatch(logout());
       navigate('/login');
+    } else if (clickedSetting === 'Profile') {
+      navigate(`/profile?accountID=${account._id}`);
     }
     setAnchorElUser(null);
   };
