@@ -13,10 +13,9 @@ import {
 import AddScreenMenu from "../Menus/AddScreenMenu";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  createScreen,
   deleteScreen,
 } from "../../../features/courseEditor/courseSlice";
-import { getScreen } from "../../../features/courseEditor/screenSlice";
+import { getScreen, createScreen } from "../../../features/courseEditor/screenSlice";
 import { getCourse } from "../../../features/courseEditor/courseSlice";
 import { toast } from "react-toastify";
 import DeleteScreenMenu from "../Menus/DeleteScreenMenu";
@@ -55,7 +54,7 @@ function ScreenViewer({ changeTemplate }) {
   useEffect(() => {
     dispatch(getCourse(courseId));
     changeTemplate(screen.template);
-  }, [dispatch, courseId, screen.template, changeTemplate]);
+  }, [dispatch, courseId, screen.template, changeTemplate, screen]);
 
   const handleAddClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -78,10 +77,7 @@ function ScreenViewer({ changeTemplate }) {
    */
   const handleCreate = (template) => {
     try {
-      if (template === "Welcome") {
-        throw new Error("Welcome screen cannot be created");
-      }
-      dispatch(createScreen({ template: template, courseId: course._id }));
+      dispatch(createScreen({ template: template, courseId: courseId }));
       changeTemplate(template);
     } catch (error) {
       toast(error.message, { type: "error" });
