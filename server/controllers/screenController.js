@@ -8,7 +8,7 @@ const { Screen, Picture, TextField, H5P } = require("../models/Screen");
 const setScreen = asyncHandler(async (req, res) => {
   const  { template } = req.body;
   try {
-    if (!template || template.toString() === "Welcome") {
+    if (!template) {
       return res.status(400).json({ error: "Please select a valid template" });
     }
     const course = await Course.findById(req.params.courseId);
@@ -19,7 +19,7 @@ const setScreen = asyncHandler(async (req, res) => {
     course.screens.push(screen);
     await course.save();
 
-    res.status(201).json(course);
+    res.status(201).json(screen);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
