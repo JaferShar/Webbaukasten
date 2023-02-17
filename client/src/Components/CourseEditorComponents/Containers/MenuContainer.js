@@ -66,7 +66,7 @@ export default function BasicTabs() {
         Item Two
       </TabPanel>
       <TabPanel value={value} index={2}>
-        
+        <H5PPage/>
       </TabPanel>
     </Box>
     </div>
