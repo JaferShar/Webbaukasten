@@ -54,7 +54,7 @@ function ScreenViewer({ changeTemplate }) {
   useEffect(() => {
     dispatch(getCourse(courseId));
     changeTemplate(screen.template);
-  }, [dispatch, courseId, screen.template, changeTemplate, screen]);
+  }, [dispatch, courseId, screen.template, changeTemplate]);
 
   const handleAddClick = (event) => {
     setAnchorEl(event.currentTarget);

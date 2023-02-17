@@ -15,7 +15,6 @@ import { useNavigate } from 'react-router-dom';
 import CloudDoneIcon from '@mui/icons-material/CloudDone';
 import HomeIcon from '@mui/icons-material/Home';
 import { toast } from "react-toastify";
-import { resetScreen } from '../features/courseEditor/screenSlice';
 
 
 const settings = ['Profile', 'Logout'];
@@ -38,9 +37,10 @@ function ResponsiveAppBar({ searchTerm, onSearch, handleSearch }) {
       await dispatch(reset());
       await dispatch(logout());
       navigate('/login');
-    } else if (clickedSetting === 'Profile') {
-      navigate(`/profile?accountID=${account._id}`);
-    }
+    }else if (clickedSetting === 'Profile') {
+        navigate(`/profile?accountID=${account._id}`);
+      }
+
     setAnchorElUser(null);
   };
 
@@ -50,16 +50,14 @@ function ResponsiveAppBar({ searchTerm, onSearch, handleSearch }) {
         <Toolbar disableGutters>
           <Box display="flex" flexGrow={1}>
             {/* whatever is on the left side */}
-            <h1 style={{ color: 'white' }}>Kurs</h1>
+            <h1 style={{ color: 'white' }}>Profile</h1>
           </Box>
           {/* this is on the right side*/}
           <div style={{marginRight: "40px"}}>
           <CloudDoneIcon onClick={() => {toast.success('Your changes have been saved.');}} style={{ cursor: 'pointer' }} />
           </div>
           <div style={{marginRight: "40px"}}>
-          <HomeIcon onClick={() => {
-            dispatch(resetScreen());
-            navigate('/kursuebersicht');}} style={{ cursor: 'pointer' }} />
+          <HomeIcon onClick={() => {navigate('/kursuebersicht');}} style={{ cursor: 'pointer' }} />
           </div>
 
           {/* This is the profile Button and menu  */}

@@ -12,6 +12,7 @@ const initialState = {
 export const getScreen = createAsyncThunk("getScreen", async (screenId, thunkAPI) => {
   try {
     const token = thunkAPI.getState().auth.account.token;
+    console.log(screenId);
     return screenService.getScreen(screenId, token);
   } catch (error) {
     const message =
@@ -39,7 +40,7 @@ export const screenSlice = createSlice({
   name: "screenEditor",
   initialState,
   reducers: {
-    reset: (state) => initialState,
+    resetScreen: (state) => initialState,
   },
   extraReducers: (builder) => {
     builder
@@ -74,5 +75,5 @@ export const screenSlice = createSlice({
   },
 });
 
-export const { reset } = screenSlice.actions;
+export const { resetScreen } = screenSlice.actions;
 export default screenSlice.reducer;
