@@ -6,6 +6,7 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import {Editor, EditorState} from 'draft-js';
 import 'draft-js/dist/Draft.css';
+import H5PPage from '../../../Pages/H5PTestFolder/H5PLinkHandler.js';
 
 
 function TabPanel(props) {
@@ -65,7 +66,7 @@ export default function BasicTabs() {
         Item Two
       </TabPanel>
       <TabPanel value={value} index={2}>
-        Item Three
+        
       </TabPanel>
     </Box>
     </div>
