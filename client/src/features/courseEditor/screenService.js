@@ -10,8 +10,17 @@ const getScreen = async (screenId, token) => {
     return response.data;
 };
 
+const createScreen = async (screenData, token) => {
+    const config = {
+        headers: { Authorization: `Bearer ${token}` },
+    };
+    const response = await axios.post(API_URL + `/${screenData.courseId}`, screenData, config);
+    return response.data;
+};
+
 const courseEditorService = {
     getScreen,
+    createScreen,
 };
 
 

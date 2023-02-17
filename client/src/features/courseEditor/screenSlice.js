@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import screenService from "../courseEditor/screenService";
 
 const initialState = {
-  screen: {template: "Welcome"},
+  screen: {},
   isError: false,
   isLoading: false,
   isSuccess: false,
@@ -13,6 +13,19 @@ export const getScreen = createAsyncThunk("getScreen", async (screenId, thunkAPI
   try {
     const token = thunkAPI.getState().auth.account.token;
     return screenService.getScreen(screenId, token);
+  } catch (error) {
+    const message =
+      (error.response && error.response.data && error.response.data.message) ||
+      error.message ||
+      error.toString();
+    return thunkAPI.rejectWithValue(message);
+  }
+});
+
+export const createScreen = createAsyncThunk("/createScreen", async (screenData, thunkAPI) => {
+  try {
+    const token = thunkAPI.getState().auth.account.token;
+    return screenService.createScreen(screenData, token);
   } catch (error) {
     const message =
       (error.response && error.response.data && error.response.data.message) ||
@@ -39,6 +52,20 @@ export const screenSlice = createSlice({
         state.screen = action.payload;
       })
       .addCase(getScreen.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
+        state.screen = {};
+      })
+      .addCase(createScreen.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(createScreen.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.screen = action.payload;
+      })
+      .addCase(createScreen.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload;
