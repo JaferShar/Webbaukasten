@@ -30,7 +30,7 @@ export default function Element({ element }) {
   } else if (element.elementType === "H5P") {
     return (
       <ListItem>
-        <H5PIframe src={element.data} />
+        <H5PIframe src={element.content} />
       </ListItem>
     );
   }

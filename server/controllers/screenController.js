@@ -125,9 +125,9 @@ const setPicture = asyncHandler(async (req, res) => {
  * To Do: integrate H5P and handle the data
  */
 const setH5P = asyncHandler(async (req, res) => {
-  const { h5pType, data } = req.body;
+  const { content } = req.body;
   try {
-    if (!h5pType || !data) {
+    if (!content) {
       return res
         .status(400)
         .json({ error: "Please provide valid inputs for the H5P" });
@@ -136,7 +136,7 @@ const setH5P = asyncHandler(async (req, res) => {
     if (!screen) {
       return res.status(404).json({ error: "Screen not found" });
     }
-    const h5p = await H5P.create({ h5pType: h5pType, data: data });
+    const h5p = await H5P.create({ content: content });
     screen.elements.push(h5p);
     screen.save();
 

@@ -30,9 +30,8 @@ const TextField = Element.discriminator(
 const H5P = Element.discriminator(
   "H5P",
   new mongoose.Schema({
-    h5pName: String,
     content: {
-      type: Buffer,
+      type: String,
       required: true,
     },
   })
