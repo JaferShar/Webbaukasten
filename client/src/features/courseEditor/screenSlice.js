@@ -50,7 +50,6 @@ export const setTextField = createAsyncThunk("/setTextField", async (screenData,
 
 export const updateScreen = createAsyncThunk("/updateScreen", async (screenData, thunkAPI) => {
   try {
-    console.log("Hello")
     const token = thunkAPI.getState().auth.account.token;
     return screenService.updateScreen(screenData, token);
   } catch (error) {

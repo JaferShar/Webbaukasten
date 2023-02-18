@@ -228,56 +228,36 @@ const updateSection = asyncHandler(async (req, res) => {
 // updateScreen function does not notices if element was deleted. May add functionallity to delete or create elements later
 const updateScreen = asyncHandler(async (req, res) => {
   try {
+    const screenId = req.query.param1;
     const { elements } = req.body;
     if (!elements) {
       return res.status(400).send({ error: "Invalid request" });
     }
 
     // get screen
-    const screen = await Screen.findById(req.params.id);
+    const screen = await Screen.findById(screenId);
     if (!screen) {
       return res.status(400).send({ error: "Screen not found" });
     }
 
-    // iterate over elements and update them
-    for (let i = 0; i < elements.length; i++) {
-      // get single element
-      const { _id, elementType, ...rest } = elements[i];
-      let elementModel;
+    elements.forEach(async (element) => {
+      const { _id, elementType } = element;
+
       switch (elementType) {
         case "Picture":
-          elementModel = Picture;
           break;
         case "TextField":
-          elementModel = TextField;
-          break;
+          screen.elements.id(_id).set({ text: element.text })
+          await screen.save()
+          break; 
         case "H5P":
-          elementModel = H5P;
           break;
         default:
           return res.status(400).send({ error: "Invalid element type" });
       }
+    });
 
-      // find element in screen
-      let element = screen.elements.id(_id);
-      if (!element) {
-        return res.status(400).send({ error: "Element not found" });
-      }
-
-      // update element specific properties
-      Object.assign(element, rest);
-
-      // check if the order has changed
-      if (i !== screen.elements.indexOf(element)) {
-        screen.elements.splice(screen.elements.indexOf(element), 1);
-        screen.elements.splice(i, 0, element);
-      }
-    }
-
-    // save screen if no errors occured and return success
-    await screen.save();
-
-    return res.status(200).send({ success: true });
+    return res.status(200).send(screen);
   } catch (error) {
     return res.status(500).send({ error: error.message });
   }
