@@ -48,6 +48,35 @@ export const setTextField = createAsyncThunk("/setTextField", async (screenData,
   }
 });
 
+export const updateScreen = createAsyncThunk("/updateScreen", async (screenData, thunkAPI) => {
+  try {
+    console.log("Hello")
+    const token = thunkAPI.getState().auth.account.token;
+    return screenService.updateScreen(screenData, token);
+  } catch (error) {
+    const message =
+      (error.response && error.response.data && error.response.data.message) ||
+      error.message ||
+      error.toString();
+    return thunkAPI.rejectWithValue(message);
+  }
+});
+
+export const updateTextField = (updateData) => {
+  const { screen, elementId, text } = updateData;
+  const updatedElements = screen.elements.map((element) => {
+    if (element._id === elementId) {
+      return { ...element, text };
+    }
+    return element;
+  });
+  const updatedScreen = { ...screen, elements: updatedElements };
+  return {
+    type: "screenEditor/updateScreen",
+    payload: updatedScreen,
+  };
+};
+
 export const screenSlice = createSlice({
   name: "screenEditor",
   initialState,
@@ -95,6 +124,22 @@ export const screenSlice = createSlice({
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload;
+      })
+      .addCase(updateScreen.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(updateScreen.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.screen = action.payload;
+      })
+      .addCase(updateScreen.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
+      })
+      .addCase("screenEditor/updateScreen", (state, action) => {
+        state.screen = action.payload;
       })
   },
 });
