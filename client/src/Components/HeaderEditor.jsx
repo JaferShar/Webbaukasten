@@ -28,8 +28,6 @@ function ResponsiveAppBar({ searchTerm, onSearch, handleSearch }) {
 
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
-    console.log('handleOpenUserMenu');
-    console.log(account);
   };
 
   const handleCloseUserMenu = async (clickedSetting) => {

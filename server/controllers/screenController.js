@@ -69,11 +69,6 @@ const setSection = asyncHandler(async (req, res) => {
 const setTextField = asyncHandler(async (req, res) => {
   try {
     const text = req.body.text;
-    if (!text) {
-      return res
-        .status(400)
-        .json({ error: "Please provide valid inputs for the text field" });
-    }
     const screen = await Screen.findById(req.params.screenId);
     if (!screen) {
       return res.status(404).json({ error: "Screen not found" });

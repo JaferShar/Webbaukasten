@@ -23,7 +23,7 @@ const setTextField = async (screenData, token) => {
     const config = {
         headers: { Authorization: `Bearer ${token}` },
     };
-    const response = await axios.put(ELEMENT_URL + `/textfield/${screenData.id}`, screenData, config);
+    const response = await axios.post(ELEMENT_URL + `/textfield/${screenData.screenId}`, screenData, config);
     return response.data;
 };
 
