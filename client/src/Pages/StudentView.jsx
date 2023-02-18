@@ -8,7 +8,7 @@ import ProgressBar from "@ramonak/react-progress-bar";
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import Button from '@mui/material/Button';
 import { useDispatch, useSelector } from "react-redux";
-import { getCourse } from "../features/courseEditor/courseSlice";
+import { getCourseData } from "../features/studentView/studentCourseSlice";
 import { useEffect } from 'react';
 
 const Item = styled(Paper)(({ theme }) => ({
@@ -26,7 +26,10 @@ function StudentView() {
     const courseId = params.get("courseId");
 
     useEffect(() => {
-        dispatch(getCourse(courseId));
+        if (courseId) {
+            dispatch(getCourseData(courseId));
+        }
+        
       }, [dispatch, courseId]);
 
     return (
