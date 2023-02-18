@@ -148,6 +148,9 @@ const setH5P = asyncHandler(async (req, res) => {
 
 const getScreen = asyncHandler(async (req, res) => {
   try {
+    if (!req.params.screenId) {
+      return res.status(400).json({ error: "Please provide valid inputs for the screen" });
+    }
     const screen = await Screen.findById(req.params.screenId);
     if (!screen) {
       return res.status(404).json({ error: "Screen not found" });

@@ -14,7 +14,6 @@ export default function Element({ element }) {
       </ListItem>
     );
   } else if (element.elementType === "Picture") {
-    console.log(element);
     return (
       <div style={{ justifyContent: "center", display: "flex" }}>
         <ListItem style={{ justifyContent: "center" }}>
