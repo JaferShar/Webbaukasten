@@ -6,7 +6,7 @@ const Course = require("../models/Course");
 const { Screen, Picture, TextField, H5P } = require("../models/Screen");
 
 const setScreen = asyncHandler(async (req, res) => {
-  const  { template } = req.body;
+  const { template } = req.body;
   try {
     if (!template) {
       return res.status(400).json({ error: "Please select a valid template" });
@@ -144,7 +144,9 @@ const setH5P = asyncHandler(async (req, res) => {
 const getScreen = asyncHandler(async (req, res) => {
   try {
     if (!req.params.screenId) {
-      return res.status(400).json({ error: "Please provide valid inputs for the screen" });
+      return res
+        .status(400)
+        .json({ error: "Please provide valid inputs for the screen" });
     }
     const screen = await Screen.findById(req.params.screenId);
     if (!screen) {
@@ -240,22 +242,30 @@ const updateScreen = asyncHandler(async (req, res) => {
       return res.status(400).send({ error: "Screen not found" });
     }
 
+    // iterate through elements
     elements.forEach(async (element) => {
       const { _id, elementType } = element;
 
+      // select element type
       switch (elementType) {
         case "Picture":
+          // update picture
+          creen.elements.id(_id).set({ data: element.data });
           break;
         case "TextField":
-          screen.elements.id(_id).set({ text: element.text })
-          await screen.save()
-          break; 
+          // update text field
+          screen.elements.id(_id).set({ text: element.text });
+          break;
         case "H5P":
+          // update H5P
+          creen.elements.id(_id).set({ content: element.content });
           break;
         default:
           return res.status(400).send({ error: "Invalid element type" });
       }
     });
+    // save changes
+    await screen.save();
 
     return res.status(200).send(screen);
   } catch (error) {
@@ -272,7 +282,9 @@ const deleteScreen = asyncHandler(async (req, res) => {
     if (!course) {
       return res.status(404).json({ error: "Course not found" });
     }
-    const screen = course.screens.find((screen) => screen._id.toString() === screenId);
+    const screen = course.screens.find(
+      (screen) => screen._id.toString() === screenId
+    );
     if (!screen) {
       return res.status(404).json({ error: "Screen not found" });
     }
@@ -305,7 +317,6 @@ const deleteSection = asyncHandler(async (req, res) => {
 
 const deleteElement = asyncHandler(async (req, res) => {
   try {
-    
     const screen = await Screen.findById(req.params.screenId);
     if (!screen) {
       return res.status(404).json({ error: "Screen not found" });
