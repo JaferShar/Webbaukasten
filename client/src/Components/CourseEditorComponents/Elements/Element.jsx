@@ -14,11 +14,15 @@ export default function Element({ element }) {
       </ListItem>
     );
   } else if (element.elementType === "Picture") {
+    console.log(element);
     return (
       <div style={{ justifyContent: "center", display: "flex" }}>
         <ListItem style={{ justifyContent: "center" }}>
           <img
-            src={element.data}
+            src={createImageObjectUrl(
+              element.data,
+              element.picType
+            )}
             alt='placeholder'
             width='auto'
             height='auto'
@@ -58,3 +62,13 @@ const H5PIframe = ({ src }) => {
     />
   );
 };
+
+const createImageObjectUrl = (data, type) => {
+  const binaryData = atob(data);
+  const array = new Uint8Array(binaryData.length);
+  for (let i = 0; i < binaryData.length; i++) {
+    array[i] = binaryData.charCodeAt(i);
+  }
+  const blob = new Blob([array], { type });
+  return URL.createObjectURL(blob);
+}
