@@ -155,9 +155,9 @@ export default function CourseOverview() {
 
   const handleListItemClick = async (courseId) => {
     dispatch(getCourse(courseId));
-    const screenId = coursesState.find((course) => course._id === courseId)
-      .screens[0];
-    if (screenId) {
+    const selectedCourse = coursesState.find((course) => course._id === courseId);
+    if (selectedCourse.screens.length !== 0) {
+      const screenId = selectedCourse.screens[0]
       dispatch(getScreen(screenId));
     }
     navigate(`/kurs?courseId=${courseId}`);
