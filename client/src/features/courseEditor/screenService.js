@@ -27,10 +27,19 @@ const setTextField = async (screenData, token) => {
     return response.data;
 };
 
+const updateScreen = async (screenData, token) => {
+    const config = {
+        headers: { Authorization: `Bearer ${token}` },
+    };
+    const response = await axios.put(API_URL + `?param1=${screenData.screenId}`, screenData, config);
+    return response.data;
+};
+
 const courseEditorService = {
     getScreen,
     createScreen,
     setTextField,
+    updateScreen,
 };
 
 
