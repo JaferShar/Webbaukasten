@@ -153,11 +153,13 @@ export default function CourseOverview() {
     }
   };
 
-  const handleListItemClick =  async (courseId) => {
+  const handleListItemClick = async (courseId) => {
     dispatch(getCourse(courseId));
-    const screenId =  coursesState.find((course) => course._id === courseId).screens[0];
-    console.log(screenId);
-    dispatch(getScreen(screenId));
+    const screenId = coursesState.find((course) => course._id === courseId)
+      .screens[0];
+    if (screenId) {
+      dispatch(getScreen(screenId));
+    }
     navigate(`/kurs?courseId=${courseId}`);
   };
 

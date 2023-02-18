@@ -2,18 +2,18 @@ import { useEffect, useRef } from "react";
 import { ListItem, TextField } from "@mui/material";
 
 export default function Element({ element }) {
-  if (element.type === "text") {
+  if (element.elementType === "TextField") {
     return (
       <ListItem>
         <TextField
-          label='Multiline TextField'
-          defaultValue={element.data}
+          label='TextField'
+          defaultValue={element.text}
           multiline
           style={{ width: "100%" }}
         />
       </ListItem>
     );
-  } else if (element.type === "pic") {
+  } else if (element.elementType === "Picture") {
     return (
       <div style={{ justifyContent: "center", display: "flex" }}>
         <ListItem style={{ justifyContent: "center" }}>
@@ -27,7 +27,7 @@ export default function Element({ element }) {
         </ListItem>
       </div>
     );
-  } else if (element.type === "h5p") {
+  } else if (element.elementType === "H5P") {
     return (
       <ListItem>
         <H5PIframe src={element.data} />

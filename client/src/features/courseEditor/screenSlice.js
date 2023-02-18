@@ -12,7 +12,6 @@ const initialState = {
 export const getScreen = createAsyncThunk("getScreen", async (screenId, thunkAPI) => {
   try {
     const token = thunkAPI.getState().auth.account.token;
-    console.log(screenId);
     return screenService.getScreen(screenId, token);
   } catch (error) {
     const message =
