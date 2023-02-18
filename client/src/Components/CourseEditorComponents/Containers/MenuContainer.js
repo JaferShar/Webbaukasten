@@ -7,6 +7,7 @@ import Box from '@mui/material/Box';
 import {Editor, EditorState} from 'draft-js';
 import 'draft-js/dist/Draft.css';
 import H5PPage from '../../../Pages/H5PTestFolder/H5PLinkHandler.js';
+import TextField from './TextField.jsx';
 
 
 function TabPanel(props) {
@@ -60,7 +61,7 @@ export default function BasicTabs() {
         </Tabs>
       </Box>
       <TabPanel value={value} index={0}>
-        Texteditor
+        <TextField />
       </TabPanel>
       <TabPanel value={value} index={1}>
         Item Two
