@@ -1,6 +1,7 @@
 import axios from "axios";
 
 const API_URL = `api/screen`
+const ELEMENT_URL = `api/element`
 
 const getScreen = async (screenId, token) => {
     const config = {
@@ -18,9 +19,18 @@ const createScreen = async (screenData, token) => {
     return response.data;
 };
 
+const setTextField = async (screenData, token) => {
+    const config = {
+        headers: { Authorization: `Bearer ${token}` },
+    };
+    const response = await axios.put(ELEMENT_URL + `/textfield/${screenData.id}`, screenData, config);
+    return response.data;
+};
+
 const courseEditorService = {
     getScreen,
     createScreen,
+    setTextField,
 };
 
 
