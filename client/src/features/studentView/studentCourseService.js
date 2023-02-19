@@ -1,9 +1,7 @@
 import axios from "axios";
 
-const API_URL = `api/student/course`;
-
-const getCourseData = async (courseId, token) => {
-    const response = await axios.get(API_URL + `/${courseId}`);
+const getCourseData = async (courseId) => {
+    const response = await axios.get("/api/student/course/" + courseId);
     return response.data;
 };
 
@@ -12,4 +10,3 @@ const studentCourseService = {
 };
 
 export default studentCourseService;
-

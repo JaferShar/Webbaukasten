@@ -8,8 +8,13 @@ import ProgressBar from "@ramonak/react-progress-bar";
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import Button from '@mui/material/Button';
 import { useDispatch, useSelector } from "react-redux";
-import { getCourse } from "../features/courseEditor/courseSlice";
+import { getCourseData } from "../features/studentView/studentCourseSlice";
 import { useEffect } from 'react';
+import { useState } from 'react';
+import { getScreenData } from "../features/studentView/studentScreenSlice";
+
+
+
 
 const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -24,10 +29,26 @@ function StudentView() {
     const dispatch = useDispatch();
     const params = new URLSearchParams(window.location.search);
     const courseId = params.get("courseId");
+    const [screenId, setScreenId] = useState(0);
 
     useEffect(() => {
-        dispatch(getCourse(courseId));
-      }, [dispatch, courseId]);
+        dispatch(getCourseData(courseId));
+    }, [dispatch, courseId]);
+    
+    const { course, isError, message } = useSelector(
+        (state) => state.studentCourse
+    );
+    
+    useEffect(() => {
+        console.log(course);
+        if (course.screens !== undefined) {
+            dispatch(getScreenData(course.screens[0]));
+        }
+        
+    }, [course]);
+    
+
+
 
     return (
         <div>

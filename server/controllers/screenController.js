@@ -6,9 +6,9 @@ const Course = require("../models/Course");
 const { Screen, Picture, TextField, H5P } = require("../models/Screen");
 
 const setScreen = asyncHandler(async (req, res) => {
-  const  { template } = req.body;
+  const { template } = req.body;
   try {
-    if (!template || template.toString() === "Welcome") {
+    if (!template) {
       return res.status(400).json({ error: "Please select a valid template" });
     }
     const course = await Course.findById(req.params.courseId);
@@ -19,7 +19,7 @@ const setScreen = asyncHandler(async (req, res) => {
     course.screens.push(screen);
     await course.save();
 
-    res.status(201).json(course);
+    res.status(201).json(screen);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -69,11 +69,6 @@ const setSection = asyncHandler(async (req, res) => {
 const setTextField = asyncHandler(async (req, res) => {
   try {
     const text = req.body.text;
-    if (!text) {
-      return res
-        .status(400)
-        .json({ error: "Please provide valid inputs for the text field" });
-    }
     const screen = await Screen.findById(req.params.screenId);
     if (!screen) {
       return res.status(404).json({ error: "Screen not found" });
@@ -125,9 +120,9 @@ const setPicture = asyncHandler(async (req, res) => {
  * To Do: integrate H5P and handle the data
  */
 const setH5P = asyncHandler(async (req, res) => {
-  const { h5pType, data } = req.body;
+  const { content } = req.body;
   try {
-    if (!h5pType || !data) {
+    if (!content) {
       return res
         .status(400)
         .json({ error: "Please provide valid inputs for the H5P" });
@@ -136,7 +131,7 @@ const setH5P = asyncHandler(async (req, res) => {
     if (!screen) {
       return res.status(404).json({ error: "Screen not found" });
     }
-    const h5p = await H5P.create({ h5pType: h5pType, data: data });
+    const h5p = await H5P.create({ content: content });
     screen.elements.push(h5p);
     screen.save();
 
@@ -148,6 +143,11 @@ const setH5P = asyncHandler(async (req, res) => {
 
 const getScreen = asyncHandler(async (req, res) => {
   try {
+    if (!req.params.screenId) {
+      return res
+        .status(400)
+        .json({ error: "Please provide valid inputs for the screen" });
+    }
     const screen = await Screen.findById(req.params.screenId);
     if (!screen) {
       return res.status(404).json({ error: "Screen not found" });
@@ -230,56 +230,44 @@ const updateSection = asyncHandler(async (req, res) => {
 // updateScreen function does not notices if element was deleted. May add functionallity to delete or create elements later
 const updateScreen = asyncHandler(async (req, res) => {
   try {
+    const screenId = req.query.param1;
     const { elements } = req.body;
     if (!elements) {
       return res.status(400).send({ error: "Invalid request" });
     }
 
     // get screen
-    const screen = await Screen.findById(req.params.id);
+    const screen = await Screen.findById(screenId);
     if (!screen) {
       return res.status(400).send({ error: "Screen not found" });
     }
 
-    // iterate over elements and update them
-    for (let i = 0; i < elements.length; i++) {
-      // get single element
-      const { _id, elementType, ...rest } = elements[i];
-      let elementModel;
+    // iterate through elements
+    elements.forEach(async (element) => {
+      const { _id, elementType } = element;
+
+      // select element type
       switch (elementType) {
         case "Picture":
-          elementModel = Picture;
+          // update picture
+          creen.elements.id(_id).set({ data: element.data });
           break;
         case "TextField":
-          elementModel = TextField;
+          // update text field
+          screen.elements.id(_id).set({ text: element.text });
           break;
         case "H5P":
-          elementModel = H5P;
+          // update H5P
+          creen.elements.id(_id).set({ content: element.content });
           break;
         default:
           return res.status(400).send({ error: "Invalid element type" });
       }
-
-      // find element in screen
-      let element = screen.elements.id(_id);
-      if (!element) {
-        return res.status(400).send({ error: "Element not found" });
-      }
-
-      // update element specific properties
-      Object.assign(element, rest);
-
-      // check if the order has changed
-      if (i !== screen.elements.indexOf(element)) {
-        screen.elements.splice(screen.elements.indexOf(element), 1);
-        screen.elements.splice(i, 0, element);
-      }
-    }
-
-    // save screen if no errors occured and return success
+    });
+    // save changes
     await screen.save();
 
-    return res.status(200).send({ success: true });
+    return res.status(200).send(screen);
   } catch (error) {
     return res.status(500).send({ error: error.message });
   }
@@ -294,7 +282,9 @@ const deleteScreen = asyncHandler(async (req, res) => {
     if (!course) {
       return res.status(404).json({ error: "Course not found" });
     }
-    const screen = course.screens.find((screen) => screen._id.toString() === screenId);
+    const screen = course.screens.find(
+      (screen) => screen._id.toString() === screenId
+    );
     if (!screen) {
       return res.status(404).json({ error: "Screen not found" });
     }
@@ -327,7 +317,6 @@ const deleteSection = asyncHandler(async (req, res) => {
 
 const deleteElement = asyncHandler(async (req, res) => {
   try {
-    
     const screen = await Screen.findById(req.params.screenId);
     if (!screen) {
       return res.status(404).json({ error: "Screen not found" });

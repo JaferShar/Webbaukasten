@@ -9,6 +9,7 @@ import Test from './Components/CourseEditorComponents/FixComponents/Test';
 import H5PPage from './Pages/H5PTestFolder/H5PPage'
 import PixabayTestPage from './Pages/PixabayTest/PixabayTestPage';
 import StudentView from './Pages/StudentView';
+import Profile from './Pages/ProfileSettings';
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
           <Route path='/pixabay' element={<PixabayTestPage />}/>
           <Route path='/h5p' element={<H5PPage/>}/>
           <Route path='/test' element={<Test />} />
+          <Route path='/profile' element={<Profile />} />
         </Routes>
       </BrowserRouter>
       <ToastContainer />

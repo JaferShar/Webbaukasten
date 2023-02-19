@@ -9,7 +9,7 @@ import Container from '@mui/material/Container';
 import Avatar from '@mui/material/Avatar';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
-import { logout, reset } from '../features/auth/authSlice';
+import { logout, reset } from '../../features/auth/authSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import CloudDoneIcon from '@mui/icons-material/CloudDone';
@@ -37,7 +37,10 @@ function ResponsiveAppBar({ searchTerm, onSearch, handleSearch }) {
       await dispatch(reset());
       await dispatch(logout());
       navigate('/login');
-    }
+    }else if (clickedSetting === 'Profile') {
+        navigate(`/profile?accountID=${account._id}`);
+      }
+
     setAnchorElUser(null);
   };
 
@@ -47,7 +50,7 @@ function ResponsiveAppBar({ searchTerm, onSearch, handleSearch }) {
         <Toolbar disableGutters>
           <Box display="flex" flexGrow={1}>
             {/* whatever is on the left side */}
-            <h1 style={{ color: 'white' }}>Kurs</h1>
+            <h1 style={{ color: 'white' }}>Profile</h1>
           </Box>
           {/* this is on the right side*/}
           <div style={{marginRight: "40px"}}>

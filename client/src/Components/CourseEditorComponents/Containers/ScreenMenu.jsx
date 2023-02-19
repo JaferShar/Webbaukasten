@@ -2,10 +2,13 @@ import * as React from 'react';
 import PropTypes from 'prop-types';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
-import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
-import {Editor, EditorState} from 'draft-js';
 import 'draft-js/dist/Draft.css';
+import H5PMenu from './H5PMenu.jsx';
+import TextFieldMenu from './TextFieldMenu.jsx';
+import PixabayTestPage from '../../../Pages/PixabayTest/PixabayTestPage.js';
+import Picture from '../Buttons/PopUpButtonPicture.js'
+import PictureMenu from './PictureMenu.jsx';
 
 
 function TabPanel(props) {
@@ -21,7 +24,7 @@ function TabPanel(props) {
     >
       {value === index && (
         <Box sx={{ p: 3 }}>
-          <Typography>{children}</Typography>
+          {children}
         </Box>
       )}
     </div>
@@ -59,13 +62,14 @@ export default function BasicTabs() {
         </Tabs>
       </Box>
       <TabPanel value={value} index={0}>
-        Texteditor
+        <TextFieldMenu />
       </TabPanel>
       <TabPanel value={value} index={1}>
-        Item Two
+        <PixabayTestPage/>
+        <PictureMenu />
       </TabPanel>
       <TabPanel value={value} index={2}>
-        Item Three
+        <H5PMenu/>
       </TabPanel>
     </Box>
     </div>

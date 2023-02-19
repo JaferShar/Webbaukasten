@@ -1,24 +1,36 @@
 import { useEffect, useRef } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { ListItem, TextField } from "@mui/material";
+import { updateTextField } from "../../../features/courseEditor/screenSlice";
 
 export default function Element({ element }) {
-  if (element.type === "text") {
+  const screen = useSelector((state) => state.screenEditor.screen);
+  const dispatch = useDispatch();
+
+  const handleUpdateTextField = (event, element) => {
+    const { value } = event.target;
+    dispatch(
+      updateTextField({ screen: screen, elementId: element._id, text: value })
+    );
+  };
+
+  if (element.elementType === "TextField") {
     return (
       <ListItem>
         <TextField
-          label='Multiline TextField'
-          defaultValue={element.data}
+          defaultValue={element.text}
+          onChange={(event) => handleUpdateTextField(event, element)}
           multiline
           style={{ width: "100%" }}
         />
       </ListItem>
     );
-  } else if (element.type === "pic") {
+  } else if (element.elementType === "Picture") {
     return (
       <div style={{ justifyContent: "center", display: "flex" }}>
         <ListItem style={{ justifyContent: "center" }}>
           <img
-            src={element.data}
+            src={createImageObjectUrl(element.data, element.picType)}
             alt='placeholder'
             width='auto'
             height='auto'
@@ -27,10 +39,10 @@ export default function Element({ element }) {
         </ListItem>
       </div>
     );
-  } else if (element.type === "h5p") {
+  } else if (element.elementType === "H5P") {
     return (
       <ListItem>
-        <H5PIframe src={element.data} />
+        <H5PIframe src={element.content} />
       </ListItem>
     );
   }
@@ -57,4 +69,14 @@ const H5PIframe = ({ src }) => {
       frameBorder={0}
     />
   );
+};
+
+const createImageObjectUrl = (data, type) => {
+  const binaryData = atob(data);
+  const array = new Uint8Array(binaryData.length);
+  for (let i = 0; i < binaryData.length; i++) {
+    array[i] = binaryData.charCodeAt(i);
+  }
+  const blob = new Blob([array], { type });
+  return URL.createObjectURL(blob);
 };

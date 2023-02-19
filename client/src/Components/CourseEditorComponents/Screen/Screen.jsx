@@ -1,6 +1,6 @@
 import { Box } from "@mui/material";
 import templates from "../Templates/Template";
-import "../../../Styling/SiteStyling/Screen.css";
+import "../../../Styling/PageStyling/Screen.css";
 
 const Screen = ({ template }) => {
   return (

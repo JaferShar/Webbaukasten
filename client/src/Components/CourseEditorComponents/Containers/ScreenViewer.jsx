@@ -1,5 +1,16 @@
 import React, { useState, useEffect } from "react";
-import "../../../Styling/SiteStyling/ScreenViewer.css";
+import { useDispatch, useSelector } from "react-redux";
+import { toast } from "react-toastify";
+import {
+  deleteScreen,
+  getCourse,
+} from "../../../features/courseEditor/courseSlice";
+import {
+  getScreen,
+  createScreen,
+} from "../../../features/courseEditor/screenSlice";
+import AddScreenMenu from "../Menus/AddScreenMenu";
+import DeleteScreenMenu from "../Menus/DeleteScreenMenu";
 import Article from "@mui/icons-material/Article";
 import NoteAdd from "@mui/icons-material/NoteAdd";
 import {
@@ -10,16 +21,7 @@ import {
   ListItemButton,
   Grid,
 } from "@mui/material";
-import AddScreenMenu from "../Menus/AddScreenMenu";
-import { useDispatch, useSelector } from "react-redux";
-import {
-  createScreen,
-  deleteScreen,
-} from "../../../features/courseEditor/courseSlice";
-import { getScreen } from "../../../features/courseEditor/screenSlice";
-import { getCourse } from "../../../features/courseEditor/courseSlice";
-import { toast } from "react-toastify";
-import DeleteScreenMenu from "../Menus/DeleteScreenMenu";
+import "../../../Styling/PageStyling/ScreenViewer.css";
 
 /**
  * This Module is responsible for displaying an add screen button in the Screen Viewer.
@@ -55,7 +57,22 @@ function ScreenViewer({ changeTemplate }) {
   useEffect(() => {
     dispatch(getCourse(courseId));
     changeTemplate(screen.template);
-  }, [dispatch, courseId, screen.template, changeTemplate]);
+  }, [
+    dispatch,
+    courseId,
+    screen.template,
+    changeTemplate,
+    selectedScreen,
+  ]);
+
+  useEffect(() => {
+    if (selectedScreen === null &&
+      course.screens !== undefined &&
+      course.screens.length > 0) {
+      dispatch(getScreen(course.screens[0]));
+      setSelectedScreen(course.screens[0]);
+    }
+  }, [dispatch, course]);
 
   const handleAddClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -78,10 +95,7 @@ function ScreenViewer({ changeTemplate }) {
    */
   const handleCreate = (template) => {
     try {
-      if (template === "Welcome") {
-        throw new Error("Welcome screen cannot be created");
-      }
-      dispatch(createScreen({ template: template, courseId: course._id }));
+      dispatch(createScreen({ template: template, courseId: courseId }));
       changeTemplate(template);
     } catch (error) {
       toast(error.message, { type: "error" });

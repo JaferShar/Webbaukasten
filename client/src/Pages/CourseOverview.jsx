@@ -11,10 +11,10 @@ import { Avatar, Button, IconButton, Grid } from "@mui/material";
 import FolderIcon from "@mui/icons-material/Folder";
 import AddIcon from "@mui/icons-material/Add";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
-import "../Styling/SiteStyling/CourseOverview.css";
+import "../Styling/PageStyling/CourseOverview.css";
 import { toast } from "react-toastify";
 import MoreVertMenu from "../Components/CourseOverviewComponents/MoreVertMenu";
-import ResponsiveAppBar from "../Components/ResponsiveAppBar";
+import ResponsiveAppBar from "../Components/Headers/ResponsiveAppBar";
 import { useDispatch, useSelector } from "react-redux";
 import {
   createCourse,
@@ -24,8 +24,8 @@ import {
   shareCourse,
 } from "../features/courseOverview/courseOverViewSlice";
 import { useEffect } from "react";
-import { getCourse } from "../features/courseEditor/courseSlice";
-
+import { getCourse, resetCourse } from "../features/courseEditor/courseSlice";
+import { getScreen, resetScreen } from "../features/courseEditor/screenSlice";
 
 export default function CourseOverview() {
   const navigate = useNavigate();
@@ -38,6 +38,7 @@ export default function CourseOverview() {
   const { coursesState, isError, message } = useSelector(
     (state) => state.courseOverview
   );
+  const { course } = useSelector((state) => state.courseEditor);
 
   const handleClose = () => {
     setAnchorEl(null);
@@ -62,10 +63,12 @@ export default function CourseOverview() {
         return;
       }
       dispatch(getAllCourses());
+      dispatch(resetCourse())
+      dispatch(resetScreen())
     } catch (error) {
       toast("Kurse konnten nicht geladen werden", { type: "error" });
     }
-  }, [account, navigate, dispatch, isError, message]);
+  }, [account, navigate, dispatch, isError, message, course]);
 
   // tested
   const handleCreateCourse = async () => {
@@ -127,9 +130,9 @@ export default function CourseOverview() {
 
   const handleShare = async (email) => {
     try {
-      dispatch(shareCourse({ courseId: selectedCourseId, email: email}))
+      dispatch(shareCourse({ courseId: selectedCourseId, email: email }));
       dispatch(getAllCourses());
-      toast.success('course was shared with ' + email)
+      toast.success("course was shared with " + email);
     } catch (error) {
       toast(error.message, { type: "error" });
     } finally {
@@ -139,9 +142,12 @@ export default function CourseOverview() {
 
   const handlePublish = async () => {
     try {
-      const pageUrl = new URL(`/student/view?courseId=${selectedCourseId}`, window.location.origin).href;
+      const pageUrl = new URL(
+        `/student/view?courseId=${selectedCourseId}`,
+        window.location.origin
+      ).href;
       navigator.clipboard.writeText(pageUrl);
-      toast.success('URL was copied to clipboard')
+      toast.success("URL was copied to clipboard");
     } catch (error) {
       toast(error.message, { type: "error" });
     } finally {
@@ -149,8 +155,13 @@ export default function CourseOverview() {
     }
   };
 
-  const handleListItemClick = (courseId) => {
+  const handleListItemClick = async (courseId) => {
     dispatch(getCourse(courseId));
+    const selectedCourse = coursesState.find((course) => course._id === courseId);
+    if (selectedCourse.screens.length !== 0) {
+      const screenId = selectedCourse.screens[0]
+      dispatch(getScreen(screenId));
+    }
     navigate(`/kurs?courseId=${courseId}`);
   };
 
@@ -180,16 +191,16 @@ export default function CourseOverview() {
                   </ListItemAvatar>
                   <ListItemText primary={course.courseName} />
                   <Box sx={{ ml: "auto" }}>
-                      <IconButton
-                        edge="end"
-                        aria-label="more"
-                        onClick={(event) => {
-                          event.stopPropagation(); // stop the event from propagating to the parent
-                          handleClickMoreVertIcon(event, course._id);
-                        }}
-                      >
-                        <MoreVertIcon />
-                      </IconButton>
+                    <IconButton
+                      edge='end'
+                      aria-label='more'
+                      onClick={(event) => {
+                        event.stopPropagation(); // stop the event from propagating to the parent
+                        handleClickMoreVertIcon(event, course._id);
+                      }}
+                    >
+                      <MoreVertIcon />
+                    </IconButton>
                   </Box>
                 </ListItemButton>
               ))}
@@ -208,8 +219,8 @@ export default function CourseOverview() {
         sx={{ display: "flex", justifyContent: "center", marginTop: "20px" }}
       >
         <Button
-          variant="contained"
-          color="primary"
+          variant='contained'
+          color='primary'
           onClick={handleCreateCourse}
         >
           <AddIcon />
