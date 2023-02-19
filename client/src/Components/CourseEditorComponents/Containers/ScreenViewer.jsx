@@ -56,23 +56,23 @@ function ScreenViewer({ changeTemplate }) {
 
   useEffect(() => {
     dispatch(getCourse(courseId));
-    if (
-      selectedScreen === null &&
-      course.screens !== undefined &&
-      course.screens.length > 0
-    ) {
-      dispatch(getScreen(course.screens[0]));
-      setSelectedScreen(course.screens[0]);
-    }
     changeTemplate(screen.template);
   }, [
     dispatch,
     courseId,
     screen.template,
     changeTemplate,
-    course.screens,
     selectedScreen,
   ]);
+
+  useEffect(() => {
+    if (selectedScreen === null &&
+      course.screens !== undefined &&
+      course.screens.length > 0) {
+      dispatch(getScreen(course.screens[0]));
+      setSelectedScreen(course.screens[0]);
+    }
+  }, [dispatch, course]);
 
   const handleAddClick = (event) => {
     setAnchorEl(event.currentTarget);
