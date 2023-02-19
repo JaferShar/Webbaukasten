@@ -1,8 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
-import { deleteScreen, getCourse } from "../../../features/courseEditor/courseSlice";
-import { getScreen, createScreen } from "../../../features/courseEditor/screenSlice";
+import {
+  deleteScreen,
+  getCourse,
+} from "../../../features/courseEditor/courseSlice";
+import {
+  getScreen,
+  createScreen,
+} from "../../../features/courseEditor/screenSlice";
 import AddScreenMenu from "../Menus/AddScreenMenu";
 import DeleteScreenMenu from "../Menus/DeleteScreenMenu";
 import Article from "@mui/icons-material/Article";
@@ -50,8 +56,23 @@ function ScreenViewer({ changeTemplate }) {
 
   useEffect(() => {
     dispatch(getCourse(courseId));
+    if (
+      selectedScreen === null &&
+      course.screens !== undefined &&
+      course.screens.length > 0
+    ) {
+      dispatch(getScreen(course.screens[0]));
+      setSelectedScreen(course.screens[0]);
+    }
     changeTemplate(screen.template);
-  }, [dispatch, courseId, screen.template, changeTemplate]);
+  }, [
+    dispatch,
+    courseId,
+    screen.template,
+    changeTemplate,
+    course.screens,
+    selectedScreen,
+  ]);
 
   const handleAddClick = (event) => {
     setAnchorEl(event.currentTarget);
