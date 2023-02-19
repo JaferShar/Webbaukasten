@@ -24,8 +24,8 @@ import {
   shareCourse,
 } from "../features/courseOverview/courseOverViewSlice";
 import { useEffect } from "react";
-import { getCourse } from "../features/courseEditor/courseSlice";
-import { getScreen } from "../features/courseEditor/screenSlice";
+import { getCourse, resetCourse } from "../features/courseEditor/courseSlice";
+import { getScreen, resetScreen } from "../features/courseEditor/screenSlice";
 
 export default function CourseOverview() {
   const navigate = useNavigate();
@@ -63,6 +63,8 @@ export default function CourseOverview() {
         return;
       }
       dispatch(getAllCourses());
+      dispatch(resetCourse())
+      dispatch(resetScreen())
     } catch (error) {
       toast("Kurse konnten nicht geladen werden", { type: "error" });
     }

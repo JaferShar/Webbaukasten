@@ -16,6 +16,7 @@ import CloudDoneIcon from '@mui/icons-material/CloudDone';
 import HomeIcon from '@mui/icons-material/Home';
 import { toast } from "react-toastify";
 import { resetScreen, updateScreen } from '../../features/courseEditor/screenSlice';
+import { resetCourse } from '../../features/courseEditor/courseSlice';
 
 
 const settings = ['Profile', 'Logout'];
@@ -59,6 +60,12 @@ function ResponsiveAppBar({ searchTerm, onSearch, handleSearch }) {
     }
   };
 
+  const handleClickHome = () => {
+    dispatch(resetScreen());
+    dispatch(resetCourse());
+    navigate('/kursuebersicht');
+  };
+
   return (
     <AppBar position="static">
       <Container maxWidth="100%">
@@ -72,9 +79,7 @@ function ResponsiveAppBar({ searchTerm, onSearch, handleSearch }) {
           <CloudDoneIcon onClick={handleSafe} style={{ cursor: 'pointer' }} />
           </div>
           <div style={{marginRight: "40px"}}>
-          <HomeIcon onClick={() => {
-            dispatch(resetScreen());
-            navigate('/kursuebersicht');}} style={{ cursor: 'pointer' }} />
+          <HomeIcon onClick={handleClickHome} style={{ cursor: 'pointer' }} />
           </div>
 
           {/* This is the profile Button and menu  */}
