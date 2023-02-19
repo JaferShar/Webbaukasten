@@ -9,10 +9,10 @@ import Container from '@mui/material/Container';
 import Avatar from '@mui/material/Avatar';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
-import { logout, reset } from '../features/auth/authSlice';
+import { logout, reset } from '../../features/auth/authSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import SearchBar from './CourseOverviewComponents/SearchBar';
+import SearchBar from '../CourseOverviewComponents/SearchBar';
 
 const settings = ['Profile', 'Logout'];
 

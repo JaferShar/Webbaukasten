@@ -9,13 +9,13 @@ import Container from '@mui/material/Container';
 import Avatar from '@mui/material/Avatar';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
-import { logout, reset } from '../features/auth/authSlice';
+import { logout, reset } from '../../features/auth/authSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import CloudDoneIcon from '@mui/icons-material/CloudDone';
 import HomeIcon from '@mui/icons-material/Home';
 import { toast } from "react-toastify";
-import { resetScreen, updateScreen } from '../features/courseEditor/screenSlice';
+import { resetScreen, updateScreen } from '../../features/courseEditor/screenSlice';
 
 
 const settings = ['Profile', 'Logout'];
