@@ -13,6 +13,8 @@ const PictureMenu = () => {
   };
 
   const handleFileUpload = (event) => {
+    // check if file is an image and not too big
+    // handle error on displaying the image
     const file = event.target.files[0];
     const formData = new FormData();
     formData.append("image", file);

@@ -1,5 +1,6 @@
 BIG BUGS:
 -fix displaying erorrs with toast
+-maybe using lazy loading for the components fixing the atob bug
 
 
 TO DOs:
