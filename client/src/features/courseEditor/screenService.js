@@ -27,6 +27,14 @@ const setTextField = async (screenData, token) => {
     return response.data;
 };
 
+const setH5P = async (screenData, token) => {
+    const config = {
+        headers: { Authorization: `Bearer ${token}` },
+    };
+    const response = await axios.post(ELEMENT_URL + `/h5p/${screenData.screenId}`, screenData, config);
+    return response.data;
+};
+
 const updateScreen = async (screenData, token) => {
     const config = {
         headers: { Authorization: `Bearer ${token}` },

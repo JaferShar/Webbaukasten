@@ -48,6 +48,19 @@ export const setTextField = createAsyncThunk("/setTextField", async (screenData,
   }
 });
 
+export const setH5P = createAsyncThunk("/setH5P", async (screenData, thunkAPI) => {
+  try {
+    const token = thunkAPI.getState().auth.account.token;
+    return screenService.setH5P(screenData, token);
+  } catch (error) {
+    const message =
+      (error.response && error.response.data && error.response.data.message) ||
+      error.message ||
+      error.toString();
+    return thunkAPI.rejectWithValue(message);
+  }
+});
+
 export const updateScreen = createAsyncThunk("/updateScreen", async (screenData, thunkAPI) => {
   try {
     const token = thunkAPI.getState().auth.account.token;
