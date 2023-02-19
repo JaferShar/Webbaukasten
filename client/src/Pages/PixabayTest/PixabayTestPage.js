@@ -1,10 +1,7 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
-import Search from '@mui/material';
-import TextField from '@mui/material/TextField';
 import PixabaySearch from './PixabaySearch';
 
 
@@ -27,7 +24,7 @@ export default function PixabayTestPage() {
 
     return (
         <div>
-            <Button onClick={handleOpen}>Bildersuche</Button>
+            <Button onClick={handleOpen}>Pixabay Bildersuche</Button>
             <Modal
                 open={open}
                 onClose={handleClose}
