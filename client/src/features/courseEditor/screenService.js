@@ -35,6 +35,14 @@ const setH5P = async (screenData, token) => {
     return response.data;
 };
 
+const setPicture = async (screenData, token) => {
+    const config = {
+        headers: { Authorization: `Bearer ${token}` },
+    };
+    const response = await axios.post(ELEMENT_URL + `/picture/${screenData.screenId}`, screenData, config);
+    return response.data;
+};
+
 const updateScreen = async (screenData, token) => {
     const config = {
         headers: { Authorization: `Bearer ${token}` },
@@ -47,6 +55,8 @@ const courseEditorService = {
     getScreen,
     createScreen,
     setTextField,
+    setH5P,
+    setPicture,
     updateScreen,
 };
 

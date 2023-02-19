@@ -61,6 +61,19 @@ export const setH5P = createAsyncThunk("/setH5P", async (screenData, thunkAPI) =
   }
 });
 
+export const setPicture = createAsyncThunk("/setPicture", async (screenData, thunkAPI) => {
+  try {
+    const token = thunkAPI.getState().auth.account.token;
+    return screenService.setPicture(screenData, token);
+  } catch (error) {
+    const message =
+      (error.response && error.response.data && error.response.data.message) ||
+      error.message ||
+      error.toString();
+    return thunkAPI.rejectWithValue(message);
+  }
+});
+
 export const updateScreen = createAsyncThunk("/updateScreen", async (screenData, thunkAPI) => {
   try {
     const token = thunkAPI.getState().auth.account.token;
@@ -152,6 +165,32 @@ export const screenSlice = createSlice({
       })
       .addCase("screenEditor/updateScreen", (state, action) => {
         state.screen = action.payload;
+      })
+      .addCase(setH5P.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(setH5P.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.screen = action.payload;
+      }) 
+      .addCase(setH5P.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
+      })
+      .addCase(setPicture.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(setPicture.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.screen = action.payload;
+      })
+      .addCase(setPicture.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
       })
   },
 });
