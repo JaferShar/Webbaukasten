@@ -21,7 +21,7 @@ export const getScreenData = createAsyncThunk("getScreenData", async (screenId, 
   }
 });
 
-export const StudentScreenSlice = createSlice({
+export const studentScreenSlice = createSlice({
   name: "studentScreenData",
   initialState,
   reducers: {
@@ -45,5 +45,5 @@ export const StudentScreenSlice = createSlice({
       })  },
 });
 
-export const { resetScreen } = screenSlice.actions;
-export default screenSlice.reducer;
+export const { resetScreen } = studentScreenSlice.actions;
+export default studentScreenSlice.reducer;
