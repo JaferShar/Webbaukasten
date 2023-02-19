@@ -2,12 +2,10 @@ import * as React from 'react';
 import PropTypes from 'prop-types';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
-import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
-import {Editor, EditorState} from 'draft-js';
 import 'draft-js/dist/Draft.css';
-import H5PPage from '../../../Pages/H5PTestFolder/H5PLinkHandler.js';
-import TextField from './TextField.jsx';
+import H5PMenu from './H5PMenu.jsx';
+import TextFieldMenu from './TextFieldMenu.jsx';
 import PixabayTestPage from '../../../Pages/PixabayTest/PixabayTestPage.js';
 
 
@@ -62,13 +60,13 @@ export default function BasicTabs() {
         </Tabs>
       </Box>
       <TabPanel value={value} index={0}>
-        <TextField />
+        <TextFieldMenu />
       </TabPanel>
       <TabPanel value={value} index={1}>
         <PixabayTestPage/>
       </TabPanel>
       <TabPanel value={value} index={2}>
-        <H5PPage/>
+        <H5PMenu/>
       </TabPanel>
     </Box>
     </div>
