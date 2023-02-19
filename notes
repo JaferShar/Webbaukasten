@@ -1,32 +1,32 @@
-14.02. To Do:
-1. create screen slice and screen service for redux ✅
-other To Dos:
-2.1. add on click screen ✅
-2.2. fetch screen data from backend ✅
-3. display screen data based on templates
--> May include rewriting some template code
-4.prevent deleting redux states on refresh (✅)
-
 BIG BUGS:
-- Redux Coursestate is empty after clicking on course
+-fix displaying erorrs with toast
 
 
--integrate H5P
--integrate Pixabay
--integrate Elements on Screen
--Build Menu for Elements
--declare functions or delete Template Menu
--restyle Course Editor
--Section control
--reorder Screens
--integrate publish and share
+TO DOs:
+    Fixing:
+    -walk through code and search for Errors
+    -delete unused code
+    -rearrange some code (e.g. Pixabay Page and H5P Page to components not an own page anymore)
+    -fix Linting with ESLint
+    -comment code USE DOCTHIS EXTENSION!!! ('/**')
 
+    New Features:
+    -add Pixabay and H5P to menu (link h5p to editor and add buttons to change redux state)
+    -add methods in screen slice to to create h5p and pixabay elements
+    -delete elements
+    -safe updates of screen (clicking home, selecting other screen etc.)
+    -finish student view
+    -finish profile view
 
+    -Check functional requirements for completness!!!
+    -Start writing the overleaf document!!!
 
-Have To Do:
--comment code USE DOCTHIS EXTENSION!!! ('/**')
 
 May Dos:
--Add Student View
 -change style of Screen Viewer to match real Screen
 -refine Course Overview
+-Add Section control
+-reorder Screens
+-reorder Elements
+-reorder Courses
+-replace Pictures and H5P (in general replace elements at a position or reorder them)
