@@ -10,6 +10,11 @@ import Button from '@mui/material/Button';
 import { useDispatch, useSelector } from "react-redux";
 import { getCourseData } from "../features/studentView/studentCourseSlice";
 import { useEffect } from 'react';
+import { useState } from 'react';
+import { getScreenData } from "../features/studentView/studentScreenSlice";
+
+
+
 
 const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -24,13 +29,26 @@ function StudentView() {
     const dispatch = useDispatch();
     const params = new URLSearchParams(window.location.search);
     const courseId = params.get("courseId");
+    const [screenId, setScreenId] = useState(0);
 
     useEffect(() => {
-        if (courseId) {
-            dispatch(getCourseData(courseId));
+        dispatch(getCourseData(courseId));
+    }, [dispatch, courseId]);
+    
+    const { course, isError, message } = useSelector(
+        (state) => state.studentCourse
+    );
+    
+    useEffect(() => {
+        console.log(course);
+        if (course.screens !== undefined) {
+            dispatch(getScreenData(course.screens[0]));
         }
         
-      }, [dispatch, courseId]);
+    }, [course]);
+    
+
+
 
     return (
         <div>
