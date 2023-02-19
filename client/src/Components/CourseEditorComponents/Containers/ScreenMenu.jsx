@@ -8,6 +8,7 @@ import {Editor, EditorState} from 'draft-js';
 import 'draft-js/dist/Draft.css';
 import H5PPage from '../../../Pages/H5PTestFolder/H5PLinkHandler.js';
 import TextField from './TextField.jsx';
+import PixabayTestPage from '../../../Pages/PixabayTest/PixabayTestPage.js';
 
 
 function TabPanel(props) {
@@ -64,7 +65,7 @@ export default function BasicTabs() {
         <TextField />
       </TabPanel>
       <TabPanel value={value} index={1}>
-        Item Two
+        <PixabayTestPage/>
       </TabPanel>
       <TabPanel value={value} index={2}>
         <H5PPage/>
