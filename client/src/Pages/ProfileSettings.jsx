@@ -8,7 +8,7 @@ import {
   ListItemText,
   TextField,
 } from "@mui/material";
-import ProfileHeader from "../Components/ProfileHeader";
+import ProfileHeader from "../Components/Headers/ProfileHeader";
 import {useSelector } from 'react-redux';
 const ProfileSetting = () => {
  const { account } = useSelector((state) => state.auth);

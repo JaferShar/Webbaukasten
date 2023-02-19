@@ -11,10 +11,10 @@ import { Avatar, Button, IconButton, Grid } from "@mui/material";
 import FolderIcon from "@mui/icons-material/Folder";
 import AddIcon from "@mui/icons-material/Add";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
-import "../Styling/SiteStyling/CourseOverview.css";
+import "../Styling/PageStyling/CourseOverview.css";
 import { toast } from "react-toastify";
 import MoreVertMenu from "../Components/CourseOverviewComponents/MoreVertMenu";
-import ResponsiveAppBar from "../Components/ResponsiveAppBar";
+import ResponsiveAppBar from "../Components/Headers/ResponsiveAppBar";
 import { useDispatch, useSelector } from "react-redux";
 import {
   createCourse,

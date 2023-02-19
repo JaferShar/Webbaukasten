@@ -1,8 +1,8 @@
 import React from "react";
 import { useState } from "react";
 import ScreenViewer from "../Components/CourseEditorComponents/Containers/ScreenViewer";
-import Menu from "../Components/CourseEditorComponents/Containers/MenuContainer";
-import HeaderEditor from "../Components/HeaderEditor";
+import Menu from "../Components/CourseEditorComponents/Containers/ScreenMenu";
+import HeaderEditor from "../Components/Headers/HeaderEditor";
 import Screen from "../Components/CourseEditorComponents/Screen/Screen";
 
 function CourseEditor() {

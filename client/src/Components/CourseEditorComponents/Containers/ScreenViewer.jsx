@@ -1,5 +1,10 @@
 import React, { useState, useEffect } from "react";
-import "../../../Styling/SiteStyling/ScreenViewer.css";
+import { useDispatch, useSelector } from "react-redux";
+import { toast } from "react-toastify";
+import { deleteScreen, getCourse } from "../../../features/courseEditor/courseSlice";
+import { getScreen, createScreen } from "../../../features/courseEditor/screenSlice";
+import AddScreenMenu from "../Menus/AddScreenMenu";
+import DeleteScreenMenu from "../Menus/DeleteScreenMenu";
 import Article from "@mui/icons-material/Article";
 import NoteAdd from "@mui/icons-material/NoteAdd";
 import {
@@ -10,15 +15,7 @@ import {
   ListItemButton,
   Grid,
 } from "@mui/material";
-import AddScreenMenu from "../Menus/AddScreenMenu";
-import { useDispatch, useSelector } from "react-redux";
-import {
-  deleteScreen,
-} from "../../../features/courseEditor/courseSlice";
-import { getScreen, createScreen } from "../../../features/courseEditor/screenSlice";
-import { getCourse } from "../../../features/courseEditor/courseSlice";
-import { toast } from "react-toastify";
-import DeleteScreenMenu from "../Menus/DeleteScreenMenu";
+import "../../../Styling/PageStyling/ScreenViewer.css";
 
 /**
  * This Module is responsible for displaying an add screen button in the Screen Viewer.
