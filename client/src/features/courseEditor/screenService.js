@@ -37,9 +37,12 @@ const setH5P = async (screenData, token) => {
 
 const setPicture = async (screenData, token) => {
     const config = {
-        headers: { Authorization: `Bearer ${token}` },
+        headers: { 
+            'Content-Type': 'multipart/form-data',
+            Authorization: `Bearer ${token}` 
+        },
     };
-    const response = await axios.post(ELEMENT_URL + `/picture/${screenData.screenId}`, screenData, config);
+    const response = await axios.post(ELEMENT_URL + `/picture/${screenData.screenId}`, screenData.formData, config);
     return response.data;
 };
 
