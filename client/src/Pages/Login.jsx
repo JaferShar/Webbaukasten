@@ -116,13 +116,7 @@ const handleSubmit = (event) => {
                     lastName: family_name,
                     picture: picture,
                   };
-
                   dispatch(register(accountData));
-
-                  console.log('Login Success');
-                  console.log(credentialResponse);
-                  console.log(credentialResponse.credential);
-                  console.log(jwtDecode(credentialResponse.credential));
                 }}
                 onError={() => {
                   console.log('Login Failed');
