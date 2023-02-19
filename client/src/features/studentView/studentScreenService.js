@@ -3,7 +3,7 @@ import axios from "axios";
 const API_URL = `api/student/screen`
 
 const getScreenData = async (screenId, token) => {
-    const response = await axios.get(API_URL + `/${screenId}`);
+    const response = await axios.get("/api/student/screen/" + screenId);
     return response.data;
 };
 
