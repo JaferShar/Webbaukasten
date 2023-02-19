@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const asyncHandler = require("express-async-handler");
+const { Screen } = require("../models/Screen");
 
 const Course = require("../models/Course");
 
@@ -18,13 +19,15 @@ const getCourseData = asyncHandler(async (req, res) => {
 
 const getScreenData = asyncHandler(async (req, res) => {
     try {
-      const screen = await Screen.findById(req.params.screenId);
+      console.log(req.params.id , "Inside getScreenData")
+      const screen = await Screen.findById(req.params.id);
       if (!screen) {
         return res.status(404).json({ error: "Screen not found" });
       }
   
       res.status(200).json(screen);
     } catch (error) {
+      console.log(error)
       res.status(500).json({ error: error.message });
     }
   });

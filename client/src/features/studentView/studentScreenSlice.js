@@ -11,7 +11,8 @@ const initialState = {
 
 export const getScreenData = createAsyncThunk("getScreenData", async (screenId, thunkAPI) => {
   try {
-    return studentScreenService.getScreen(screenId);
+    console.log("Inside thunk")
+    return studentScreenService.getScreenData(screenId);
   } catch (error) {
     const message =
       (error.response && error.response.data && error.response.data.message) ||
