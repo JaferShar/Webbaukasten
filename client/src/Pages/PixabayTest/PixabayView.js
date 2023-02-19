@@ -1,18 +1,9 @@
 import React, { Component } from "react";
-import Grid from '@mui/material/Grid';
-import ListItem from "@mui/material/ListItem";
 import { PropTypes } from 'prop-types';
-import IconButton from "@mui/material/IconButton";
-import ZoomIn from '@mui/icons-material/ZoomIn'
-import Dialog from '@mui/material/Dialog';
 import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
 import ImageListItemBar from '@mui/material/ImageListItemBar';
-import InfoIcon from '@mui/icons-material/Info';
 import ListSubheader from '@mui/material/ListSubheader';
-import { Button } from "@mui/material";
-import DownloadIcon from '@mui/icons-material/Download';
-import { createTheme } from '@mui/material/styles';
 import { PixabaySaveButton } from "./PixabaySaveButton";
 
 

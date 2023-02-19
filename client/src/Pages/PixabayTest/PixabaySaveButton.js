@@ -1,5 +1,4 @@
 import { ThemeProvider } from "@emotion/react";
-import { alpha } from "@material-ui/core";
 import SaveIcon from "@mui/icons-material/Save";
 import { Button } from "@mui/material";
 import { createTheme } from '@mui/material/styles';
@@ -12,7 +11,10 @@ const theme = createTheme({
   }
   }
 });
-
+/**
+ * 
+ * @returns Button
+ */
 export const PixabaySaveButton = () => (
   <ThemeProvider theme={theme}>
   <Button
