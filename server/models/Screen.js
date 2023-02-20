@@ -12,8 +12,10 @@ const Element = mongoose.model("Element", elementSchema);
 const Picture = Element.discriminator(
   "Picture",
   new mongoose.Schema({
-    data: { type: Buffer, required: true },
-    picType: { type: String, required: true },
+    url: {
+      type: String,
+      required: true,
+    },
   })
 );
 

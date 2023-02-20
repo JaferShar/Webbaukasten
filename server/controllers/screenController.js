@@ -84,33 +84,24 @@ const setTextField = asyncHandler(async (req, res) => {
 });
 
 const setPicture = asyncHandler(async (req, res) => {
+  console.log("setPicture")
+  const { url } = req.body;
+  console.log(url)
   try {
-    const upload = multer({ storage: multer.memoryStorage() }).single("image");
-    upload(req, res, async (err) => {
-      if (err) {
-        throw new Error(err.message);
-      }
-      if (!req.file) {
-        return res.status(400).json({ error: "Please upload an image" });
-      }
-      // create picture
-      const picture = new Picture({
-        data: req.file.buffer,
-        picType: req.file.mimetype,
-      });
-      await picture.save();
+    if (!url) {
+      return res
+        .status(400)
+        .json({ error: "Please provide valid inputs for the H5P" });
+    }
+    const screen = await Screen.findById(req.params.screenId);
+    if (!screen) {
+      return res.status(404).json({ error: "Screen not found" });
+    }
+    const picture = await Picture.create({ url: url });
+    screen.elements.push(picture);
+    screen.save();
 
-      // add picture to screen
-      const screen = await Screen.findById(req.params.screenId);
-      if (!screen) {
-        return res.status(404).json({ error: "Screen not found" });
-      }
-
-      screen.elements.push(picture);
-      await screen.save();
-
-      res.status(201).json(screen);
-    });
+    res.status(201).json(screen);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
