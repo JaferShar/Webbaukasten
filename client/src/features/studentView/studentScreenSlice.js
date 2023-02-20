@@ -40,6 +40,7 @@ export const studentScreenSlice = createSlice({
       .addCase(getScreenData.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
+        state.isSuccess = false;
         state.message = action.payload;
         state.screen = {};
       })  },
