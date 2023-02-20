@@ -29,23 +29,21 @@ function StudentView() {
     const dispatch = useDispatch();
     const params = new URLSearchParams(window.location.search);
     const courseId = params.get("courseId");
-    const [screenId, setScreenId] = useState(0);
+    const [screenIndex, setScreenIndex] = useState(0);
 
-    useEffect(() => {
-        dispatch(getCourseData(courseId));
-    }, [dispatch, courseId]);
-    
     const { course, isError, message } = useSelector(
         (state) => state.studentCourse
     );
+
+    useEffect(() => {
+        dispatch(getCourseData(courseId));
+    }, [courseId, dispatch,]);
     
     useEffect(() => {
-        console.log(course);
         if (course.screens !== undefined) {
-            dispatch(getScreenData(course.screens[0]));
+            dispatch(getScreenData(course.screens[screenIndex]));
         }
-        
-    }, [course]);
+    }, [course, screenIndex, dispatch]);
     
 
 
