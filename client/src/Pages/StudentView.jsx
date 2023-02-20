@@ -38,13 +38,13 @@ function StudentView() {
     useEffect(() => {
         dispatch(getCourseData(courseId));
     }, [courseId, dispatch,]);
-    
+
     useEffect(() => {
         if (course.screens !== undefined) {
             dispatch(getScreenData(course.screens[screenIndex]));
         }
     }, [course, screenIndex, dispatch]);
-    
+
 
 
 
@@ -63,7 +63,14 @@ function StudentView() {
                                 <ProgressBar completed={60} />
                             </Box>
                             <Box sx={{ width: '20%', display: 'flex', justifyContent: 'flex-end' }}>
-                                <Button variant="contained" endIcon={<ArrowForwardIosIcon />}>
+                                <Button variant="contained" endIcon={<ArrowForwardIosIcon />}
+                                    onClick={() => {
+                                        if (screenIndex < course.screens.length) {
+                                            setScreenIndex(screenIndex + 1)
+                                        }
+                                    }
+                                    }
+                                >
                                     Weiter
                                 </Button>
                             </Box>
