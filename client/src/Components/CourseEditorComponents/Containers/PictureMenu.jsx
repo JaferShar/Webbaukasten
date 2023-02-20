@@ -16,6 +16,20 @@ export default function CloudinaryUploadWidget() {
       {
         cloudName: cloudName,
         uploadPreset: uploadPreset,
+        sources: [
+            "local",
+            "url",
+            "camera",
+            "image_search",
+            "google_drive",
+            "dropbox",
+            "pixabay",
+        ],
+        url: {
+            isRemote: true,
+            defaultValue: 'https://pixabay.com/api/?key=33449732-b16fa09defbfef09ff64fd27e&per_page=50&q=',
+            placeholder: 'Search Pixabay images...'
+          }
       },
       (error, result) => {
         if (!error && result && result.event === "success") {
