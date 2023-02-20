@@ -12,7 +12,7 @@ import { getCourseData } from "../features/studentView/studentCourseSlice";
 import { useEffect } from 'react';
 import { useState } from 'react';
 import { getScreenData } from "../features/studentView/studentScreenSlice";
-import templates from '../Components/CourseEditorComponents/Templates/Template';
+import templates from '../Components/CourseEditorComponents/Templates/StudentTemplate';
 
 
 
@@ -27,6 +27,7 @@ const Item = styled(Paper)(({ theme }) => ({
 
 
 function StudentView() {
+    
     const dispatch = useDispatch();
     const params = new URLSearchParams(window.location.search);
     const courseId = params.get("courseId");
@@ -71,7 +72,18 @@ function StudentView() {
                             <Item>
                                 {templates["Welcome"]}
                             </Item>
-                        ) : null}
+                        ) : screenIndex > 0 && screenIndex < course.screens.length -1 ? (
+                            <Item>
+                              {templates["Standard"]}
+                            </Item>
+                        ) : screenIndex === course.screens.length ? (
+                            <Item>
+                                {templates["Ende"]}
+                            </Item>
+                        ):
+
+                        
+                         null}
                         {/* Rest of the code */}
                         {/* This is the bottom stack for the progress Bar with continue Button */}
                         <Stack direction="row" spacing={2} justifyContent="space-between" alignItems={"center"}>
