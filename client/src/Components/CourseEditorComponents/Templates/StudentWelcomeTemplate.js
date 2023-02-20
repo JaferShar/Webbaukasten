@@ -6,7 +6,7 @@ import { getScreen } from "../../../features/courseEditor/screenSlice";
 export default function WelcomeTemplate() {
   const studentScreen = useSelector((state) => state.studentScreen);
 
-  if (!studentScreen) {
+  if (!studentScreen.screen || !studentScreen.screen.elements ) {
     return <Stack spacing={2} />;
   } else {
     return (

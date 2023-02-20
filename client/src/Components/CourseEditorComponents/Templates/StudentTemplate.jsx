@@ -1,8 +1,9 @@
 import React from "react";
 import ElementList from "../Elements/ElementList";
+import StudentWelcome from "./StudentWelcomeTemplate"
 
 const templates = {
-  Welcome: (<div>Hello</div>),
+  Welcome: <StudentWelcome/>,
   Standard: <ElementList />,
   End: <div>End</div>
 };
