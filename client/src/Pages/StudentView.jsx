@@ -12,6 +12,7 @@ import { getCourseData } from "../features/studentView/studentCourseSlice";
 import { useEffect } from 'react';
 import { useState } from 'react';
 import { getScreenData } from "../features/studentView/studentScreenSlice";
+import templates from '../Components/CourseEditorComponents/Templates/Template';
 
 
 
@@ -36,12 +37,12 @@ function StudentView() {
     );
 
 
-    
+
     useEffect(() => {
         dispatch(getCourseData(courseId));
     }, [courseId, dispatch,]);
 
-    
+
     useEffect(() => {
         if (course.screens !== undefined) {
             dispatch(getScreenData(course.screens[screenIndex]));
@@ -51,7 +52,7 @@ function StudentView() {
     /**
      * This function handles the click on the "Weiter" Button. It increases the screenIndex by 1 and fetches the next screen
      */
-    function handleWeiterButton()  {
+    function handleWeiterButton() {
         if (screenIndex < course.screens.length) {
             setScreenIndex(screenIndex + 1)
         }
@@ -66,13 +67,12 @@ function StudentView() {
                     {/* This is the stack for the main student View content The elements that get fetched into the Redux state "studentScreen" 
                      are getting mapped here and displayed inside this stack */}
                     <Stack spacing={3}>
-                        <h1>{data.courseName} + {courseId}</h1>
-                        <Item>{data.screens[0].elements[0]}</Item>
-
-                        <div style={{ width: "100%", display: 'flex', justifyContent: 'center' }}>
-                            <img src={data.screens[0].elements[1]} alt='description of the image' width="auto" height="auto" />
-                        </div>
-
+                        {screenIndex === 0 ? (
+                            <Item>
+                                {templates["Welcome"]}
+                            </Item>
+                        ) : null}
+                        {/* Rest of the code */}
                         {/* This is the bottom stack for the progress Bar with continue Button */}
                         <Stack direction="row" spacing={2} justifyContent="space-between" alignItems={"center"}>
                             <Box sx={{ width: '80%' }}>
