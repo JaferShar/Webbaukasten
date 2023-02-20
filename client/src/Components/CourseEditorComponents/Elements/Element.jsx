@@ -30,7 +30,7 @@ export default function Element({ element }) {
       <div style={{ justifyContent: "center", display: "flex" }}>
         <ListItem style={{ justifyContent: "center" }}>
           <img
-            src={createImageObjectUrl(element.data, element.picType)}
+            src={element.url}
             alt='placeholder'
             width='auto'
             height='auto'
@@ -69,14 +69,4 @@ const H5PIframe = ({ src }) => {
       frameBorder={0}
     />
   );
-};
-
-const createImageObjectUrl = (data, type) => {
-  const binaryData = atob(data);
-  const array = new Uint8Array(binaryData.length);
-  for (let i = 0; i < binaryData.length; i++) {
-    array[i] = binaryData.charCodeAt(i);
-  }
-  const blob = new Blob([array], { type });
-  return URL.createObjectURL(blob);
 };
