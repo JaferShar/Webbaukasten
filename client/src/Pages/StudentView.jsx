@@ -15,8 +15,6 @@ import { getScreenData } from "../features/studentView/studentScreenSlice";
 import templates from '../Components/CourseEditorComponents/Templates/StudentTemplate';
 
 
-
-
 const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
     ...theme.typography.body2,
@@ -25,9 +23,15 @@ const Item = styled(Paper)(({ theme }) => ({
     color: theme.palette.text.secondary,
 }));
 
-
+/**
+ *StudentView is the main component for the student view. It fetches the course data from the backend and renders the course content.
+ * It also handles the navigation between the screens.
+ * Depending on the screen template, the corresponding template component is rendered.
+ * 
+ * @return {*} 
+ */
 function StudentView() {
-    
+
     const dispatch = useDispatch();
     const params = new URLSearchParams(window.location.search);
     const courseId = params.get("courseId");
@@ -37,17 +41,19 @@ function StudentView() {
         (state) => state.studentCourse
     );
 
-
+    const studentScreen = useSelector(
+        (state) => state.studentScreen
+    );
 
     useEffect(() => {
         dispatch(getCourseData(courseId));
     }, [courseId, dispatch,]);
 
-
     useEffect(() => {
         if (course.screens !== undefined) {
             dispatch(getScreenData(course.screens[screenIndex]));
         }
+
     }, [course, screenIndex, dispatch]);
 
     /**
@@ -56,6 +62,7 @@ function StudentView() {
     function handleWeiterButton() {
         if (screenIndex < course.screens.length) {
             setScreenIndex(screenIndex + 1)
+            console.log("screenIndex: " + screenIndex);
         }
     }
 
@@ -68,36 +75,35 @@ function StudentView() {
                     {/* This is the stack for the main student View content The elements that get fetched into the Redux state "studentScreen" 
                      are getting mapped here and displayed inside this stack */}
                     <Stack spacing={3}>
-                        {screenIndex === 0 ? (
-                            <Item>
-                                {templates["Welcome"]}
-                            </Item>
-                        ) : screenIndex > 0 && screenIndex < course.screens.length -1 ? (
-                            <Item>
-                              {templates["Standard"]}
-                            </Item>
-                        ) : screenIndex === course.screens.length ? (
-                            <Item>
-                                {templates["Ende"]}
-                            </Item>
-                        ):
-
-                        
-                         null}
+                        {
+                            (studentScreen.screen !== undefined) ? templates[`${studentScreen.screen.template}`] : <div>lol</div>
+                        }
                         {/* Rest of the code */}
-                        {/* This is the bottom stack for the progress Bar with continue Button */}
-                        <Stack direction="row" spacing={2} justifyContent="space-between" alignItems={"center"}>
-                            <Box sx={{ width: '80%' }}>
-                                <ProgressBar completed={60} />
-                            </Box>
-                            <Box sx={{ width: '20%', display: 'flex', justifyContent: 'flex-end' }}>
-                                <Button variant="contained" endIcon={<ArrowForwardIosIcon />}
-                                    onClick={handleWeiterButton}
-                                >
-                                    Weiter
-                                </Button>
-                            </Box>
-                        </Stack>
+                        {/* This is the bottom stack for the progress Bar with continue Button 
+                        This only renders if we are not on the End card screen
+                        */}
+
+
+                        {studentScreen.screen.template !== 'End' ? (
+                            <Stack direction="row" spacing={2} justifyContent="space-between" alignItems="center">
+                                <Box sx={{ width: '80%' }}>
+                                    <ProgressBar completed={
+                                        course.screens !== undefined
+                                        ? Math.round((screenIndex  / (course.screens.length -1)) * 100)
+                                        : 0
+                                    }
+                                 />
+                                </Box>
+                                <Box sx={{ width: '20%', display: 'flex', justifyContent: 'flex-end' }}>
+                                    <Button variant="contained" endIcon={<ArrowForwardIosIcon />} onClick={handleWeiterButton}>
+                                        Weiter
+                                    </Button>
+                                </Box>
+                            </Stack>
+                        ) : (
+                            <div></div>
+                        )}
+
 
                     </Stack>
                 </Box>

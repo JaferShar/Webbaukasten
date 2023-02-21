@@ -1,11 +1,12 @@
 import React from "react";
-import ElementList from "../Elements/ElementList";
+import StudentElementList from "../Elements/StudentsElementList.jsx"
 import StudentWelcome from "./StudentWelcomeTemplate"
 
 const templates = {
   Welcome: <StudentWelcome/>,
-  Standard: <ElementList />,
+  Standard: <StudentElementList />,
   End: <div>End</div>
 };
 
 export default templates;
+
