@@ -37,17 +37,19 @@ function StudentView() {
         (state) => state.studentCourse
     );
 
-
+    const studentScreen = useSelector(
+        (state) => state.studentScreen
+    );
 
     useEffect(() => {
         dispatch(getCourseData(courseId));
     }, [courseId, dispatch,]);
 
-
     useEffect(() => {
         if (course.screens !== undefined) {
             dispatch(getScreenData(course.screens[screenIndex]));
         }
+        
     }, [course, screenIndex, dispatch]);
 
     /**
@@ -56,6 +58,7 @@ function StudentView() {
     function handleWeiterButton() {
         if (screenIndex < course.screens.length) {
             setScreenIndex(screenIndex + 1)
+            console.log("screenIndex: " + screenIndex);
         }
     }
 
@@ -68,22 +71,9 @@ function StudentView() {
                     {/* This is the stack for the main student View content The elements that get fetched into the Redux state "studentScreen" 
                      are getting mapped here and displayed inside this stack */}
                     <Stack spacing={3}>
-                        {screenIndex === 0 ? (
-                            <Item>
-                                {templates["Welcome"]}
-                            </Item>
-                        ) : screenIndex > 0 && screenIndex < course.screens.length -1 ? (
-                            <Item>
-                              {templates["Standard"]}
-                            </Item>
-                        ) : screenIndex === course.screens.length ? (
-                            <Item>
-                                {templates["Ende"]}
-                            </Item>
-                        ):
-
-                        
-                         null}
+                        {
+                             (studentScreen.screen !== undefined) ? templates[`${studentScreen.screen.template}`] : <div>lol</div>
+                        }
                         {/* Rest of the code */}
                         {/* This is the bottom stack for the progress Bar with continue Button */}
                         <Stack direction="row" spacing={2} justifyContent="space-between" alignItems={"center"}>
