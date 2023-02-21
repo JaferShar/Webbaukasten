@@ -32,7 +32,7 @@ export default function Element({ element }) {
           <img
             src={element.url}
             alt='placeholder'
-            width='auto'
+            width='100%'
             height='auto'
             loading='lazy'
           />
