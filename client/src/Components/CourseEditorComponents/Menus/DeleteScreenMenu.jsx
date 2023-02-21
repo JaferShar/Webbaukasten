@@ -3,7 +3,7 @@ import { Menu, MenuItem } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import Container from "@mui/material/Container";
 
-export default function AddScreenMenu({ anchorEl, handleDelete, handleClose }) {
+export default function DeleteScreenMenu({ anchorEl, handleDelete, handleClose }) {
   return (
     <Container>
       <Menu
