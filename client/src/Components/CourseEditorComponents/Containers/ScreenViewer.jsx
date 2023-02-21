@@ -72,7 +72,7 @@ function ScreenViewer({ changeTemplate }) {
       dispatch(getScreen(course.screens[0]));
       setSelectedScreen(course.screens[0]);
     }
-  }, [dispatch, course]);
+  }, [dispatch, course, selectedScreen]);
 
   const handleAddClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -96,7 +96,8 @@ function ScreenViewer({ changeTemplate }) {
   const handleCreate = (template) => {
     try {
       dispatch(createScreen({ template: template, courseId: courseId }));
-      changeTemplate(template);
+      dispatch(getCourse(courseId));
+      setSelectedScreen(course.screens[course.screens.length - 1])
     } catch (error) {
       toast(error.message, { type: "error" });
     } finally {
