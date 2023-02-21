@@ -15,7 +15,7 @@ export default function H5PLinkHandler(props) {
           variant="standard"
           value={props.currString}
           onChange={props.updateString}
-          sx={{ width: "75%" }}
+          sx={{ width: "55%" }}
         />
         <Button variant="contained" onClick={props.generateH5P}>
           Hochladen
