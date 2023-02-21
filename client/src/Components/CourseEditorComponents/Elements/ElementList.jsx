@@ -1,9 +1,8 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Stack } from "@mui/material";
 import Element from "./Element";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  getScreen,
   deleteElement,
 } from "../../../features/courseEditor/screenSlice";
 import ElementMenu from "./ElementMenu";

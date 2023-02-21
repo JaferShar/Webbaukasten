@@ -74,7 +74,6 @@ const updateScreen = async (screenData, token) => {
 };
 
 const deleteElement = async (elementData, token) => {
-  console.log("elementData", elementData);
   const config = {
     headers: { Authorization: `Bearer ${token}` },
   };

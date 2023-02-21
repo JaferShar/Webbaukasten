@@ -308,7 +308,6 @@ const deleteElement = asyncHandler(async (req, res) => {
   try {
     const screenId = req.query.param1;
     const elementId = req.query.param2;
-    console.log(screenId, elementId)
     const screen = await Screen.findById(screenId);
     if (!screen) {
       return res.status(404).json({ error: "Screen not found" });

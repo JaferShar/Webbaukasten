@@ -1,6 +1,5 @@
 BIG BUGS:
 -fix displaying erorrs with toast
-(have to reload maybe set selected screen)
 -have to close widget twice to close it (cannot close it on clicking anywhere else)
 
 TO DOs:
@@ -15,12 +14,9 @@ Fixing:
 
     New Features:
     -add Pixabay to cloudinary (integrate to widget or extra button)
-    -delete elements
     -exchange elements with other elements
-    -all in all context menu for elements
     -safe updates of screen (selecting other screen, pressing home etc.)
     -finish student view (talk to Raphael)
-    -resize images in editor that they fit the size of the screen!! like h5p and text elements (maxWidth)
     -create different templates for standard and welcome screen (welcome screen has fix quantity of elements 
     title, subtitle, description ...)
 
