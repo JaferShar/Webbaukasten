@@ -8,7 +8,7 @@ const {
 } = require("../controllers/screenController");
 
 // params: screenId, elementId
-router.route("/:screenId").delete(deleteElement);
+router.route("").delete(deleteElement);
 // params: screenId
 router.route("/textfield/:screenId").post(setTextField);
 // params: screenId
