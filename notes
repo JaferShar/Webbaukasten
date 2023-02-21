@@ -1,33 +1,37 @@
 BIG BUGS:
 -fix displaying erorrs with toast
--maybe using lazy loading for the components fixing the atob bug
-
+-on create screen the screen is not added and selected to the course automatically 
+(have to reload maybe set selected screen)
+-have to close widget twice to close it (cannot close it on clicking anywhere else)
 
 TO DOs:
-    Fixing:
-    -walk through code and search for Errors
-    -delete unused code
-    -rearrange some code (e.g. Pixabay Page and H5P Page to components not an own page anymore)
-    -fix Linting with ESLint
-    -comment code USE DOCTHIS EXTENSION!!! ('/**')
+Fixing:
+-walk through code and search for Errors!!!
+-delete unused code
+-rearrange some code (e.g. Pixabay Page and H5P Page to components not an own page anymore)
+-fix Linting with ESLint
+-comment code USE DOCTHIS EXTENSION!!! ('/\*\*')
+-Check functional requirements for completness!!!
+-Start writing the overleaf document!!!
 
     New Features:
-    -add Pixabay and H5P to menu (link h5p to editor and add buttons to change redux state)
-    -add methods in screen slice to to create h5p and pixabay elements
+    -emphasize the selected screen in the course editor
+    -add Pixabay to cloudinary (integrate to widget or extra button)
     -delete elements
-    -safe updates of screen (clicking home, selecting other screen etc.)
-    -finish student view
-    -finish profile view
+    -exchange elements with other elements
+    -all in all context menu for elements
+    -safe updates of screen (selecting other screen, pressing home etc.)
+    -finish student view (talk to Raphael)
+    -resize images in editor that they fit the size of the screen!! like h5p and text elements (maxWidth)
+    -create different templates for standard and welcome screen (welcome screen has fix quantity of elements 
+    title, subtitle, description ...)
 
-    -Check functional requirements for completness!!!
-    -Start writing the overleaf document!!!
-
-
+    
 May Dos:
+-context menu for creating screen on hover with short description for each template
 -change style of Screen Viewer to match real Screen
--refine Course Overview
--Add Section control
+-refine Course Overview with bigger courses (maybe change order, colors etc.)
+-Add Section control (would not be nice but not necessary for the first version)
 -reorder Screens
 -reorder Elements
 -reorder Courses
--replace Pictures and H5P (in general replace elements at a position or reorder them)
