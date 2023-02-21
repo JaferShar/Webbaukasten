@@ -87,7 +87,12 @@ function StudentView() {
                         {studentScreen.screen.template !== 'End' ? (
                             <Stack direction="row" spacing={2} justifyContent="space-between" alignItems="center">
                                 <Box sx={{ width: '80%' }}>
-                                    <ProgressBar completed={60} />
+                                    <ProgressBar completed={
+                                        course.screens !== undefined
+                                        ? Math.round((screenIndex  / (course.screens.length -1)) * 100)
+                                        : 0
+                                    }
+                                 />
                                 </Box>
                                 <Box sx={{ width: '20%', display: 'flex', justifyContent: 'flex-end' }}>
                                     <Button variant="contained" endIcon={<ArrowForwardIosIcon />} onClick={handleWeiterButton}>
