@@ -84,9 +84,7 @@ const setTextField = asyncHandler(async (req, res) => {
 });
 
 const setPicture = asyncHandler(async (req, res) => {
-  console.log("setPicture")
   const { url } = req.body;
-  console.log(url)
   try {
     if (!url) {
       return res

@@ -7,7 +7,6 @@ import 'draft-js/dist/Draft.css';
 import H5PMenu from './H5PMenu.jsx';
 import TextFieldMenu from './TextFieldMenu.jsx';
 import PixabayTestPage from '../../../Pages/PixabayTest/PixabayTestPage.js';
-import Picture from '../Buttons/PopUpButtonPicture.js'
 import PictureMenu from './PictureMenu.jsx';
 
 
