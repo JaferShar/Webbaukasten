@@ -27,7 +27,7 @@ const Item = styled(Paper)(({ theme }) => ({
 
 
 function StudentView() {
-    
+
     const dispatch = useDispatch();
     const params = new URLSearchParams(window.location.search);
     const courseId = params.get("courseId");
@@ -49,7 +49,7 @@ function StudentView() {
         if (course.screens !== undefined) {
             dispatch(getScreenData(course.screens[screenIndex]));
         }
-        
+
     }, [course, screenIndex, dispatch]);
 
     /**
@@ -72,22 +72,26 @@ function StudentView() {
                      are getting mapped here and displayed inside this stack */}
                     <Stack spacing={3}>
                         {
-                             (studentScreen.screen !== undefined) ? templates[`${studentScreen.screen.template}`] : <div>lol</div>
+                            (studentScreen.screen !== undefined) ? templates[`${studentScreen.screen.template}`] : <div>lol</div>
                         }
                         {/* Rest of the code */}
                         {/* This is the bottom stack for the progress Bar with continue Button */}
-                        <Stack direction="row" spacing={2} justifyContent="space-between" alignItems={"center"}>
-                            <Box sx={{ width: '80%' }}>
-                                <ProgressBar completed={60} />
-                            </Box>
-                            <Box sx={{ width: '20%', display: 'flex', justifyContent: 'flex-end' }}>
-                                <Button variant="contained" endIcon={<ArrowForwardIosIcon />}
-                                    onClick={handleWeiterButton}
-                                >
-                                    Weiter
-                                </Button>
-                            </Box>
-                        </Stack>
+
+                        {studentScreen.screen.template !== 'End' ? (
+                            <Stack direction="row" spacing={2} justifyContent="space-between" alignItems="center">
+                                <Box sx={{ width: '80%' }}>
+                                    <ProgressBar completed={60} />
+                                </Box>
+                                <Box sx={{ width: '20%', display: 'flex', justifyContent: 'flex-end' }}>
+                                    <Button variant="contained" endIcon={<ArrowForwardIosIcon />} onClick={handleWeiterButton}>
+                                        Weiter
+                                    </Button>
+                                </Box>
+                            </Stack>
+                        ) : (
+                            <div></div>
+                        )}
+
 
                     </Stack>
                 </Box>
