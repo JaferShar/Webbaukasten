@@ -15,8 +15,6 @@ import { getScreenData } from "../features/studentView/studentScreenSlice";
 import templates from '../Components/CourseEditorComponents/Templates/StudentTemplate';
 
 
-
-
 const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
     ...theme.typography.body2,
@@ -25,7 +23,13 @@ const Item = styled(Paper)(({ theme }) => ({
     color: theme.palette.text.secondary,
 }));
 
-
+/**
+ *StudentView is the main component for the student view. It fetches the course data from the backend and renders the course content.
+ * It also handles the navigation between the screens.
+ * Depending on the screen template, the corresponding template component is rendered.
+ * 
+ * @return {*} 
+ */
 function StudentView() {
 
     const dispatch = useDispatch();
@@ -75,7 +79,10 @@ function StudentView() {
                             (studentScreen.screen !== undefined) ? templates[`${studentScreen.screen.template}`] : <div>lol</div>
                         }
                         {/* Rest of the code */}
-                        {/* This is the bottom stack for the progress Bar with continue Button */}
+                        {/* This is the bottom stack for the progress Bar with continue Button 
+                        This only renders if we are not on the End card screen
+                        */}
+
 
                         {studentScreen.screen.template !== 'End' ? (
                             <Stack direction="row" spacing={2} justifyContent="space-between" alignItems="center">
