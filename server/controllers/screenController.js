@@ -306,11 +306,13 @@ const deleteSection = asyncHandler(async (req, res) => {
 
 const deleteElement = asyncHandler(async (req, res) => {
   try {
-    const screen = await Screen.findById(req.params.screenId);
+    const screenId = req.query.param1;
+    const elementId = req.query.param2;
+    const screen = await Screen.findById(screenId);
     if (!screen) {
       return res.status(404).json({ error: "Screen not found" });
     }
-    screen.elements.id(req.params.elementId).remove();
+    screen.elements.id(elementId).remove();
     await screen.save();
 
     res.status(200).json(screen);

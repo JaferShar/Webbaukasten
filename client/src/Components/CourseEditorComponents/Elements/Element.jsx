@@ -1,9 +1,9 @@
 import { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { ListItem, TextField } from "@mui/material";
+import { ListItem, TextField, Button } from "@mui/material";
 import { updateTextField } from "../../../features/courseEditor/screenSlice";
 
-export default function Element({ element }) {
+export default function Element({ element, handleContextMenu }) {
   const screen = useSelector((state) => state.screenEditor.screen);
   const dispatch = useDispatch();
 
@@ -21,7 +21,10 @@ export default function Element({ element }) {
           defaultValue={element.text}
           onChange={(event) => handleUpdateTextField(event, element)}
           multiline
-          style={{ width: "100%" }}
+          style={{ width: "100%", cursor: "context-menu" }}
+          onContextMenu={(event) => {
+            handleContextMenu(event, element._id);
+          }}
         />
       </ListItem>
     );
@@ -35,14 +38,34 @@ export default function Element({ element }) {
             width='100%'
             height='auto'
             loading='lazy'
+            style={{ cursor: "context-menu" }}
+            onContextMenu={(event) => {
+              handleContextMenu(event, element._id);
+            }}
           />
         </ListItem>
       </div>
     );
   } else if (element.elementType === "H5P") {
     return (
-      <ListItem>
+      <ListItem
+        style={{
+          position: "relative",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          flexDirection: "column",
+        }}
+      >
         <H5PIframe src={element.content} />
+        <Button
+          sx={{ color: "black" }}
+          onClick={(event) => {
+            handleContextMenu(event, element._id);
+          }}
+        >
+          Context Menu
+        </Button>
       </ListItem>
     );
   }
