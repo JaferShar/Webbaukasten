@@ -1,6 +1,5 @@
 BIG BUGS:
 -fix displaying erorrs with toast
--on create screen the screen is not added and selected to the course automatically 
 (have to reload maybe set selected screen)
 -have to close widget twice to close it (cannot close it on clicking anywhere else)
 
@@ -15,7 +14,6 @@ Fixing:
 -Start writing the overleaf document!!!
 
     New Features:
-    -emphasize the selected screen in the course editor
     -add Pixabay to cloudinary (integrate to widget or extra button)
     -delete elements
     -exchange elements with other elements

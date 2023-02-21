@@ -117,6 +117,15 @@ function ScreenViewer({ changeTemplate }) {
 
   const handleOnClickScreen = (screenId) => {
     dispatch(getScreen(screenId));
+    setSelectedScreen(screenId);
+  };
+
+  const handleEmphasize = (screenId) => {
+    if (screenId === selectedScreen) {
+      return "1px solid #0000ff";
+    } else {
+      return "1px solid #d9dddd";
+    }
   };
 
   return (
@@ -140,7 +149,7 @@ function ScreenViewer({ changeTemplate }) {
                 className='rectangle-list-item'
                 style={{
                   flexDirection: "column",
-                  border: "1px solid #d9dddd",
+                  border: handleEmphasize(screenId),
                   cursor: "context-menu",
                 }}
                 sx={{ mb: 2 }}
