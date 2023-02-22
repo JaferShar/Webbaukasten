@@ -1,5 +1,10 @@
 const mongoose = require("mongoose");
 
+/**
+ * This mongoose schema defines the structure of an element placed on a screen. 
+ * It uses the discriminator feature of mongoose to determine between elements.
+ * The discriminator key is the elementType property.
+ */
 const elementSchema = new mongoose.Schema(
   {
     elementType: { type: String, required: true },
@@ -9,6 +14,9 @@ const elementSchema = new mongoose.Schema(
 
 const Element = mongoose.model("Element", elementSchema);
 
+/**
+ * This mongoose schema defines the structure of a picture element placed on a screen.
+ */
 const Picture = Element.discriminator(
   "Picture",
   new mongoose.Schema({
@@ -19,6 +27,9 @@ const Picture = Element.discriminator(
   })
 );
 
+/**
+ * This mongoose schema defines the structure of a text field element placed on a screen.
+ */
 const TextField = Element.discriminator(
   "TextField",
   new mongoose.Schema({
@@ -29,6 +40,9 @@ const TextField = Element.discriminator(
   })
 );
 
+/**
+ * This mongoose schema defines the structure of a H5P element placed on a screen.
+ */
 const H5P = Element.discriminator(
   "H5P",
   new mongoose.Schema({
@@ -39,13 +53,18 @@ const H5P = Element.discriminator(
   })
 );
 
+/**
+ * This mongoose schema defines the structure of a screen document in the database.
+ */
 const screenSchema = new mongoose.Schema({
+  // allowed templates are "Welcome", "Standard" and "End"
   template: {
     type: String,
     enum: ["Welcome", "Standard", "End"],
     default: "Welcome",
     required: true,
   },
+  // The elements of a screen are stored as an array of embedded documents.
   elements: {
     type: [elementSchema],
     default: [],
@@ -54,6 +73,9 @@ const screenSchema = new mongoose.Schema({
 
 const Screen = mongoose.model("Screen", screenSchema);
 
+/**
+ * Export the schemas as mongoose models.
+ */
 module.exports = {
   Screen,
   Picture,
