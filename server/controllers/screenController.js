@@ -262,6 +262,51 @@ const updateScreen = asyncHandler(async (req, res) => {
   }
 });
 
+const exchangeElement = asyncHandler(async (req, res) => {
+  try {
+    const screenId = req.query.param1;
+    const prevElementId = req.query.param2;
+    const { element } = req.body;
+    if (!element || !prevElementId || !screenId) {
+      return res.status(400).send({ error: "Invalid request" });
+    }
+
+    const screen = await Screen.findById(screenId);
+    if (!screen) {
+      return res.status(400).send({ error: "Screen not found" });
+    }
+
+    // create element
+    const newElement = null;
+    switch (element.elementType) {
+      case "Picture":
+        newElement = Picture.create({ url: element.url });
+        break;
+      case "TextField":
+        newElement = TextField.create({ text: element.text });
+        break;
+      case "H5P":
+        newElement = H5P.create({ content: element.content });
+        break;
+      default:
+        return res.status(400).send({ error: "Invalid element type" });
+        break;
+    }
+
+    if (!newElement) {
+      return res.status(400).send({ error: "Could not create new Element" });
+    }
+
+    // exchange element
+    screen.elements.id(prevElementId).set(newElement);
+    await screen.save();
+
+    return res.status(200).send(screen);
+  } catch (error) {
+    return res.status(500).send({ error: error.message });
+  }
+});
+
 const deleteScreen = asyncHandler(async (req, res) => {
   try {
     const courseId = req.query.param1;
@@ -331,6 +376,7 @@ module.exports = {
   updateScreenPosition,
   updateSection,
   updateScreen,
+  exchangeElement,
   deleteScreen,
   deleteSection,
   deleteElement,
