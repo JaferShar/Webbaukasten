@@ -81,7 +81,7 @@ const exchangeElement = async (elementData, token) => {
   try {
   const response = await axios.post(
     ELEMENT_URL +
-      `?param1=${elementData.screenId}&param2=${elementData.prevElementId}`,
+      `/?param1=${elementData.screenId}&param2=${elementData.prevElementId}`,
     elementData,
     config
   );

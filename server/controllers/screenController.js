@@ -319,23 +319,24 @@ const exchangeElement = asyncHandler(async (req, res) => {
     }
 
     // create element
-    const newElement = null;
+    var newElement = null;
     switch (element.elementType) {
       case "Picture":
-        newElement = Picture.create({ url: element.url });
+        newElement = await Picture.create({ url: element.url });
         break;
       case "TextField":
-        newElement = TextField.create({ text: element.text });
+        newElement = await TextField.create({ text: element.text });
         break;
       case "H5P":
-        newElement = H5P.create({ content: element.content });
+        newElement = await H5P.create({ content: element.content });
+        console.log(newElement)
         break;
-      default:
-        return res.status(400).send({ error: "Invalid element type" });
-        break;
-    }
-
-    if (!newElement) {
+        default:
+          return res.status(400).send({ error: "Invalid element type" });
+          break;
+        }
+        
+    if (newElement === null) {
       return res.status(400).send({ error: "Could not create new Element" });
     }
 
