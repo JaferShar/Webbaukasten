@@ -12,7 +12,10 @@ const {
 // params: courseId, screenId
 router.route("/").put(protect, updateScreen).delete(protect, deleteScreen);
 // params: courseId
-router.route("/:courseId").post(protect, setScreen).put(protect, updateScreenPosition);
+router
+  .route("/:courseId")
+  .post(protect, setScreen)
+  .put(protect, updateScreenPosition);
 router.route("/:screenId").get(protect, getScreen);
 
 module.exports = router;
