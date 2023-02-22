@@ -5,10 +5,11 @@ const {
   setPicture,
   setH5P,
   deleteElement,
+  exchangeElement,
 } = require("../controllers/screenController");
 
 // params: screenId, elementId
-router.route("").delete(deleteElement);
+router.route("").delete(deleteElement).post(exchangeElement);
 // params: screenId
 router.route("/textfield/:screenId").post(setTextField);
 // params: screenId
