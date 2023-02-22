@@ -1,9 +1,9 @@
 import { Stack } from "@mui/material";
-import Element from "../CourseEditorComponents/Elements/Element";
+import Element from "../Element";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 
-export default function StudentElementList() {
+export default function StudentStandard() {
     const studentScreen = useSelector(
         (state) => state.studentScreen
     );

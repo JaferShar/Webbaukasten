@@ -1,25 +1,14 @@
 import { useEffect, useRef } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { ListItem, TextField, Button } from "@mui/material";
-import { updateTextField } from "../../../features/courseEditor/screenSlice";
 
 export default function Element({ element, handleContextMenu }) {
-  const screen = useSelector((state) => state.screenEditor.screen);
-  const dispatch = useDispatch();
 
-  const handleUpdateTextField = (event, element) => {
-    const { value } = event.target;
-    dispatch(
-      updateTextField({ screen: screen, elementId: element._id, text: value })
-    );
-  };
 
   if (element.elementType === "TextField") {
     return (
       <ListItem>
         <TextField
           defaultValue={element.text}
-          onChange={(event) => handleUpdateTextField(event, element)}
           multiline
           style={{ width: "100%", cursor: "context-menu" }}
           onContextMenu={(event) => {
