@@ -1,6 +1,16 @@
-BIG BUGS:
--fix displaying erorrs with toast
--have to close widget twice to close it (cannot close it on clicking anywhere else)
+MOST IMPORTANRT FEAUTURES
+-Welcome in editor /disable Menu
+-Toastify error 
+-studentView end screen
+-comments
+-replace elements
+-cloudinary mit pixabay
+-save on changescreen and home
+
+MOST IMPORT CLEAN
+-unused code entferne
+-comments
+-fix linting eslinting and prettier
 
 TO DOs:
 Fixing:
@@ -13,10 +23,7 @@ Fixing:
 -Start writing the overleaf document!!!
 
     New Features:
-    -add Pixabay to cloudinary (integrate to widget or extra button)
-    -exchange elements with other elements
     -safe updates of screen (selecting other screen, pressing home etc.)
-    -finish student view (talk to Raphael)
     -create different templates for standard and welcome screen (welcome screen has fix quantity of elements 
     title, subtitle, description ...)
     -delete picture from cloudinary on delete element
