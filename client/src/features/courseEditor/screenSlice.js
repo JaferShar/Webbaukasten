@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import screenService from "../courseEditor/screenService";
+import { toast } from "react-toastify";
 
 const initialState = {
   screen: {},
@@ -102,6 +103,21 @@ export const updateTextField = (updateData) => {
   };
 };
 
+export const exchangeElement = createAsyncThunk("/exchangeElement", async (elementData, thunkAPI) => {
+  try {
+    const token = thunkAPI.getState().auth.account.token;
+    return screenService.exchangeElement(elementData, token);
+  } catch (error) {
+    const message =
+      (error.response && error.response.data && error.response.data.message) ||
+      error.message ||
+      error.toString();
+      console.log(message)
+      toast.error(message);
+    return thunkAPI.rejectWithValue(message);
+  }
+});
+
 export const deleteElement = createAsyncThunk("/deleteElement", async (elementData, thunkAPI) => {
   try {
     const token = thunkAPI.getState().auth.account.token;
@@ -111,6 +127,7 @@ export const deleteElement = createAsyncThunk("/deleteElement", async (elementDa
       (error.response && error.response.data && error.response.data.message) ||
       error.message ||
       error.toString();
+      toast.error(message);
     return thunkAPI.rejectWithValue(message);
   }
 });
@@ -218,6 +235,19 @@ export const screenSlice = createSlice({
         state.isError = true;
         state.message = action.payload;
       })
+      // .addCase(exchangeElement.pending, (state) => {
+      //   state.isLoading = true;
+      // })
+      // .addCase(exchangeElement.fulfilled, (state, action) => {
+      //   state.isLoading = false;
+      //   state.isSuccess = true;
+      //   state.screen = action.payload;
+      // })
+      // .addCase(exchangeElement.rejected, (state, action) => {
+      //   state.isLoading = false;
+      //   state.isError = true;
+      //   state.message = action.payload;
+      // })
   },
 });
 
