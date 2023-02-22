@@ -15,7 +15,7 @@ export default function StudentStandard() {
 
   if (!studentScreen.screen.elements || studentScreen.screen.elements.length === 0) {
     return <Stack spacing={2} >
-        <div>Failed to load elements of screen</div>
+        <div>Failed to load elements of screen or there are no elements</div>
         </Stack>;
   } else {
     return (

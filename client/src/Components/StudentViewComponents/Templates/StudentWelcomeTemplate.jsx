@@ -11,8 +11,9 @@ export default function WelcomeTemplate() {
   } else {
     return (
       <Stack spacing={2}>
-        <h1>{studentScreen.screen.elements[0].text}</h1>
-        <h2>{studentScreen.screen.elements[1].text}</h2>
+        <p>Test Placeholder</p>
+        {/* <h1>{studentScreen.screen.elements[0].text}</h1>
+        <h2>{studentScreen.screen.elements[1].text}</h2> */}
       </Stack>
     );
   }
