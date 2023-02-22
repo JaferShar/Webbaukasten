@@ -12,7 +12,7 @@ import { getCourseData } from "../features/studentView/studentCourseSlice";
 import { useEffect } from 'react';
 import { useState } from 'react';
 import { getScreenData } from "../features/studentView/studentScreenSlice";
-import templates from '../Components/CourseEditorComponents/Templates/StudentTemplate';
+import templates from '../Components/StudentViewComponents/StudentTemplate.jsx';
 
 
 const Item = styled(Paper)(({ theme }) => ({

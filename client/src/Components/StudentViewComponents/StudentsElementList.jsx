@@ -1,5 +1,5 @@
 import { Stack } from "@mui/material";
-import Element from "./Element";
+import Element from "../CourseEditorComponents/Elements/Element";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 
