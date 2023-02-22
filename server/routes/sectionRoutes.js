@@ -1,4 +1,5 @@
 const express = require("express");
+const { protect } = require("../middleware/authMiddleware");
 const router = express.Router();
 const {
   setSection,
@@ -6,6 +7,10 @@ const {
   deleteSection,
 } = require("../controllers/screenController");
 
-router.route("/:id").post(setSection).put(updateSection).delete(deleteSection);
+router
+  .route("/:id")
+  .post(protect, setSection)
+  .put(protect, updateSection)
+  .delete(protect, deleteSection);
 
 module.exports = router;
