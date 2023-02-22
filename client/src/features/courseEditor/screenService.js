@@ -1,4 +1,5 @@
 import axios from "axios";
+import { toast } from "react-toastify";
 
 const API_URL = `api/screen`;
 const ELEMENT_URL = `api/element`;
@@ -73,6 +74,23 @@ const updateScreen = async (screenData, token) => {
   return response.data;
 };
 
+const exchangeElement = async (elementData, token) => {
+  const config = {
+    headers: { Authorization: `Bearer ${token}` },
+  };
+  try {
+  const response = await axios.post(
+    ELEMENT_URL +
+      `?param1=${elementData.screenId}&param2=${elementData.prevElementId}`,
+    elementData,
+    config
+  );
+  return response.data;
+  } catch (error) {
+    toast.error(error.message.toString());
+  }
+};
+
 const deleteElement = async (elementData, token) => {
   const config = {
     headers: { Authorization: `Bearer ${token}` },
@@ -92,6 +110,7 @@ const courseEditorService = {
   setH5P,
   setPicture,
   updateScreen,
+  exchangeElement,
   deleteElement,
 };
 
