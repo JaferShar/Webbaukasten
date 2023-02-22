@@ -8,6 +8,7 @@ import H5PMenu from './H5PMenu.jsx';
 import TextFieldMenu from './TextFieldMenu.jsx';
 import PixabayTestPage from '../../../Pages/PixabayTest/PixabayTestPage.js';
 import PictureMenu from './PictureMenu.jsx';
+import { Grid } from '@mui/material';
 
 
 function TabPanel(props) {
@@ -64,8 +65,10 @@ export default function BasicTabs() {
         <TextFieldMenu />
       </TabPanel>
       <TabPanel value={value} index={1}>
-        <PixabayTestPage/>
+        <Grid container>
         <PictureMenu />
+        <PixabayTestPage/>
+        </Grid>
       </TabPanel>
       <TabPanel value={value} index={2}>
         <H5PMenu/>
