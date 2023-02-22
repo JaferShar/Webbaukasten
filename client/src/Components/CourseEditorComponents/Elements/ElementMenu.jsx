@@ -37,13 +37,13 @@ export default function ElementMenu({
   };
 
   const handleClickTextField = () => {
-      handleClose();
-      setSubMenuAnchorEl(null);
+    handleClose();
+    setSubMenuAnchorEl(null);
   };
 
   const handleClickImage = () => {
-      handleClose();
-      setSubMenuAnchorEl(null);
+    handleClose();
+    setSubMenuAnchorEl(null);
   };
 
   const handleClickH5P = (event) => {
@@ -51,10 +51,11 @@ export default function ElementMenu({
     setH5PAnchorEl(event.currentTarget);
   };
 
-  const closeMoadals = () => {
-    handleCloseSubMenu()
-      setH5PModalOpen(false);
-      setImageModalOpen(false);
+  const closeAll = () => {
+    handleClose();
+    handleCloseSubMenu();
+    setH5PModalOpen(false);
+    setImageModalOpen(false);
   };
 
   return (
@@ -109,20 +110,16 @@ export default function ElementMenu({
         }}
       >
         <List>
-          <ListItemButton 
-           onClick={handleClickTextField}
-          >
+          <ListItemButton onClick={handleClickTextField}>
             <ListItemText primary='Textfeld' />
           </ListItemButton>
-          <ListItemButton 
-           onClick={handleClickImage}
-          >
+          <ListItemButton onClick={handleClickImage}>
             <ListItemText primary='Bild' />
           </ListItemButton>
-          <ListItemButton 
-           onClick={(event) => {
-            handleClickH5P(event);
-           }}
+          <ListItemButton
+            onClick={(event) => {
+              handleClickH5P(event);
+            }}
           >
             <ListItemText primary='H5P' />
           </ListItemButton>
@@ -130,7 +127,7 @@ export default function ElementMenu({
       </Menu>
       <H5PPopover
         h5pModalOpen={h5pModalOpen}
-        handleClose={closeMoadals}
+        handleClose={closeAll}
         anchorEl={h5pAnchorEl}
         selectedElement={selectedElement}
         handleExchangeH5P={handleExchangeH5P}

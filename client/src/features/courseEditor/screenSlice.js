@@ -235,19 +235,19 @@ export const screenSlice = createSlice({
         state.isError = true;
         state.message = action.payload;
       })
-      // .addCase(exchangeElement.pending, (state) => {
-      //   state.isLoading = true;
-      // })
-      // .addCase(exchangeElement.fulfilled, (state, action) => {
-      //   state.isLoading = false;
-      //   state.isSuccess = true;
-      //   state.screen = action.payload;
-      // })
-      // .addCase(exchangeElement.rejected, (state, action) => {
-      //   state.isLoading = false;
-      //   state.isError = true;
-      //   state.message = action.payload;
-      // })
+      .addCase(exchangeElement.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(exchangeElement.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.screen = action.payload;
+      })
+      .addCase(exchangeElement.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
+      })
   },
 });
 

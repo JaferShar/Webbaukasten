@@ -6,10 +6,11 @@ MOST IMPORTANRT FEAUTURES
 -replace elements
 -cloudinary mit pixabay
 -save on changescreen and home
+-Abfragen ob wirklich bild und nicht andere Datei hochgeladen wird
 
 MOST IMPORT CLEAN
 -unused code entferne
--comments
+-comments (backend only middleware student stuff, routes and serverjs etc left)
 -fix linting eslinting and prettier
 
 TO DOs:

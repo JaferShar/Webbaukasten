@@ -1,10 +1,11 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Stack } from "@mui/material";
 import Element from "./Element";
 import { useDispatch, useSelector } from "react-redux";
 import {
   deleteElement,
   exchangeElement,
+  getScreen,
 } from "../../../features/courseEditor/screenSlice";
 import ElementMenu from "./ElementMenu";
 
@@ -12,7 +13,15 @@ export default function ElementList() {
   const screen = useSelector((state) => state.screenEditor.screen);
   const [anchorEl, setAnchorEl] = useState(null);
   const [selectedElement, setSelectedElement] = useState(null);
+  const [reload, setReload] = useState(false);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (reload === true) {
+      dispatch(getScreen(screen._id));
+      setReload(false);
+    }
+  }, [reload, dispatch, screen._id]);
 
   const handleContextMenu = (event, elementId) => {
     event.preventDefault();
@@ -63,6 +72,8 @@ export default function ElementList() {
       })
     );
     handleClose();
+    // reload because the elementId has not changed, thus the element is not reloaded
+    setReload(true);
   };
 
   if (!screen.elements || screen.elements.length === 0) {
