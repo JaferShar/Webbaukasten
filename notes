@@ -19,6 +19,7 @@ Fixing:
     -finish student view (talk to Raphael)
     -create different templates for standard and welcome screen (welcome screen has fix quantity of elements 
     title, subtitle, description ...)
+    -delete picture from cloudinary on delete element
 
     
 May Dos:

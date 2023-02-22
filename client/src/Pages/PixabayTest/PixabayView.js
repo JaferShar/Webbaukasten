@@ -5,6 +5,7 @@ import ImageListItem from '@mui/material/ImageListItem';
 import ImageListItemBar from '@mui/material/ImageListItemBar';
 import ListSubheader from '@mui/material/ListSubheader';
 import { PixabaySaveButton } from "./PixabaySaveButton";
+import Box from "@mui/material/Box";
 
 
 class PixabayView extends Component {
@@ -17,7 +18,8 @@ class PixabayView extends Component {
 
     if (images) {
       imageListContent = (
-        <ImageList sx={{ width: 1400, height: 900 }} cols={2}>
+        <Box style={{overflow: 'auto', width: '100%', height: '60vh'}}>
+        <ImageList cols={2}>
           <ImageListItem key="Subheader" cols={2}>
             <ListSubheader component="div">Bilder</ListSubheader>
           </ImageListItem>
@@ -39,6 +41,7 @@ class PixabayView extends Component {
             </ImageListItem>
           ))}
         </ImageList>
+        </Box>
       )
     } else {
       imageListContent = null;
