@@ -1,61 +1,3 @@
-// import React from "react";
-// import {
-//   Box,
-//   Menu,
-//   MenuItem,
-//   Accordion,
-//   AccordionSummary,
-//   AccordionDetails,
-//   List,
-//   ListItemButton,
-//   ListItemText,
-// } from "@mui/material";
-// import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-// import DeleteIcon from "@mui/icons-material/Delete";
-
-// export default function ElementMenu({ anchorEl, handleClose, handleDelete }) {
-//   return (
-//     <Box style={{ width: '100%', height: "auto", overflow: "auto" }}>
-//       <Menu
-//         id='long-menu'
-//         anchorEl={anchorEl}
-//         keepMounted
-//         open={Boolean(anchorEl)}
-//         onClose={handleClose}
-//       >
-//         <MenuItem onClick={handleDelete}>
-//           <DeleteIcon sx={{ mr: 1 }} />
-//           Löschen
-//         </MenuItem>
-//         <SubMenu />
-//       </Menu>
-//     </Box>
-//   );
-// }
-
-// function SubMenu() {
-//   return (
-//     <Accordion>
-//       <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-//         Austauschen
-//       </AccordionSummary>
-//       <AccordionDetails sx={{ padding: "8px 16px" }}>
-
-//           <ListItemButton sx={{ paddingTop: "8px", paddingBottom: "8px" }}>
-//             <ListItemText primary='Textfeld' />
-//           </ListItemButton>
-//           <ListItemButton sx={{ paddingTop: "8px", paddingBottom: "8px" }}>
-//             <ListItemText primary='Bild' />
-//           </ListItemButton>
-//           <ListItemButton sx={{ paddingTop: "8px", paddingBottom: "8px" }}>
-//             <ListItemText primary='H5P' />
-//           </ListItemButton>
-
-//       </AccordionDetails>
-//     </Accordion>
-//   );
-// }
-
 import { useState } from "react";
 import {
   Box,
@@ -69,9 +11,21 @@ import {
   Delete as DeleteIcon,
   SwapHoriz as SwapHorizIcon,
 } from "@mui/icons-material";
+import H5PPopover from "./H5PPopover";
 
-export default function ElementMenu({ anchorEl, handleClose, handleDelete }) {
+export default function ElementMenu({
+  anchorEl,
+  handleClose,
+  handleDelete,
+  handleExchangeTextField,
+  handleExchangeImage,
+  handleExchangeH5P,
+}) {
   const [subMenuAnchorEl, setSubMenuAnchorEl] = useState(null);
+  const [h5pModalOpen, setH5PModalOpen] = useState(false);
+  const [imageModalOpen, setImageModalOpen] = useState(false);
+  const [h5pAnchorEl, setH5PAnchorEl] = useState(null);
+  const [imageAnchorEl, setImageAnchorEl] = useState(null);
 
   const handleOpenSubMenu = (event) => {
     setSubMenuAnchorEl(event.currentTarget);
@@ -79,7 +33,28 @@ export default function ElementMenu({ anchorEl, handleClose, handleDelete }) {
 
   const handleCloseSubMenu = () => {
     setSubMenuAnchorEl(null);
-    handleClose();
+  };
+
+  const handleClickTextField = () => {
+      handleClose();
+      setSubMenuAnchorEl(null);
+  };
+
+  const handleClickImage = () => {
+      handleClose();
+      setSubMenuAnchorEl(null);
+  };
+
+  const handleClickH5P = (event) => {
+      handleClose();
+      setSubMenuAnchorEl(null);
+      setH5PModalOpen(true);
+      setH5PAnchorEl(event.currentTarget);
+  };
+
+  const closeMoadals = () => {
+      setH5PModalOpen(false);
+      setImageModalOpen(false);
   };
 
   return (
@@ -134,17 +109,31 @@ export default function ElementMenu({ anchorEl, handleClose, handleDelete }) {
         }}
       >
         <List>
-          <ListItemButton onClick={handleDelete}>
+          <ListItemButton 
+           onClick={handleClickTextField}
+          >
             <ListItemText primary='Textfeld' />
           </ListItemButton>
-          <ListItemButton>
+          <ListItemButton 
+           onClick={handleClickImage}
+          >
             <ListItemText primary='Bild' />
           </ListItemButton>
-          <ListItemButton>
+          <ListItemButton 
+           onClick={(event) => {
+            handleClickH5P(event);
+           }}
+          >
             <ListItemText primary='H5P' />
           </ListItemButton>
         </List>
       </Menu>
+      <H5PPopover
+        h5pModalOpen={h5pModalOpen}
+        handleClose={closeMoadals}
+        anchorEl={h5pAnchorEl}
+        handleExchangeH5P={handleExchangeH5P}
+      />
     </Box>
   );
 }
