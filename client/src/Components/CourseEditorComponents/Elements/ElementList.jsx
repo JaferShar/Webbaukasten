@@ -54,12 +54,12 @@ export default function ElementList() {
     handleClose();
   };
 
-  const handleExchangeH5P = (content) => {
+  const handleExchangeH5P = (elementId, content) => {
     dispatch(
       exchangeElement({
         screenId: screen._id,
         prevElementId: selectedElement,
-        element: { type: "H5P", src: content },
+        element: { elementType: "H5P", content: content },
       })
     );
     handleClose();
@@ -80,12 +80,13 @@ export default function ElementList() {
         ))}
         <ElementMenu
           anchorEl={anchorEl}
+          selectedElement={selectedElement}
           handleClose={handleClose}
           handleDelete={handleDelete}
           handleExchangeTextField={handleExchangeTextField}
           handleExchangeImage={handleExchangeImage}
           handleExchangeH5P={handleExchangeH5P}
-        />
+          />
       </Stack>
     );
   }

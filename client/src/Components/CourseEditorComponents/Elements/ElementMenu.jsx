@@ -15,6 +15,7 @@ import H5PPopover from "./H5PPopover";
 
 export default function ElementMenu({
   anchorEl,
+  selectedElement,
   handleClose,
   handleDelete,
   handleExchangeTextField,
@@ -46,13 +47,12 @@ export default function ElementMenu({
   };
 
   const handleClickH5P = (event) => {
-      handleClose();
-      setSubMenuAnchorEl(null);
-      setH5PModalOpen(true);
-      setH5PAnchorEl(event.currentTarget);
+    setH5PModalOpen(true);
+    setH5PAnchorEl(event.currentTarget);
   };
 
   const closeMoadals = () => {
+    handleCloseSubMenu()
       setH5PModalOpen(false);
       setImageModalOpen(false);
   };
@@ -132,6 +132,7 @@ export default function ElementMenu({
         h5pModalOpen={h5pModalOpen}
         handleClose={closeMoadals}
         anchorEl={h5pAnchorEl}
+        selectedElement={selectedElement}
         handleExchangeH5P={handleExchangeH5P}
       />
     </Box>

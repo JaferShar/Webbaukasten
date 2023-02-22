@@ -5,6 +5,7 @@ export default function H5PPopover({
   h5pModalOpen,
   handleClose,
   anchorEl,
+  selectedElement,
   handleExchangeH5P,
 }) {
   const [content, setContent] = useState("");
@@ -36,7 +37,8 @@ export default function H5PPopover({
         />
         <Box mt={2} sx={{ display: "flex", justifyContent: "flex-end" }}>
           <Button onClick={() => {
-            handleExchangeH5P(content)
+            handleClose()
+            handleExchangeH5P(selectedElement, content)
           }}
           >
             Hochladen
