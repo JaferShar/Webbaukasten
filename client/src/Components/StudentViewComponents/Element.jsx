@@ -7,14 +7,7 @@ export default function Element({ element, handleContextMenu }) {
   if (element.elementType === "TextField") {
     return (
       <ListItem>
-        <TextField
-          defaultValue={element.text}
-          multiline
-          style={{ width: "100%", cursor: "context-menu" }}
-          onContextMenu={(event) => {
-            handleContextMenu(event, element._id);
-          }}
-        />
+        <p>{element.text}</p>
       </ListItem>
     );
   } else if (element.elementType === "Picture") {
