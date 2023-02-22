@@ -38,7 +38,8 @@ export default function ElementMenu({
 
   const handleClickTextField = () => {
     handleClose();
-    setSubMenuAnchorEl(null);
+    handleCloseSubMenu();
+    handleExchangeTextField();
   };
 
   const handleClickImage = () => {

@@ -46,7 +46,7 @@ export default function ElementList() {
       exchangeElement({
         screenId: screen._id,
         prevElementId: selectedElement,
-        element: { type: "TextField", text: "" },
+        element: { elementType: "TextField", text: "" },
       })
     );
     handleClose();
@@ -57,7 +57,7 @@ export default function ElementList() {
       exchangeElement({
         screenId: screen._id,
         prevElementId: selectedElement,
-        element: { type: "Image", src: "" },
+        element: { elementType: "Picture", url: "" },
       })
     );
     handleClose();
