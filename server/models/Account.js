@@ -1,5 +1,8 @@
 const mongoose = require("mongoose");
 
+/**
+ * This mongoose schema defines the structure of an account document in the database.
+ */
 const accountSchema = mongoose.Schema(
   {
     firstName: {
@@ -29,4 +32,7 @@ const accountSchema = mongoose.Schema(
   }
 );
 
+/**
+ * Export the schema as a mongoose model.
+ */
 module.exports = mongoose.model("Account", accountSchema);
