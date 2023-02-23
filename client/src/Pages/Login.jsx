@@ -17,6 +17,7 @@ import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { register, reset } from '../features/auth/authSlice';
 import { useEffect } from 'react';
+import Kursify from '../assets/Kursify.jpg';
 
 function Register() {
   const navigate = useNavigate();
@@ -46,7 +47,7 @@ function Copyright(props) {
       {...props}
     >
       {'Copyright © '}
-      <Link color="inherit" href="https://mui.com/">
+      <Link color="inherit" href="https://youtu.be/dQw4w9WgXcQ">
         Kursify
       </Link>{' '}
       {new Date().getFullYear()}
@@ -97,13 +98,19 @@ const handleSubmit = (event) => {
               alignItems: 'center',
             }}
           >
+            <img
+            style={{width: "30vw"}}
+              src={Kursify}
+              alt="Kursify"
+            />
+            <Box sx={{mb: 10}} />
             <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
               <LockOutlinedIcon />
             </Avatar>
             <Typography component="h1" variant="h5">
               Sign in
             </Typography>
-            <h1>Tets</h1>
+            <h1>Kursify</h1>
             <GoogleOAuthProvider clientId="852695826269-326bgl5c4t0sojrcoqq3kqtentjo7hqp.apps.googleusercontent.com">
               <GoogleLogin
                 onSuccess={(credentialResponse) => {
