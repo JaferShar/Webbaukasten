@@ -12,10 +12,10 @@ import {
   SwapHoriz as SwapHorizIcon,
 } from "@mui/icons-material";
 import H5PPopover from "./H5PPopover";
+import ImagePopover from "./ImagePopover";
 
 export default function ElementMenu({
   anchorEl,
-  selectedElement,
   handleClose,
   handleDelete,
   handleExchangeTextField,
@@ -42,9 +42,9 @@ export default function ElementMenu({
     handleExchangeTextField();
   };
 
-  const handleClickImage = () => {
-    handleClose();
-    setSubMenuAnchorEl(null);
+  const handleClickImage = (event) => {
+    setImageModalOpen(true);
+    setImageAnchorEl(event.currentTarget);
   };
 
   const handleClickH5P = (event) => {
@@ -114,7 +114,9 @@ export default function ElementMenu({
           <ListItemButton onClick={handleClickTextField}>
             <ListItemText primary='Textfeld' />
           </ListItemButton>
-          <ListItemButton onClick={handleClickImage}>
+          <ListItemButton onClick={(event) => {
+            handleClickImage(event);
+            }}>
             <ListItemText primary='Bild' />
           </ListItemButton>
           <ListItemButton
@@ -130,8 +132,13 @@ export default function ElementMenu({
         h5pModalOpen={h5pModalOpen}
         handleClose={closeAll}
         anchorEl={h5pAnchorEl}
-        selectedElement={selectedElement}
         handleExchangeH5P={handleExchangeH5P}
+      />
+      <ImagePopover
+        imageModalOpen={imageModalOpen}
+        handleClose={closeAll}
+        anchorEl={imageAnchorEl}
+        handleExchangeImage={handleExchangeImage}
       />
     </Box>
   );
