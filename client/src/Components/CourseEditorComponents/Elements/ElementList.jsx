@@ -9,6 +9,7 @@ import {
 } from "../../../features/courseEditor/screenSlice";
 import ElementMenu from "./ElementMenu";
 import uploadCloudinary from '../../../features/upload/CloudinaryUpload'
+import { toast } from "react-toastify";
 
 export default function ElementList() {
   const screen = useSelector((state) => state.screenEditor.screen);
@@ -54,15 +55,23 @@ export default function ElementList() {
   };
 
   const handleExchangeImage = async (file) => {
-    const url = await uploadCloudinary(file);
-    dispatch(
-      exchangeElement({
-        screenId: screen._id,
-        prevElementId: selectedElement,
-        element: { elementType: "Picture", url: url },
-      })
-    );
-    handleClose();
+    try {
+      const url = await uploadCloudinary(file);
+      dispatch(
+        exchangeElement({
+          screenId: screen._id,
+          prevElementId: selectedElement,
+          element: { elementType: "Picture", url: url },
+        })
+      );
+      setReload(true)
+      toast.success("Image uploaded to cloudinary")
+    } catch (error) {
+      toast.error(error.message);
+    } finally {
+      handleClose();
+    }
+
   };
 
   const handleExchangeH5P = (content) => {
