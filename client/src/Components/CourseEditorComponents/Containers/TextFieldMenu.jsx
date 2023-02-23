@@ -14,9 +14,8 @@ import AddIcon from "@mui/icons-material/Add";
 
 const TextEditor = () => {
   const [open, setOpen] = useState(false);
-  var [text] = useState("");
-  const rteText = ``;
-  const [html, set] = useState("");
+  const [text] = useState("");
+  const [html, setHtml] = useState("");
   const dispatch = useDispatch();
   const screen = useSelector((state) => state.screenEditor.screen);
 
@@ -45,15 +44,14 @@ const TextEditor = () => {
   };
 
   const [notes, setNotes] = useState(
-    RichTextEditor.createValueFromString(rteText, "html")
-  );
+    RichTextEditor.createValueFromString(text, "html")
+  );  
 
-  //
   const onValueChangeCallback = useCallback((value) => {
     const toHtml = value.toString("html");
     setNotes(value);
-    set(toHtml);
-  });
+    setHtml(toHtml);
+  }, []);
 
   const handleOpen = () => {
     setOpen(true);
@@ -62,12 +60,37 @@ const TextEditor = () => {
   const handleClose = () => {
     setOpen(false);
   };
-// saves html text in screen
+
   const handleSave = () => {
-    console.log(`Text: ${html}`);
+    const htmlString = notes.toString("html");
+    const text = htmlString.replace(/<\/?([a-z][a-z0-9]*)\b[^>]*>|<!--[\s\S]*?-->/gi, '');
+    console.log(`Text: ${text}`);
     handleClose();
-    dispatch(setTextField({ text: html, screenId: screen._id }));
+    dispatch(setTextField({ text: text, screenId: screen._id }));
   };
+
+  
+  const cleanText = (text) => {
+    const regex = /(<([^>]+)>)/gi;
+    const htmlEntities = {
+      "&": "&amp;",
+      "<": "&lt;",
+      ">": "&gt;",
+      '"': "&quot;",
+      "'": "&#x27;",
+      "/": "&#x2F;",
+    };
+    return text.replace(regex, "").replace(/[&<>"'\/]/g, (match) => htmlEntities[match]);
+  };
+  
+
+  <RichTextEditor
+  value={notes}
+  onChange={onValueChangeCallback}
+  data-test="notes"
+  toolbarConfig={toolbarConfig}
+  blockStyleFn={() => ({})}
+/>
 
 
   return (
@@ -82,7 +105,14 @@ const TextEditor = () => {
             value={notes}
             onChange={onValueChangeCallback}
             data-test="notes"
-            toolbarConfig={toolbarConfig}/>
+            toolbarConfig={toolbarConfig}
+            customStyleMap={{
+              'paragraph': {
+                margin: 0,
+                padding: 0,
+              },
+            }}
+          />
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
@@ -92,8 +122,10 @@ const TextEditor = () => {
       <Button style={{ border: "1px solid #d9dddd" }} onClick={handleOpen}>
         <AddIcon />
         Text hinzufügen
-      </Button>
-    </div>
+     
+        </Button>
+      </div>
+   
   );
 };
 
