@@ -83,7 +83,12 @@ function ScreenViewer({ changeTemplate }) {
   };
 
   const handleDelete = () => {
-    dispatch(deleteScreen({ courseId: course._id, screenId: selectedScreen }));
+    if (course.screens[0] !== selectedScreen) {
+      dispatch(deleteScreen({ courseId: course._id, screenId: selectedScreen }));
+    } else {
+      toast.error("You cannot delete the first screen.")
+    }
+
     handleCloseContextMenu();
   };
 

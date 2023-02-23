@@ -19,7 +19,7 @@ export default function Element({ element, handleContextMenu }) {
       <ListItem>
         <Typography
           onChange={(event) => handleUpdateTextField(event, element)}
-          multiline
+          multiline="true"
           style={{ width: "100%", cursor: "context-menu" }}
           onContextMenu={(event) => {
             handleContextMenu(event, element._id);
