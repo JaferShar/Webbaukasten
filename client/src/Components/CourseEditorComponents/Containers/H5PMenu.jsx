@@ -5,7 +5,7 @@ import { setH5P } from "../../../features/courseEditor/screenSlice";
 import { Button, Box, TextField } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import H5PLogo from "../../../assets/H5PLogo.jpg";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 
 const invalidLinkNotify = () => {
   toast.error("Kein gültiger Link", {
@@ -31,16 +31,19 @@ const H5P = () => {
   const [value, setValue] = useState("");
   const validH5PLink = new RegExp("https://h5p.org/h5p/embed/[0-9]+");
 
+  /*handleClick checks if the input value in the H5P-Searchbar is a valid H5P-element URL.
+  Dispatches if it is, else notifies toastify that throws an error*/
   const handleClick = () => {
-    const h5pURL = value.match(validH5PLink);
+    const h5pURL = String(value.match(validH5PLink));
     if (!h5pURL) {
       invalidLinkNotify();
       setValue("");
     } else {
-    dispatch(setH5P({ screenId: screen._id, content: value }));
-    setValue("");
+      dispatch(setH5P({ screenId: screen._id, content: h5pURL }));
+      setValue("");
     }
   };
+
   return (
     <Box>
       <TextField
