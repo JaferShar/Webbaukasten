@@ -329,7 +329,6 @@ const exchangeElement = asyncHandler(async (req, res) => {
         break;
       case "H5P":
         newElement = await H5P.create({ content: element.content });
-        console.log(newElement)
         break;
         default:
           return res.status(400).send({ error: "Invalid element type" });
