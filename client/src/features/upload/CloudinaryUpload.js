@@ -1,5 +1,4 @@
 import axios from "axios";
-import { toast } from "react-toastify";
 
 const CloudinaryUpload = async (file) => {
 
@@ -12,13 +11,19 @@ const CloudinaryUpload = async (file) => {
   formData.append("cloud_name", cloudName);
 
   try {
+
     const result = await axios.post(
       `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`,
       formData
     );
     return result.data.secure_url;
   } catch (error) {
-    toast.error("Upload failed. Please try again later.");
+    if (error.response) {
+      const errorMessage = error.response.data.error.message;
+      throw new Error(errorMessage);
+    } else {
+      throw new Error("Something went wrong, try again later");
+    }
   }
 };
 
