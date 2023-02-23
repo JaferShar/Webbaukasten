@@ -3,6 +3,7 @@ import AddIcon from "@mui/icons-material/Add";
 import { Button } from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
 import { setPicture } from "../../../features/courseEditor/screenSlice";
+import { toast } from "react-toastify";
 /**
  * This component provides a button to open Cloudinary upload widget.
  * Upon successful upload, the uploaded image is saved to the current screen in the Redux store.
@@ -53,8 +54,8 @@ export default function CloudinaryUploadWidget() {
   return (
     <Button
       style={{ border: "1px solid #d9dddd" }}
-      id="upload_widget"
-      className="cloudinary-button"
+      id='upload_widget'
+      className='cloudinary-button'
     >
       <AddIcon />
       Bild hochladen
