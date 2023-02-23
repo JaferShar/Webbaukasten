@@ -6,7 +6,7 @@ import Box from '@mui/material/Box';
 import 'draft-js/dist/Draft.css';
 import H5PMenu from './H5PMenu.jsx';
 import TextFieldMenu from './TextFieldMenu.jsx';
-import PixabayTestPage from '../../../Pages/PixabayTest/PixabayTestPage.js';
+import PixabayTestPage from '../../Pixabay/PixabayOpen.js';
 import PictureMenu from './PictureMenu.jsx';
 import { Grid } from '@mui/material';
 import { useDispatch, useSelector } from "react-redux";
@@ -77,6 +77,7 @@ export default function BasicTabs() {
             <TabPanel value={value} index={1}>
               <Grid container>
                 <PictureMenu />
+                <Box sx={{mr: 2}} />
                 <PixabayTestPage />
               </Grid>
             </TabPanel>
