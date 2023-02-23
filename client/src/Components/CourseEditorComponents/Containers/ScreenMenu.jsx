@@ -10,6 +10,7 @@ import PixabayTestPage from '../../Pixabay/PixabayOpen.js';
 import PictureMenu from './PictureMenu.jsx';
 import { Grid } from '@mui/material';
 import {useSelector } from "react-redux";
+import Alert from '@mui/material/Alert';
 
 
 function TabPanel(props) {
@@ -86,7 +87,9 @@ export default function BasicTabs() {
             </TabPanel>
           </>
         ) : (
-          <div>No menu available on Welcome Screen</div>
+          <div>
+            <Alert severity="info"> The menu is only available on Standard Templates!</Alert>
+          </div>
         )}
       </Box>
     </div>
