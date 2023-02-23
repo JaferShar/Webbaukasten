@@ -5,6 +5,20 @@ import { setH5P } from "../../../features/courseEditor/screenSlice";
 import { Button, Box, TextField } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import H5PLogo from "../../../assets/H5PLogo.jpg";
+import { ToastContainer, toast } from "react-toastify";
+
+const invalidLinkNotify = () => {
+  toast.error("Kein gültiger Link", {
+    position: "top-right",
+    autoClose: 5000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+    theme: "light",
+  });
+};
 /**
  *This component allows H5P content to be uploaded to a course screen.
  *
@@ -15,9 +29,17 @@ const H5P = () => {
   const dispatch = useDispatch();
   const h5pWebsite = "https://h5p.org/content-types-and-applications";
   const [value, setValue] = useState("");
+  const validH5PLink = new RegExp("https://h5p.org/h5p/embed/[0-9]+");
+
   const handleClick = () => {
+    const h5pURL = value.match(validH5PLink);
+    if (!h5pURL) {
+      invalidLinkNotify();
+      setValue("");
+    } else {
     dispatch(setH5P({ screenId: screen._id, content: value }));
     setValue("");
+    }
   };
   return (
     <Box>
