@@ -1,16 +1,25 @@
-import { useEffect } from "react";
 import { Stack } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { TextField } from "@mui/material";
+import { updateTextField } from "../../../features/courseEditor/screenSlice"
+
 
 export default function WelcomeTemplate() {
     const screen = useSelector((state) => state.screenEditor.screen);
+    const dispatch = useDispatch();
 
+    const handleUpdateTextField = (event, element) => {
+        const { value } = event.target;
+        dispatch(
+          updateTextField({ screen: screen, elementId: element._id, text: value })
+        );
+      };
 
     return (
         <Stack spacing={6}>
             <TextField
                 defaultValue={screen[0] ? screen[0].text : ''}
+                onChange={(event) => handleUpdateTextField(event,  screen[0])}
                 id="standard-basic"
                 label="Course Title"
                 variant="standard"
@@ -18,6 +27,7 @@ export default function WelcomeTemplate() {
 
             <TextField
                 defaultValue={screen[1] ? screen[1].text : ''}
+                onChange={(event) => handleUpdateTextField(event, screen[1])}
                 id="standard-textarea"
                 label="Course description"
                 placeholder="Placeholder"
