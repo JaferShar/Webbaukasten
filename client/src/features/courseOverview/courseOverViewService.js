@@ -1,41 +1,86 @@
 import axios from "axios";
+import { toast } from "react-toastify";
 
 const API_URL = "api/course";
 
 const createCourse = async (courseData, token) => {
-  const config = {
-    headers: { Authorization: `Bearer ${token}` },
-  };
-  const response = await axios.post(API_URL, courseData, config);
-  return response.data;
+  try {
+    const config = {
+      headers: { Authorization: `Bearer ${token}` },
+    };
+    const response = await axios.post(API_URL, courseData, config);
+    return response.data;
+  } catch (error) {
+    if (error.response) {
+      const errorMessage = error.response.data.error;
+      toast.error(errorMessage);
+      throw new Error(errorMessage);
+    } else {
+      toast.error("Something went wrong, try again later");
+      throw new Error("Something went wrong, try again later");
+    }
+  }
 };
 
 const getAllCourses = async (token) => {
-  const config = {
-    headers: { Authorization: `Bearer ${token}` },
-  };
-  const response = await axios.get(API_URL + "/all", config);
-  return response.data;
+  try {
+    const config = {
+      headers: { Authorization: `Bearer ${token}` },
+    };
+    const response = await axios.get(API_URL + "/all", config);
+    return response.data;
+  } catch (error) {
+    if (error.response) {
+      const errorMessage = error.response.data.error;
+      toast.error(errorMessage);
+      throw new Error(errorMessage);
+    } else {
+      toast.error("Something went wrong, try again later");
+      throw new Error("Something went wrong, try again later");
+    }
+  }
 };
 
 const deleteCourse = async (courseId, token) => {
-  const config = {
-    headers: { Authorization: `Bearer ${token}` },
-  };
-  const response = await axios.delete(API_URL + `/${courseId}`, config);
-  return response.data;
+  try {
+    const config = {
+      headers: { Authorization: `Bearer ${token}` },
+    };
+    const response = await axios.delete(API_URL + `/${courseId}`, config);
+    return response.data;
+  } catch (error) {
+    if (error.response) {
+      const errorMessage = error.response.data.error;
+      toast.error(errorMessage);
+      throw new Error(errorMessage);
+    } else {
+      toast.error("Something went wrong, try again later");
+      throw new Error("Something went wrong, try again later");
+    }
+  }
 };
 
 const renameCourse = async (courseData, token) => {
-  const config = {
-    headers: { Authorization: `Bearer ${token}` },
-  };
-  const response = await axios.put(
-    API_URL + `/${courseData.courseId}`,
-    courseData,
-    config
-  );
-  return response.data;
+  try {
+    const config = {
+      headers: { Authorization: `Bearer ${token}` },
+    };
+    const response = await axios.put(
+      API_URL + `/${courseData.courseId}`,
+      courseData,
+      config
+    );
+    return response.data;
+  } catch (error) {
+    if (error.response) {
+      const errorMessage = error.response.data.error;
+      toast.error(errorMessage);
+      throw new Error(errorMessage);
+    } else {
+      toast.error("Something went wrong, try again later");
+      throw new Error("Something went wrong, try again later");
+    }
+  }
 };
 
 const shareCourse = async (data, token) => {
@@ -50,7 +95,14 @@ const shareCourse = async (data, token) => {
     );
     return response.data;
   } catch (error) {
-    throw new Error(error.message);
+    if (error.response) {
+      const errorMessage = error.response.data.error;
+      toast.error(errorMessage);
+      throw new Error(errorMessage);
+    } else {
+      toast.error("Something went wrong, try again later");
+      throw new Error("Something went wrong, try again later");
+    }
   }
 };
 

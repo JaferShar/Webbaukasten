@@ -2,10 +2,11 @@ const jwt = require("jsonwebtoken");
 const asyncHandler = require("express-async-handler");
 const User = require("../models/Account");
 const Account = require("../models/Account");
-
-//@desc     Register new account
-//@route    POST /api/account
-//@access   Public
+/**
+ * @desc     Register new account
+ * @route    POST /api/account
+ * @access   Public
+ */
 const registerAccount = asyncHandler(async (req, res) => {
   const { firstName, lastName, email, picture } = req.body;
 
@@ -29,6 +30,7 @@ const registerAccount = asyncHandler(async (req, res) => {
     picture: picture,
   });
 
+  // response with token
   if (account) {
     res.status(201).json({
       _id: account.id,
@@ -44,15 +46,18 @@ const registerAccount = asyncHandler(async (req, res) => {
   }
 });
 
-//@desc     Authenticate new User
-//@route    POST /api/account/login
-//@access   Public
+/**
+ * @desc Authenticate new User
+ * @route POST /api/account/login
+ * @access Public
+ */
 const loginAccount = asyncHandler(async (req, res) => {
   const { email } = req.body;
 
   //check for Account email
   const account = await Account.findOne({ email });
 
+  // return account with token
   if (account) {
     res.json({
       _id: account.id,
@@ -68,9 +73,11 @@ const loginAccount = asyncHandler(async (req, res) => {
   }
 });
 
-//@desc     Get user data
-//@route    GET /api/account/me
-//@access   Private
+/**
+ * @desc Get user data
+ * @route GET /api/account/me
+ * @access Private
+ */
 const getMe = asyncHandler(async (req, res) => {
   res.status(200).json(req.account);
 });

@@ -1,45 +1,68 @@
+import React, { useCallback } from "react";
 import AddIcon from "@mui/icons-material/Add";
-import { Button, Box } from "@mui/material";
+import { Button } from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
 import { setPicture } from "../../../features/courseEditor/screenSlice";
-import { useState } from "react";
+import { toast } from "react-toastify";
 
-const PictureMenu = () => {
+/**
+This component provides a button to open Cloudinary upload widget.
+Upon successful upload, the uploaded image is saved to the current screen in the Redux store.
+@export
+@return {JSX.Element} CloudinaryUploadWidget Component
+*/
+export default function CloudinaryUploadWidget() {
   const dispatch = useDispatch();
   const screen = useSelector((state) => state.screenEditor.screen);
+  const { REACT_APP_CLOUD_NAME, REACT_APP_UPLOAD_PRESET } = process.env;
+  // Memoize Cloudinary upload widget creation.
+  const widget = useCallback(() => {
+    window.cloudinary.createUploadWidget(
+      {
+        cloudName: REACT_APP_CLOUD_NAME,
+        uploadPreset: REACT_APP_UPLOAD_PRESET,
+        sources: [
+          "local",
+          "url",
+          "camera",
+          "image_search",
+          "google_drive",
+          "dropbox",
+        ],
+      },
+      async (error, result) => {
+        if (!error && result && result.event === "success") {
+          try {
+            dispatch(setPicture({ url: result.info.secure_url, screenId: screen._id }));
+          } catch (error) {
+            toast.error("Failed to upload image");
+          }
+        }
+      }
+    );
+  }, [REACT_APP_CLOUD_NAME, REACT_APP_UPLOAD_PRESET, dispatch, screen._id]);
 
-  const handleInput = () => {
-    document.getElementById("fileInput").click();
-  };
 
-  const handleFileUpload = (event) => {
-    // check if file is an image and not too big
-    // handle error on displaying the image
-    const file = event.target.files[0];
-    const formData = new FormData();
-    formData.append("image", file);
-    dispatch(setPicture({formData: formData, screenId: screen._id}));
-  };
+  // Use ref hook to attach Cloudinary upload widget to button click event.
+  const buttonRef = useCallback(
+    (node) => {
+      if (node !== null) {
+        node.addEventListener("click", () => {
+          widget.open();
+        });
+      }
+    },
+    [widget]
+  );
 
   return (
-    <Box>
-      <Button
-        onClick={handleInput}
-        style={{
-          border: "1px solid #d9dddd",
-        }}
-      >
-        <AddIcon />
-        Bild hochladen
-      </Button>
-      <input
-        id="fileInput"
-        type="file"
-        style={{ display: "none" }}
-        onChange={handleFileUpload}
-      />
-    </Box>
+    <Button
+      style={{ border: "1px solid #d9dddd" }}
+      ref={buttonRef}
+      className='cloudinary-button'
+    >
+      <AddIcon />
+      Bild hochladen
+    </Button>
   );
-};
-
-export default PictureMenu;
+}

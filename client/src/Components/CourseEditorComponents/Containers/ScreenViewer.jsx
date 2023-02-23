@@ -72,7 +72,7 @@ function ScreenViewer({ changeTemplate }) {
       dispatch(getScreen(course.screens[0]));
       setSelectedScreen(course.screens[0]);
     }
-  }, [dispatch, course]);
+  }, [dispatch, course, selectedScreen]);
 
   const handleAddClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -83,7 +83,12 @@ function ScreenViewer({ changeTemplate }) {
   };
 
   const handleDelete = () => {
-    dispatch(deleteScreen({ courseId: course._id, screenId: selectedScreen }));
+    if (course.screens[0] !== selectedScreen) {
+      dispatch(deleteScreen({ courseId: course._id, screenId: selectedScreen }));
+    } else {
+      toast.error("You cannot delete the first screen.")
+    }
+
     handleCloseContextMenu();
   };
 
@@ -96,7 +101,8 @@ function ScreenViewer({ changeTemplate }) {
   const handleCreate = (template) => {
     try {
       dispatch(createScreen({ template: template, courseId: courseId }));
-      changeTemplate(template);
+      dispatch(getCourse(courseId));
+      setSelectedScreen(course.screens[course.screens.length - 1])
     } catch (error) {
       toast(error.message, { type: "error" });
     } finally {
@@ -116,6 +122,15 @@ function ScreenViewer({ changeTemplate }) {
 
   const handleOnClickScreen = (screenId) => {
     dispatch(getScreen(screenId));
+    setSelectedScreen(screenId);
+  };
+
+  const handleEmphasize = (screenId) => {
+    if (screenId === selectedScreen) {
+      return "1px solid #0000ff";
+    } else {
+      return "1px solid #d9dddd";
+    }
   };
 
   return (
@@ -139,7 +154,7 @@ function ScreenViewer({ changeTemplate }) {
                 className='rectangle-list-item'
                 style={{
                   flexDirection: "column",
-                  border: "1px solid #d9dddd",
+                  border: handleEmphasize(screenId),
                   cursor: "context-menu",
                 }}
                 sx={{ mb: 2 }}

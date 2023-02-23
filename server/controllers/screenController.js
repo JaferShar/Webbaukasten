@@ -1,10 +1,13 @@
 const mongoose = require("mongoose");
 const asyncHandler = require("express-async-handler");
-const multer = require("multer");
-
 const Course = require("../models/Course");
 const { Screen, Picture, TextField, H5P } = require("../models/Screen");
 
+/**
+ * @desc create new screen
+ * @route POST /api/screen/:courseId
+ * @access Protected
+ */
 const setScreen = asyncHandler(async (req, res) => {
   const { template } = req.body;
   try {
@@ -25,7 +28,11 @@ const setScreen = asyncHandler(async (req, res) => {
   }
 });
 
-// tested
+/**
+ * @desc Create new Section
+ * @route POST /api/section/:id
+ * @access Protected
+ */
 const setSection = asyncHandler(async (req, res) => {
   try {
     const { sectionName, index } = req.body;
@@ -66,6 +73,11 @@ const setSection = asyncHandler(async (req, res) => {
   }
 });
 
+/**
+ * @desc Create new TextField
+ * @route POST /api/textfield/:screenId
+ * @access Protected
+ */
 const setTextField = asyncHandler(async (req, res) => {
   try {
     const text = req.body.text;
@@ -83,41 +95,37 @@ const setTextField = asyncHandler(async (req, res) => {
   }
 });
 
+/**
+ * @desc Create new Picture
+ * @route POST /api/picture/:screenId
+ * @access Protected
+ */
 const setPicture = asyncHandler(async (req, res) => {
+  const { url } = req.body;
   try {
-    const upload = multer({ storage: multer.memoryStorage() }).single("image");
-    upload(req, res, async (err) => {
-      if (err) {
-        throw new Error(err.message);
-      }
-      if (!req.file) {
-        return res.status(400).json({ error: "Please upload an image" });
-      }
-      // create picture
-      const picture = new Picture({
-        data: req.file.buffer,
-        picType: req.file.mimetype,
-      });
-      await picture.save();
+    if (!url) {
+      return res
+        .status(400)
+        .json({ error: "Please provide valid inputs for the H5P" });
+    }
+    const screen = await Screen.findById(req.params.screenId);
+    if (!screen) {
+      return res.status(404).json({ error: "Screen not found" });
+    }
+    const picture = await Picture.create({ url: url });
+    screen.elements.push(picture);
+    screen.save();
 
-      // add picture to screen
-      const screen = await Screen.findById(req.params.screenId);
-      if (!screen) {
-        return res.status(404).json({ error: "Screen not found" });
-      }
-
-      screen.elements.push(picture);
-      await screen.save();
-
-      res.status(201).json(screen);
-    });
+    res.status(201).json(screen);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 });
 
 /**
- * To Do: integrate H5P and handle the data
+ * @desc Create new H5P
+ * @route POST /api/h5p/:screenId
+ * @access Protected
  */
 const setH5P = asyncHandler(async (req, res) => {
   const { content } = req.body;
@@ -141,6 +149,11 @@ const setH5P = asyncHandler(async (req, res) => {
   }
 });
 
+/**
+ * @desc Get screen
+ * @route GET /api/screen/:screenId
+ * @access Protected
+ */
 const getScreen = asyncHandler(async (req, res) => {
   try {
     if (!req.params.screenId) {
@@ -159,6 +172,11 @@ const getScreen = asyncHandler(async (req, res) => {
   }
 });
 
+/**
+ * @desc Update screen position
+ * @route PUT /api/screen/:courseId
+ * @access Protected
+ */
 const updateScreenPosition = asyncHandler(async (req, res) => {
   try {
     const { screenId, newIndex } = req.body;
@@ -185,6 +203,11 @@ const updateScreenPosition = asyncHandler(async (req, res) => {
   }
 });
 
+/**
+ * @desc Update section
+ * @route PUT /api/section/:id
+ * @access Protected
+ */
 const updateSection = asyncHandler(async (req, res) => {
   const { sectionName, index, position } = req.body;
   try {
@@ -225,9 +248,11 @@ const updateSection = asyncHandler(async (req, res) => {
   }
 });
 
-// since here methods are not fully integrated, they are not tested
-
-// updateScreen function does not notices if element was deleted. May add functionallity to delete or create elements later
+/**
+ * @desc Update screen elements if they are changed
+ * @route PUT /api/screen
+ * @access Protected
+ */
 const updateScreen = asyncHandler(async (req, res) => {
   try {
     const screenId = req.query.param1;
@@ -250,7 +275,7 @@ const updateScreen = asyncHandler(async (req, res) => {
       switch (elementType) {
         case "Picture":
           // update picture
-          creen.elements.id(_id).set({ data: element.data });
+          screen.elements.id(_id).set({ data: element.data });
           break;
         case "TextField":
           // update text field
@@ -258,7 +283,7 @@ const updateScreen = asyncHandler(async (req, res) => {
           break;
         case "H5P":
           // update H5P
-          creen.elements.id(_id).set({ content: element.content });
+          screen.elements.id(_id).set({ content: element.content });
           break;
         default:
           return res.status(400).send({ error: "Invalid element type" });
@@ -273,6 +298,61 @@ const updateScreen = asyncHandler(async (req, res) => {
   }
 });
 
+/**
+ * @desc Exchange element with another element
+ * @route POAT /api/element/
+ * @access Protected
+ */
+const exchangeElement = asyncHandler(async (req, res) => {
+  try {
+    const screenId = req.query.param1;
+    const prevElementId = req.query.param2;
+    const { element } = req.body;
+    if (!element || !prevElementId || !screenId) {
+      return res.status(400).send({ error: "Invalid request" });
+    }
+
+    const screen = await Screen.findById(screenId);
+    if (!screen) {
+      return res.status(400).send({ error: "Screen not found" });
+    }
+
+    // create element
+    var newElement = null;
+    switch (element.elementType) {
+      case "Picture":
+        newElement = await Picture.create({ url: element.url });
+        break;
+      case "TextField":
+        newElement = await TextField.create({ text: element.text });
+        break;
+      case "H5P":
+        newElement = await H5P.create({ content: element.content });
+        break;
+        default:
+          return res.status(400).send({ error: "Invalid element type" });
+          break;
+        }
+        
+    if (newElement === null) {
+      return res.status(400).send({ error: "Could not create new Element" });
+    }
+
+    // exchange element
+    screen.elements.id(prevElementId).set(newElement);
+    await screen.save();
+
+    return res.status(200).send(screen);
+  } catch (error) {
+    return res.status(500).send({ error: error.message });
+  }
+});
+
+/**
+ * @desc Delete screen
+ * @route DELETE /api/screen
+ * @access Protected
+ */
 const deleteScreen = asyncHandler(async (req, res) => {
   try {
     const courseId = req.query.param1;
@@ -300,6 +380,11 @@ const deleteScreen = asyncHandler(async (req, res) => {
   }
 });
 
+/**
+ * @desc Delete section
+ * @route DELETE /api/section/:id
+ * @access Protected
+ */
 const deleteSection = asyncHandler(async (req, res) => {
   try {
     const course = await Course.findById(req.params.id);
@@ -315,13 +400,20 @@ const deleteSection = asyncHandler(async (req, res) => {
   }
 });
 
+/**
+ * @desc Delete element
+ * @route DELETE /api/element/
+ * @access Protected
+ */
 const deleteElement = asyncHandler(async (req, res) => {
   try {
-    const screen = await Screen.findById(req.params.screenId);
+    const screenId = req.query.param1;
+    const elementId = req.query.param2;
+    const screen = await Screen.findById(screenId);
     if (!screen) {
       return res.status(404).json({ error: "Screen not found" });
     }
-    screen.elements.id(req.params.elementId).remove();
+    screen.elements.id(elementId).remove();
     await screen.save();
 
     res.status(200).json(screen);
@@ -340,6 +432,7 @@ module.exports = {
   updateScreenPosition,
   updateSection,
   updateScreen,
+  exchangeElement,
   deleteScreen,
   deleteSection,
   deleteElement,

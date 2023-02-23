@@ -1,35 +1,13 @@
 import { useEffect, useRef } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { ListItem, Typography, Button } from "@mui/material";
-import { updateTextField } from "../../../features/courseEditor/screenSlice";
+import { ListItem, Button } from "@mui/material";
 
 export default function Element({ element, handleContextMenu }) {
-  const screen = useSelector((state) => state.screenEditor.screen);
-  const dispatch = useDispatch();
 
-  const handleUpdateTextField = (event, element) => {
-    const { value } = event.target;
-    dispatch(
-      updateTextField({ screen: screen, elementId: element._id, text: value })
-    );
-  };
 
   if (element.elementType === "TextField") {
     return (
       <ListItem>
-        <Typography
-          onChange={(event) => handleUpdateTextField(event, element)}
-          multiline="true"
-          style={{ width: "100%", cursor: "context-menu" }}
-          onContextMenu={(event) => {
-            handleContextMenu(event, element._id);
-          }}
-          variant="body1"
-          dangerouslySetInnerHTML={{
-            __html:
-              element.text
-          }}
-        />
+        <p>{element.text}</p>
       </ListItem>
     );
   } else if (element.elementType === "Picture") {

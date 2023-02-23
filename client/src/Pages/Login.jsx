@@ -21,7 +21,7 @@ import { useEffect } from 'react';
 function Register() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { account, isLoading, isError, isSuccess, message } = useSelector(
+  const { account, isError, isSuccess, message } = useSelector(
     (state) => state.auth
   );
 

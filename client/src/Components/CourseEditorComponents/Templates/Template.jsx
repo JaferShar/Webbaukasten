@@ -1,10 +1,10 @@
 import React from "react";
 import ElementList from "../Elements/ElementList";
+import WelcomeTemplateEditor from "./WelcomeTemplateEditor";
 
 const templates = {
-  Welcome: (<div>Hello</div>),
+  Welcome: <WelcomeTemplateEditor/>,
   Standard: <ElementList />,
-  End: <div>End</div>
 };
 
 export default templates;

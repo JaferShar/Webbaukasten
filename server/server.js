@@ -23,5 +23,5 @@ app.use("/api/student", require("./routes/studentRoutes"));
 app.use(errorHandler);
 
 app.listen(port, () =>
-  console.log(`Ahoi Matrosen wir segeln zum Port Hamburg`.yellow.bold)
+  console.log(`Ahoi Matrosen wir segeln zum Port Hamburg, verfrachtet wird an Dock 5000`.yellow.bold)
 );

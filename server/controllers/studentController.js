@@ -19,7 +19,6 @@ const getCourseData = asyncHandler(async (req, res) => {
 
 const getScreenData = asyncHandler(async (req, res) => {
     try {
-      console.log(req.params.id , "Inside getScreenData")
       const screen = await Screen.findById(req.params.id);
       if (!screen) {
         return res.status(404).json({ error: "Screen not found" });

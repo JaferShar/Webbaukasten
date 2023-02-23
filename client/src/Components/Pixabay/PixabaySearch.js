@@ -46,7 +46,8 @@ class PixabaySearch extends Component {
           />
           <br />
           {this.state.images.length > 0 ? (
-            <PixabayView images={this.state.images} />
+            <PixabayView images={this.state.images}
+            handleClose={this.props.handleClose}/>
           ) : null}
         </Box>
       </div>

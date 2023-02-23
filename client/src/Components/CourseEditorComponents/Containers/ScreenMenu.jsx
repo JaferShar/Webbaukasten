@@ -6,9 +6,11 @@ import Box from '@mui/material/Box';
 import 'draft-js/dist/Draft.css';
 import H5PMenu from './H5PMenu.jsx';
 import TextFieldMenu from './TextFieldMenu.jsx';
-import PixabayTestPage from '../../../Pages/PixabayTest/PixabayTestPage.js';
-import Picture from '../Buttons/PopUpButtonPicture.js'
+import PixabayTestPage from '../../Pixabay/PixabayOpen.js';
 import PictureMenu from './PictureMenu.jsx';
+import { Grid } from '@mui/material';
+import {useSelector } from "react-redux";
+import Alert from '@mui/material/Alert';
 
 
 function TabPanel(props) {
@@ -45,34 +47,53 @@ function a11yProps(index) {
 }
 
 export default function BasicTabs() {
+  const screen = useSelector((state) => state.screenEditor.screen);
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
 
+
   return (
     <div style={{ width: '65%', margin: '0 auto', alignItems: 'center' }}>
-    <Box sx={{ width: '100%' }}>
-      <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-        <Tabs value={value} onChange={handleChange} aria-label="basic tabs example" >
-          <Tab label="Text" {...a11yProps(0)} />
-          <Tab label="Bild" {...a11yProps(1)} />
-          <Tab label="H5P" {...a11yProps(2)} />
-        </Tabs>
+      <Box sx={{ width: '100%' }}>
+        <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+          <Tabs value={value} onChange={handleChange} aria-label="basic tabs example" >
+            <Tab label={screen.template === 'Standard' ? 'Text' : 'Text'}
+              disabled={screen.template !== 'Standard'}  {...a11yProps(0)} />
+
+            <Tab label="Bild"
+              disabled={screen.template !== 'Standard'} {...a11yProps(1)} />
+
+            <Tab label="H5P"
+              disabled={screen.template !== 'Standard'} {...a11yProps(2)} />
+          </Tabs>
+        </Box>
+        {screen.template === 'Standard' ? (
+          <>
+            <TabPanel value={value} index={0}>
+              <TextFieldMenu />
+            </TabPanel>
+            <TabPanel value={value} index={1}>
+              <Grid container>
+                <PictureMenu />
+                <Box sx={{mr: 2}} />
+                <PixabayTestPage />
+              </Grid>
+            </TabPanel>
+            <TabPanel value={value} index={2}>
+              <H5PMenu />
+            </TabPanel>
+          </>
+        ) : (
+          <div>
+            <Alert severity="info"> The menu is only available on Standard Templates!</Alert>
+          </div>
+        )}
       </Box>
-      <TabPanel value={value} index={0}>
-        <TextFieldMenu />
-      </TabPanel>
-      <TabPanel value={value} index={1}>
-        <PixabayTestPage/>
-        <PictureMenu />
-      </TabPanel>
-      <TabPanel value={value} index={2}>
-        <H5PMenu/>
-      </TabPanel>
-    </Box>
     </div>
-    
+
   );
+
 }
