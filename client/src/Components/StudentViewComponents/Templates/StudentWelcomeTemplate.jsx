@@ -1,7 +1,5 @@
-import { useEffect } from "react";
 import { Stack } from "@mui/material";
-import { useDispatch, useSelector } from "react-redux";
-import { getScreen } from "../../../features/courseEditor/screenSlice";
+import { useSelector } from "react-redux";
 
 export default function WelcomeTemplate() {
   const studentScreen = useSelector((state) => state.studentScreen);

@@ -1,8 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 import { Menu, MenuItem } from "@mui/material";
 import TitleIcon from "@mui/icons-material/Title";
 import SourceIcon from "@mui/icons-material/Source";
-import ExplicitIcon from "@mui/icons-material/Explicit";
 import Container from "@mui/material/Container";
 
 export default function AddScreenMenu({

@@ -1,17 +1,11 @@
 import { Stack } from "@mui/material";
 import Element from "../Element";
-import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
+import { useSelector } from "react-redux";
 
 export default function StudentStandard() {
     const studentScreen = useSelector(
         (state) => state.studentScreen
     );
-
-  const dispatch = useDispatch();
-
-  useEffect (() => {
-    }, [studentScreen.elements])
 
   if (!studentScreen.screen.elements || studentScreen.screen.elements.length === 0) {
     return <Stack spacing={2} >

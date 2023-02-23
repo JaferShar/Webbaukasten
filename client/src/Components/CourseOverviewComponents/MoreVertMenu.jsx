@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Box, Button, Menu, MenuItem, TextField, Modal } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
-import EditIcon from "@mui/icons-material/Edit";
 import ShareIcon from "@mui/icons-material/Share";
 import PublishIcon from "@mui/icons-material/Publish";
 import DriveFileRenameOutlineIcon from "@mui/icons-material/DriveFileRenameOutline";
