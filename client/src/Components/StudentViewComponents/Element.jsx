@@ -7,7 +7,7 @@ export default function Element({ element, handleContextMenu }) {
   if (element.elementType === "TextField") {
     return (
       <ListItem>
-        <p>{element.text}</p>
+        <div dangerouslySetInnerHTML={{ __html: element.text }}></div>
       </ListItem>
     );
   } else if (element.elementType === "Picture") {
