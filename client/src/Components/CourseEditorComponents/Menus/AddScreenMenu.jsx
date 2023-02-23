@@ -32,11 +32,6 @@ export default function AddScreenMenu({
           <SourceIcon />
           Standard
         </MenuItem>
-        <MenuItem onClick={() => {
-          handleClick("End")}}>
-          <ExplicitIcon />
-          Ende
-        </MenuItem>
       </Menu>
     </Container>
   );
