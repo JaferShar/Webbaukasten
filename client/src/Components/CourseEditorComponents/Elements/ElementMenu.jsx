@@ -11,8 +11,8 @@ import {
   Delete as DeleteIcon,
   SwapHoriz as SwapHorizIcon,
 } from "@mui/icons-material";
-import H5PPopover from "./H5PPopover";
-import ImagePopover from "./ImagePopover";
+import H5PModal from "./H5PModal";
+import ImageModal from "./ImageModal";
 
 export default function ElementMenu({
   anchorEl,
@@ -25,8 +25,6 @@ export default function ElementMenu({
   const [subMenuAnchorEl, setSubMenuAnchorEl] = useState(null);
   const [h5pModalOpen, setH5PModalOpen] = useState(false);
   const [imageModalOpen, setImageModalOpen] = useState(false);
-  const [h5pAnchorEl, setH5PAnchorEl] = useState(null);
-  const [imageAnchorEl, setImageAnchorEl] = useState(null);
 
   const handleOpenSubMenu = (event) => {
     setSubMenuAnchorEl(event.currentTarget);
@@ -42,14 +40,12 @@ export default function ElementMenu({
     handleExchangeTextField();
   };
 
-  const handleClickImage = (event) => {
+  const handleClickImage = () => {
     setImageModalOpen(true);
-    setImageAnchorEl(event.currentTarget);
   };
 
-  const handleClickH5P = (event) => {
+  const handleClickH5P = () => {
     setH5PModalOpen(true);
-    setH5PAnchorEl(event.currentTarget);
   };
 
   const closeAll = () => {
@@ -114,30 +110,28 @@ export default function ElementMenu({
           <ListItemButton onClick={handleClickTextField}>
             <ListItemText primary='Textfeld' />
           </ListItemButton>
-          <ListItemButton onClick={(event) => {
-            handleClickImage(event);
+          <ListItemButton onClick={() => {
+            handleClickImage();
             }}>
             <ListItemText primary='Bild' />
           </ListItemButton>
           <ListItemButton
-            onClick={(event) => {
-              handleClickH5P(event);
+            onClick={() => {
+              handleClickH5P();
             }}
           >
             <ListItemText primary='H5P' />
           </ListItemButton>
         </List>
       </Menu>
-      <H5PPopover
+      <H5PModal
         h5pModalOpen={h5pModalOpen}
         handleClose={closeAll}
-        anchorEl={h5pAnchorEl}
         handleExchangeH5P={handleExchangeH5P}
       />
-      <ImagePopover
+      <ImageModal
         imageModalOpen={imageModalOpen}
         handleClose={closeAll}
-        anchorEl={imageAnchorEl}
         handleExchangeImage={handleExchangeImage}
       />
     </Box>

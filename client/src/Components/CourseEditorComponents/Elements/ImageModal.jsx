@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Box, Button, InputLabel, Popover } from "@mui/material";
+import { Box, Button, InputLabel, Modal } from "@mui/material";
 
 export default function PrettyPopover({
   imageModalOpen,
@@ -14,25 +14,20 @@ export default function PrettyPopover({
   };
 
   return (
-    <Popover
-      open={imageModalOpen}
-      onClose={handleClose}
-      anchorEl={anchorEl}
-      anchorOrigin={{
-        vertical: "center",
-        horizontal: "center",
-      }}
-      transformOrigin={{
-        vertical: "center",
-        horizontal: "center",
-      }}
-      BackdropProps={{
-        style: {
-          backgroundColor: "rgba(0, 0, 0, 0.5)",
-        },
-      }}
-    >
-      <Box p={2}>
+    <Modal open={imageModalOpen} onClose={handleClose}>
+      <Box
+        p={2}
+        sx={{
+          position: "absolute",
+          top: "50%",
+          left: "50%",
+          transform: "translate(-50%, -50%)",
+          bgcolor: "background.paper",
+          border: "2px solid #000",
+          boxShadow: 24,
+          p: 4,
+        }}
+      >
         <Box mt={2}>
           <input
             accept='image/*'
@@ -64,6 +59,6 @@ export default function PrettyPopover({
           </Button>
         </Box>
       </Box>
-    </Popover>
+    </Modal>
   );
 }
