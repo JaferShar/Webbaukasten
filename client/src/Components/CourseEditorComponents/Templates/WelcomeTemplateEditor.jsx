@@ -18,7 +18,7 @@ export default function WelcomeTemplate() {
     return (
         <Stack spacing={6}>
             <TextField
-                defaultValue={screen.elements ? screen.elements[0].text : ''}
+                defaultValue={screen.elements && screen.elements.length != 0 ? screen.elements[0].text : ''}
                 onChange={(event) => handleUpdateTextField(event,  screen.elements[0])}
                 id="standard-basic"
                 label="Course Title"
@@ -26,7 +26,7 @@ export default function WelcomeTemplate() {
             />
 
             <TextField
-                defaultValue={screen.elements ? screen.elements[1].text : ''}
+                defaultValue={screen.elements && screen.elements.length != 0  ? screen.elements[1].text : ''}
                 onChange={(event) => handleUpdateTextField(event, screen.elements[1])}
                 id="standard-textarea"
                 label="Course description"
