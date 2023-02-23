@@ -9,7 +9,7 @@ import TextFieldMenu from './TextFieldMenu.jsx';
 import PixabayTestPage from '../../Pixabay/PixabayOpen.js';
 import PictureMenu from './PictureMenu.jsx';
 import { Grid } from '@mui/material';
-import { useDispatch, useSelector } from "react-redux";
+import {useSelector } from "react-redux";
 
 
 function TabPanel(props) {
