@@ -5,7 +5,6 @@ export default function H5PPopover({
   h5pModalOpen,
   handleClose,
   anchorEl,
-  selectedElement,
   handleExchangeH5P,
 }) {
   const [content, setContent] = useState("");
@@ -36,14 +35,17 @@ export default function H5PPopover({
           onChange={(e) => setContent(e.target.value)}
         />
         <Box mt={2} sx={{ display: "flex", justifyContent: "flex-end" }}>
-          <Button onClick={() => {
+          <Button variant='contained'
+          onClick={() => {
             handleClose()
-            handleExchangeH5P(selectedElement, content)
+            handleExchangeH5P(content)
           }}
           >
             Hochladen
           </Button>
-          <Button onClick={() => {
+          <Box mx={1} />
+          <Button variant='outlined'
+          onClick={() => {
             handleClose()
             setContent("")
           }}>Abbrechen</Button>
