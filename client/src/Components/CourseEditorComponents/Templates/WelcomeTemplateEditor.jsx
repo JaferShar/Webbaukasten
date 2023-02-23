@@ -26,7 +26,7 @@ export default function WelcomeTemplate() {
             />
 
             <TextField
-                defaultValue={screen.elements && screen.elements.length !== 0  ? screen.elements[1].text : ''}
+                defaultValue={screen.elements && screen.elements.length > 1 ? screen.elements[1].text : ''}
                 onChange={(event) => handleUpdateTextField(event, screen.elements[1])}
                 id="standard-textarea"
                 label="Course description"
