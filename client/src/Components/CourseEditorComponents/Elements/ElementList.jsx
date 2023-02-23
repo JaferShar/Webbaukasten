@@ -8,6 +8,7 @@ import {
   getScreen,
 } from "../../../features/courseEditor/screenSlice";
 import ElementMenu from "./ElementMenu";
+import uploadCloudinary from '../../../features/upload/CloudinaryUpload'
 
 export default function ElementList() {
   const screen = useSelector((state) => state.screenEditor.screen);
@@ -52,18 +53,19 @@ export default function ElementList() {
     handleClose();
   };
 
-  const handleExchangeImage = (file) => {
+  const handleExchangeImage = async (file) => {
+    const url = await uploadCloudinary(file);
     dispatch(
       exchangeElement({
         screenId: screen._id,
         prevElementId: selectedElement,
-        element: { elementType: "Picture", url: "" },
+        element: { elementType: "Picture", url: url },
       })
     );
     handleClose();
   };
 
-  const handleExchangeH5P = (elementId, content) => {
+  const handleExchangeH5P = (content) => {
     dispatch(
       exchangeElement({
         screenId: screen._id,
@@ -91,7 +93,6 @@ export default function ElementList() {
         ))}
         <ElementMenu
           anchorEl={anchorEl}
-          selectedElement={selectedElement}
           handleClose={handleClose}
           handleDelete={handleDelete}
           handleExchangeTextField={handleExchangeTextField}
