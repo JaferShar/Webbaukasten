@@ -6,11 +6,11 @@ import { setPicture } from "../../../features/courseEditor/screenSlice";
 import { toast } from "react-toastify";
 
 /**
-This component provides a button to open Cloudinary upload widget.
-Upon successful upload, the uploaded image is saved to the current screen in the Redux store.
-@export
-@return {JSX.Element} CloudinaryUploadWidget Component
-*/
+ * This component provides a button to open Cloudinary upload widget.
+ * Upon successful upload, the uploaded image is saved to the current screen in the Redux store.
+ *
+ * @returns button with a popup to upload images
+ */
 export default function CloudinaryUploadWidget() {
   const dispatch = useDispatch();
   const screen = useSelector((state) => state.screenEditor.screen);

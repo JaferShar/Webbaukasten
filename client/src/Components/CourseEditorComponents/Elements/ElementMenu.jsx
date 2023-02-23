@@ -13,7 +13,19 @@ import {
 } from "@mui/icons-material";
 import H5PModal from "./H5PModal";
 import ImageModal from "./ImageModal";
-
+/**
+ * This module dleivers a menu that allows the user to edit,delete and swap elements within the screen editor.
+ *
+ * @param {*} {
+ *   anchorEl 
+ *   handleClose, Function to handle closing.
+ *   handleDelete, Function to handle delete.
+ *   handleExchangeTextField, Function to handle swapping the text field.
+ *   handleExchangeImage, Function to handle swapping the image.
+ *   handleExchangeH5P, Function to handle swapping the H5P element.
+ * }
+ * @returns A menu with edit, delete and swap tabs.
+ */
 export default function ElementMenu({
   anchorEl,
   handleClose,
@@ -58,7 +70,7 @@ export default function ElementMenu({
   return (
     <Box sx={{ width: "250px", display: "flex", alignItems: "center" }}>
       <Menu
-        id='long-menu'
+        id="long-menu"
         keepMounted
         open={Boolean(anchorEl)}
         onClose={handleClose}
@@ -77,7 +89,7 @@ export default function ElementMenu({
             <ListItemIcon>
               <DeleteIcon />
             </ListItemIcon>
-            <ListItemText primary='Löschen' />
+            <ListItemText primary="Löschen" />
           </ListItemButton>
           <ListItemButton
             onClick={(event) => {
@@ -87,20 +99,18 @@ export default function ElementMenu({
             <ListItemIcon>
               <SwapHorizIcon />
             </ListItemIcon>
-            <ListItemText primary='Austauschen' />
+            <ListItemText primary="Austauschen" />
           </ListItemButton>
-          <ListItemButton
-            
-          >
+          <ListItemButton>
             <ListItemIcon>
               <SwapHorizIcon />
             </ListItemIcon>
-            <ListItemText primary='Bearbeiten' />
+            <ListItemText primary="Bearbeiten" />
           </ListItemButton>
         </List>
       </Menu>
       <Menu
-        id='long-menu'
+        id="long-menu"
         keepMounted
         open={Boolean(subMenuAnchorEl)}
         onClose={handleCloseSubMenu}
@@ -116,19 +126,21 @@ export default function ElementMenu({
       >
         <List>
           <ListItemButton onClick={handleClickTextField}>
-            <ListItemText primary='Textfeld' />
+            <ListItemText primary="Textfeld" />
           </ListItemButton>
-          <ListItemButton onClick={() => {
-            handleClickImage();
-            }}>
-            <ListItemText primary='Bild' />
+          <ListItemButton
+            onClick={() => {
+              handleClickImage();
+            }}
+          >
+            <ListItemText primary="Bild" />
           </ListItemButton>
           <ListItemButton
             onClick={() => {
               handleClickH5P();
             }}
           >
-            <ListItemText primary='H5P' />
+            <ListItemText primary="H5P" />
           </ListItemButton>
         </List>
       </Menu>

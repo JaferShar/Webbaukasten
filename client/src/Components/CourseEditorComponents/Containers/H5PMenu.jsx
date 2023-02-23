@@ -22,7 +22,7 @@ const invalidLinkNotify = () => {
 /**
  *This component allows H5P content to be uploaded to a course screen.
  *
- * @return {JSX.Element} H5P element
+ * @returns H5P element
  */
 const H5P = () => {
   const screen = useSelector((state) => state.screenEditor.screen);
@@ -37,8 +37,8 @@ const H5P = () => {
       invalidLinkNotify();
       setValue("");
     } else {
-    dispatch(setH5P({ screenId: screen._id, content: value }));
-    setValue("");
+      dispatch(setH5P({ screenId: screen._id, content: value }));
+      setValue("");
     }
   };
   return (
