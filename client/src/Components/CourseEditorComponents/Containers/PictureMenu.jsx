@@ -7,10 +7,10 @@ import { setPicture } from "../../../features/courseEditor/screenSlice";
 export default function CloudinaryUploadWidget() {
   const dispatch = useDispatch();
   const screen = useSelector((state) => state.screenEditor.screen);
+  const cloudName = process.env.REACT_APP_CLOUD_NAME;
+  const uploadPreset = process.env.REACT_APP_UPLOAD_PRESET;
 
   useEffect(() => {
-    const cloudName = "dhe2sdssg";
-    const uploadPreset = "Kursify_img";
 
     const widget = window.cloudinary.createUploadWidget(
       {
@@ -23,13 +23,7 @@ export default function CloudinaryUploadWidget() {
             "image_search",
             "google_drive",
             "dropbox",
-            "pixabay",
         ],
-        url: {
-            isRemote: true,
-            defaultValue: 'https://pixabay.com/api/?key=33449732-b16fa09defbfef09ff64fd27e&per_page=50&q=',
-            placeholder: 'Search Pixabay images...'
-          }
       },
       (error, result) => {
         if (!error && result && result.event === "success") {
@@ -47,7 +41,7 @@ export default function CloudinaryUploadWidget() {
       },
       false
     );
-  }, [dispatch, screen._id]);
+  }, [dispatch, screen._id, cloudName, uploadPreset]);
 
   return (
     <Button
