@@ -38,3 +38,4 @@ May Dos:
 -reorder Screens
 -reorder Elements
 -reorder Courses
+-unsigned -> signed upload for more security (cloudinary)
