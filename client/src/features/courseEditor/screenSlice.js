@@ -13,7 +13,7 @@ const initialState = {
 export const getScreen = createAsyncThunk("getScreen", async (screenId, thunkAPI) => {
   try {
     const token = thunkAPI.getState().auth.account.token;
-    return screenService.getScreen(screenId, token);
+    return await screenService.getScreen(screenId, token);
   } catch (error) {
     const message =
       (error.response && error.response.data && error.response.data.message) ||
@@ -26,7 +26,7 @@ export const getScreen = createAsyncThunk("getScreen", async (screenId, thunkAPI
 export const createScreen = createAsyncThunk("/createScreen", async (screenData, thunkAPI) => {
   try {
     const token = thunkAPI.getState().auth.account.token;
-    return screenService.createScreen(screenData, token);
+    return await screenService.createScreen(screenData, token);
   } catch (error) {
     const message =
       (error.response && error.response.data && error.response.data.message) ||
@@ -39,7 +39,7 @@ export const createScreen = createAsyncThunk("/createScreen", async (screenData,
 export const setTextField = createAsyncThunk("/setTextField", async (screenData, thunkAPI) => {
   try {
     const token = thunkAPI.getState().auth.account.token;
-    return screenService.setTextField(screenData, token);
+    return await screenService.setTextField(screenData, token);
   } catch (error) {
     const message =
       (error.response && error.response.data && error.response.data.message) ||
@@ -52,7 +52,7 @@ export const setTextField = createAsyncThunk("/setTextField", async (screenData,
 export const setH5P = createAsyncThunk("/setH5P", async (screenData, thunkAPI) => {
   try {
     const token = thunkAPI.getState().auth.account.token;
-    return screenService.setH5P(screenData, token);
+    return await screenService.setH5P(screenData, token);
   } catch (error) {
     const message =
       (error.response && error.response.data && error.response.data.message) ||
@@ -65,7 +65,7 @@ export const setH5P = createAsyncThunk("/setH5P", async (screenData, thunkAPI) =
 export const setPicture = createAsyncThunk("/setPicture", async (screenData, thunkAPI) => {
   try {
     const token = thunkAPI.getState().auth.account.token;
-    return screenService.setPicture(screenData, token);
+    return await screenService.setPicture(screenData, token);
   } catch (error) {
     const message =
       (error.response && error.response.data && error.response.data.message) ||
@@ -78,7 +78,7 @@ export const setPicture = createAsyncThunk("/setPicture", async (screenData, thu
 export const updateScreen = createAsyncThunk("/updateScreen", async (screenData, thunkAPI) => {
   try {
     const token = thunkAPI.getState().auth.account.token;
-    return screenService.updateScreen(screenData, token);
+    return await screenService.updateScreen(screenData, token);
   } catch (error) {
     const message =
       (error.response && error.response.data && error.response.data.message) ||
