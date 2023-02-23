@@ -4,7 +4,7 @@ import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
 import ImageListItemBar from '@mui/material/ImageListItemBar';
 import ListSubheader from '@mui/material/ListSubheader';
-import { PixabaySaveButton } from "./PixabaySaveButton";
+import PixabaySaveButton from "./PixabaySaveButton";
 import Box from "@mui/material/Box";
 
 
@@ -35,7 +35,10 @@ class PixabayView extends Component {
                 title={item.tags}
                 subtitle={item.author}
                 actionIcon={
-                  <PixabaySaveButton/>
+                  <PixabaySaveButton
+                  handleClose={this.props.handleClose}
+                  item={item}
+                  />
                 }
               />
             </ImageListItem>

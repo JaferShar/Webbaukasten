@@ -6,10 +6,10 @@ import screenReudcer from "../features/courseEditor/screenSlice";
 import studentCourseReducer from "../features/studentView/studentCourseSlice";
 import studentScreenReducer from "../features/studentView/studentScreenSlice";
 window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__();
-/** 
+/**
  * Creates a Redux store with multiple reducers that handle the various component states.
  */
-const store = configureStore({
+export const store = configureStore({
   reducer: {
     auth: authReducer,
     courseOverview: courseOverViewReducer,
