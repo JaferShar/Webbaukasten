@@ -8,10 +8,9 @@ export default function WelcomeTemplate() {
     return <Stack spacing={2} />;
   } else {
     return (
-      <Stack spacing={2}>
-        <p>Test Placeholder</p>
-        {/* <h1>{studentScreen.screen.elements[0].text}</h1>
-        <h2>{studentScreen.screen.elements[1].text}</h2> */}
+      <Stack spacing={6}>
+        <h1>{studentScreen.screen.elements[0].text}</h1>
+        <div contenteditable="true">{studentScreen.screen.elements[1].text}</div>
       </Stack>
     );
   }
