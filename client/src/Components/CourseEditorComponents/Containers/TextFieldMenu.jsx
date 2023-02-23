@@ -63,10 +63,9 @@ const TextEditor = () => {
 
   const handleSave = () => {
     const htmlString = notes.toString("html");
-    const text = htmlString.replace(/<\/?([a-z][a-z0-9]*)\b[^>]*>|<!--[\s\S]*?-->/gi, '');
-    console.log(`Text: ${text}`);
+    console.log(`Text: ${htmlString}`);
     handleClose();
-    dispatch(setTextField({ text: text, screenId: screen._id }));
+    dispatch(setTextField({ text: htmlString, screenId: screen._id }));
   };
 
   
