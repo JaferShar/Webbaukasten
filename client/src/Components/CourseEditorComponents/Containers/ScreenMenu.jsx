@@ -9,6 +9,7 @@ import TextFieldMenu from './TextFieldMenu.jsx';
 import PixabayTestPage from '../../../Pages/PixabayTest/PixabayTestPage.js';
 import PictureMenu from './PictureMenu.jsx';
 import { Grid } from '@mui/material';
+import { useDispatch, useSelector } from "react-redux";
 
 
 function TabPanel(props) {
@@ -45,36 +46,41 @@ function a11yProps(index) {
 }
 
 export default function BasicTabs() {
+  const screen = useSelector((state) => state.screenEditor.screen);
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
 
-  return (
-    <div style={{ width: '65%', margin: '0 auto', alignItems: 'center' }}>
-    <Box sx={{ width: '100%' }}>
-      <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-        <Tabs value={value} onChange={handleChange} aria-label="basic tabs example" >
-          <Tab label="Text" {...a11yProps(0)} />
-          <Tab label="Bild" {...a11yProps(1)} />
-          <Tab label="H5P" {...a11yProps(2)} />
-        </Tabs>
-      </Box>
-      <TabPanel value={value} index={0}>
-        <TextFieldMenu />
-      </TabPanel>
-      <TabPanel value={value} index={1}>
-        <Grid container>
-        <PictureMenu />
-        <PixabayTestPage/>
-        </Grid>
-      </TabPanel>
-      <TabPanel value={value} index={2}>
-        <H5PMenu/>
-      </TabPanel>
-    </Box>
-    </div>
-    
-  );
+  if (screen.template === 'Welcome') {
+    return <div>No Menu on Welcom</div>
+  } else if (screen.template === 'Standard') {
+    return (
+      <div style={{ width: '65%', margin: '0 auto', alignItems: 'center' }}>
+        <Box sx={{ width: '100%' }}>
+          <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+            <Tabs value={value} onChange={handleChange} aria-label="basic tabs example" >
+              <Tab label="Text" {...a11yProps(0)} />
+              <Tab label="Bild" {...a11yProps(1)} />
+              <Tab label="H5P" {...a11yProps(2)} />
+            </Tabs>
+          </Box>
+          <TabPanel value={value} index={0}>
+            <TextFieldMenu />
+          </TabPanel>
+          <TabPanel value={value} index={1}>
+            <Grid container>
+              <PictureMenu />
+              <PixabayTestPage />
+            </Grid>
+          </TabPanel>
+          <TabPanel value={value} index={2}>
+            <H5PMenu />
+          </TabPanel>
+        </Box>
+      </div>
+
+    );
+  }
 }
