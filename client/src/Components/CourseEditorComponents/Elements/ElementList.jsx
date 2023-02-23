@@ -8,9 +8,12 @@ import {
   getScreen,
 } from "../../../features/courseEditor/screenSlice";
 import ElementMenu from "./ElementMenu";
-import uploadCloudinary from '../../../features/upload/CloudinaryUpload'
+import uploadCloudinary from "../../../features/upload/CloudinaryUpload";
 import { toast } from "react-toastify";
-
+/**
+ * This module provides a list of elements within the screen editor.
+ * @returns A list of elements.
+ */
 export default function ElementList() {
   const screen = useSelector((state) => state.screenEditor.screen);
   const [anchorEl, setAnchorEl] = useState(null);
@@ -64,14 +67,13 @@ export default function ElementList() {
           element: { elementType: "Picture", url: url },
         })
       );
-      setReload(true)
-      toast.success("Image uploaded to cloudinary")
+      setReload(true);
+      toast.success("Image uploaded to cloudinary");
     } catch (error) {
       toast.error(error.message);
     } finally {
       handleClose();
     }
-
   };
 
   const handleExchangeH5P = (content) => {
@@ -107,7 +109,7 @@ export default function ElementList() {
           handleExchangeTextField={handleExchangeTextField}
           handleExchangeImage={handleExchangeImage}
           handleExchangeH5P={handleExchangeH5P}
-          />
+        />
       </Stack>
     );
   }

@@ -1,11 +1,21 @@
 import { useState } from "react";
 import { Box, Button, InputLabel, Modal } from "@mui/material";
-
+/**
+ * This module provides a popup to exchange an existing image by uploading another one.
+ *
+ * @param {*} {
+ *   imageModalOpen, Function to handle opening.
+ *   handleClose, Function to handle closing.
+ *   anchorEl,
+ *   handleExchangeImage, Function to handle exhanging images.
+ * }
+ * @returns popup to upload an image.
+ */
 export default function PrettyPopover({
   imageModalOpen,
   handleClose,
   anchorEl,
-  handleExchangeImage,
+  handleExchangeImage, 
 }) {
   const [file, setFile] = useState(null);
 
@@ -30,20 +40,20 @@ export default function PrettyPopover({
       >
         <Box mt={2}>
           <input
-            accept='image/*'
-            id='contained-button-file'
+            accept="image/*"
+            id="contained-button-file"
             multiple
-            type='file'
+            type="file"
             style={{ display: "none" }}
             onChange={handleFileInputChange}
           />
-          <InputLabel htmlFor='contained-button-file'>
+          <InputLabel htmlFor="contained-button-file">
             {file ? file.name : "Bild auswählen"}
           </InputLabel>
         </Box>
         <Box mt={2} sx={{ display: "flex", justifyContent: "flex-end" }}>
           <Button
-            variant='contained'
+            variant="contained"
             disabled={!file}
             onClick={() => {
               handleExchangeImage(file);
@@ -54,7 +64,7 @@ export default function PrettyPopover({
             Hochladen
           </Button>
           <Box mx={1} />
-          <Button variant='outlined' onClick={handleClose}>
+          <Button variant="outlined" onClick={handleClose}>
             Abbrechen
           </Button>
         </Box>

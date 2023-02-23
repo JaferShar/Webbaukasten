@@ -3,6 +3,15 @@ import { useDispatch, useSelector } from "react-redux";
 import { ListItem, Typography, Button } from "@mui/material";
 import { updateTextField } from "../../../features/courseEditor/screenSlice";
 
+/**
+ * This module implements an element in the screen editor.
+ *
+ * @param {*} {
+ *   element,  The element to be provided.
+ *   handleContextMenu, Function to handle right-click context menu.
+ * }
+ * @returns A text, image or H5P element.
+ */
 export default function Element({ element, handleContextMenu }) {
   const screen = useSelector((state) => state.screenEditor.screen);
   const dispatch = useDispatch();
@@ -26,8 +35,7 @@ export default function Element({ element, handleContextMenu }) {
           }}
           variant="body1"
           dangerouslySetInnerHTML={{
-            __html:
-              element.text
+            __html: element.text,
           }}
         />
       </ListItem>
@@ -38,10 +46,10 @@ export default function Element({ element, handleContextMenu }) {
         <ListItem style={{ justifyContent: "center" }}>
           <img
             src={element.url}
-            alt='placeholder'
-            width='100%'
-            height='auto'
-            loading='lazy'
+            alt="placeholder"
+            width="100%"
+            height="auto"
+            loading="lazy"
             style={{ cursor: "context-menu" }}
             onContextMenu={(event) => {
               handleContextMenu(event, element._id);
@@ -91,8 +99,8 @@ const H5PIframe = ({ src }) => {
     <iframe
       ref={iframeRef}
       src={src}
-      width='100%'
-      title='H5P Content'
+      width="100%"
+      title="H5P Content"
       frameBorder={0}
     />
   );

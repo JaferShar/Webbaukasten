@@ -12,7 +12,7 @@ const initialState = {
 export const getCourse = createAsyncThunk("get", async (courseId, thunkAPI) => {
   try {
     const token = thunkAPI.getState().auth.account.token;
-    return courseEditorService.getCourse(courseId, token);
+    return await courseEditorService.getCourse(courseId, token);
   } catch (error) {
     const message =
       (error.response && error.response.data && error.response.data.message) ||
@@ -25,7 +25,7 @@ export const getCourse = createAsyncThunk("get", async (courseId, thunkAPI) => {
 export const deleteScreen = createAsyncThunk("/delete", async (screenData, thunkAPI) => {
   try {
     const token = thunkAPI.getState().auth.account.token;
-    return courseEditorService.deleteScreen(screenData, token);
+    return await courseEditorService.deleteScreen(screenData, token);
   } catch (error) {
     const message =
       (error.response && error.response.data && error.response.data.message) ||

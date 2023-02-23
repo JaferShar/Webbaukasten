@@ -98,16 +98,11 @@ function ScreenViewer({ changeTemplate }) {
    *
    * @param {*} template the template of the screen to be created.
    */
-  const handleCreate = (template) => {
-    try {
-      dispatch(createScreen({ template: template, courseId: courseId }));
-      dispatch(getCourse(courseId));
-      setSelectedScreen(course.screens[course.screens.length - 1])
-    } catch (error) {
-      toast(error.message, { type: "error" });
-    } finally {
+  const handleCreate = async (template) => {
+      const screen = await dispatch(createScreen({ template: template, courseId: courseId }));
+      await dispatch(getCourse(courseId));
+      setSelectedScreen(screen.payload._id);
       handleClose();
-    }
   };
 
   const handleContextMenu = (event, screenId) => {
