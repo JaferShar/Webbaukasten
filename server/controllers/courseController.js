@@ -3,7 +3,8 @@ const asyncHandler = require("express-async-handler");
 
 const Course = require("../models/Course");
 const Account = require("../models/Account");
-const Screen = require("../models/Screen").Screen;
+const { Screen, Picture, TextField, H5P } = require("../models/Screen");
+
 
 /**
  * @desc Get course by id
@@ -19,7 +20,7 @@ const getCourse = asyncHandler(async (req, res) => {
     } else if (course.account != req.account.id) {
       return res.status(401).json({ error: "Access denied." });
     }
-    
+
     res.status(200).json(course);
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -52,15 +53,27 @@ const setCourse = asyncHandler(async (req, res) => {
     const course = await Course.create({
       account: accountId,
       courseName: courseName,
+
     });
 
     // create Welcome screen
-    const screen = await Screen.create({template: "Welcome"});
+
+    const screen = await Screen.create({ template: "Welcome" });
+    const text1 = "Hello this is your cool course"
+    const textFieldTitle = await TextField.create({ text: text1 });
+    screen.elements.push(textFieldTitle);
+    await screen.save();
+
+    const text2 = "This is the first screen of your course."
+    const textfielDescription = await TextField.create({ text: text2 });
+    screen.elements.push(textfielDescription);
+    await screen.save();
+
 
     // push screen
     course.screens.push(screen);
 
-    course.save();
+    await course.save();
 
     res.status(201).json(course);
   } catch (error) {
@@ -134,7 +147,7 @@ const deleteCourse = asyncHandler(async (req, res) => {
     // remove course
     await course.remove();
 
-    res.status(200).json({id: courseId});   
+    res.status(200).json({ id: courseId });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -185,7 +198,7 @@ const shareCourse = asyncHandler(async (req, res) => {
       courseName: course.courseName,
       sections: newSections,
     });
-    
+
     // create new screens with data
     const newScreens = await Promise.all(
       course.screens.map(async (screen) => {
