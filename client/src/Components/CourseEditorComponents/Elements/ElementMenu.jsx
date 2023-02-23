@@ -89,6 +89,14 @@ export default function ElementMenu({
             </ListItemIcon>
             <ListItemText primary='Austauschen' />
           </ListItemButton>
+          <ListItemButton
+            
+          >
+            <ListItemIcon>
+              <SwapHorizIcon />
+            </ListItemIcon>
+            <ListItemText primary='Bearbeiten' />
+          </ListItemButton>
         </List>
       </Menu>
       <Menu
