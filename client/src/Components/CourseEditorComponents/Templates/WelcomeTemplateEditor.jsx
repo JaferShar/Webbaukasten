@@ -32,20 +32,21 @@ export default function WelcomeTemplate() {
         variant="standard"
       />
 
-      <TextField
-        defaultValue={
-          screen.elements && screen.elements.length > 1
-            ? screen.elements[1].text
-            : ""
-        }
-        onChange={(event) => handleUpdateTextField(event, screen.elements[1])}
-        id="standard-textarea"
-        label="Course description"
-        placeholder="Placeholder"
-        multiline
-        rows={3}
-        variant="standard"
-      />
+<TextField
+  defaultValue={
+    screen.elements && screen.elements.length > 1
+      ? screen.elements[1].text
+      : ""
+  }
+  onChange={(event) => handleUpdateTextField(event, screen.elements[1])}
+  id="standard-textarea"
+  label="Course description"
+  placeholder="Placeholder"
+  multiline
+  maxRows={null}
+  variant="standard"
+/>
+
 
       {/* <h1>{studentScreen.screen.elements[0].text}</h1>
         <h2>{studentScreen.screen.elements[1].text}</h2> */}
