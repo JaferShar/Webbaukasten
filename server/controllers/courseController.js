@@ -53,11 +53,9 @@ const setCourse = asyncHandler(async (req, res) => {
     const course = await Course.create({
       account: accountId,
       courseName: courseName,
-
     });
 
     // create Welcome screen
-
     const screen = await Screen.create({ template: "Welcome" });
     const text1 = "e.g. Math for beginners"
     const textFieldTitle = await TextField.create({ text: text1 });
