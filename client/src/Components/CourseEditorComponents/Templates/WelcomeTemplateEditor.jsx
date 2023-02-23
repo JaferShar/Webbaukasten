@@ -18,8 +18,8 @@ export default function WelcomeTemplate() {
     return (
         <Stack spacing={6}>
             <TextField
-                defaultValue={screen.elements ? screen.elements[0].text : 'could not load'}
-                onChange={(event) => handleUpdateTextField(event,  screen[0])}
+                defaultValue={screen.elements ? screen.elements[0].text : ''}
+                onChange={(event) => handleUpdateTextField(event,  screen.elements[0])}
                 id="standard-basic"
                 label="Course Title"
                 variant="standard"
@@ -27,7 +27,7 @@ export default function WelcomeTemplate() {
 
             <TextField
                 defaultValue={screen.elements ? screen.elements[1].text : ''}
-                onChange={(event) => handleUpdateTextField(event, screen[1])}
+                onChange={(event) => handleUpdateTextField(event, screen.elements[1])}
                 id="standard-textarea"
                 label="Course description"
                 placeholder="Placeholder"
