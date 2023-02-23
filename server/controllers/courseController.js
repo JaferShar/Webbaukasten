@@ -59,12 +59,12 @@ const setCourse = asyncHandler(async (req, res) => {
     // create Welcome screen
 
     const screen = await Screen.create({ template: "Welcome" });
-    const text1 = "Hello this is your cool course"
+    const text1 = "e.g. Math for beginners"
     const textFieldTitle = await TextField.create({ text: text1 });
     screen.elements.push(textFieldTitle);
     await screen.save();
 
-    const text2 = "This is the first screen of your course."
+    const text2 = "e.g. This course is for beginners who want to learn math."
     const textfielDescription = await TextField.create({ text: text2 });
     screen.elements.push(textfielDescription);
     await screen.save();
