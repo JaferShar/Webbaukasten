@@ -35,7 +35,7 @@ export default function PixabayTestPage() {
         aria-describedby='modal-modal-description'
       >
         <Box sx={style}>
-          <PixabaySearch />
+          <PixabaySearch handleClose={handleClose} />
         </Box>
       </Modal>
     </div>

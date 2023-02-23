@@ -3,26 +3,33 @@ import AddIcon from "@mui/icons-material/Add";
 import { Button } from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
 import { setPicture } from "../../../features/courseEditor/screenSlice";
-
+/**
+ * This component provides a button to open Cloudinary upload widget.
+ * Upon successful upload, the uploaded image is saved to the current screen in the Redux store.
+ *
+ * @export
+ * @return {JSX.Element} CloudinaryUploadWidget Component
+ */
 export default function CloudinaryUploadWidget() {
   const dispatch = useDispatch();
   const screen = useSelector((state) => state.screenEditor.screen);
   const cloudName = process.env.REACT_APP_CLOUD_NAME;
   const uploadPreset = process.env.REACT_APP_UPLOAD_PRESET;
 
-  useEffect(() => {
+  // Hook to initialize and open Cloudinary upload widget.
 
+  useEffect(() => {
     const widget = window.cloudinary.createUploadWidget(
       {
         cloudName: cloudName,
         uploadPreset: uploadPreset,
         sources: [
-            "local",
-            "url",
-            "camera",
-            "image_search",
-            "google_drive",
-            "dropbox",
+          "local",
+          "url",
+          "camera",
+          "image_search",
+          "google_drive",
+          "dropbox",
         ],
       },
       (error, result) => {
@@ -46,8 +53,8 @@ export default function CloudinaryUploadWidget() {
   return (
     <Button
       style={{ border: "1px solid #d9dddd" }}
-      id='upload_widget'
-      className='cloudinary-button'
+      id="upload_widget"
+      className="cloudinary-button"
     >
       <AddIcon />
       Bild hochladen
