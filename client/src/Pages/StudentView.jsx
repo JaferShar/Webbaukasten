@@ -12,6 +12,8 @@ import { useEffect } from 'react';
 import { useState } from 'react';
 import { getScreenData } from "../features/studentView/studentScreenSlice";
 import templates from '../Components/StudentViewComponents/StudentTemplate.jsx';
+import { resetScreen } from '../features/studentView/studentScreenSlice';
+import StudentEndCard from '../Components/StudentViewComponents/Templates/StudentEndCard';
 
 
 const Item = styled(Paper)(({ theme }) => ({
@@ -49,8 +51,10 @@ function StudentView() {
     }, [courseId, dispatch,]);
 
     useEffect(() => {
-        if (course.screens !== undefined) {
+        if (course.screens !== undefined && course.screens[screenIndex]) {
             dispatch(getScreenData(course.screens[screenIndex]));
+        } else {
+            dispatch(resetScreen());
         }
 
     }, [course, screenIndex, dispatch]);
@@ -61,7 +65,6 @@ function StudentView() {
     function handleWeiterButton() {
         if (screenIndex < course.screens.length) {
             setScreenIndex(screenIndex + 1)
-            console.log("screenIndex: " + screenIndex);
         }
     }
 
@@ -83,7 +86,7 @@ function StudentView() {
                         */}
 
 
-                        {studentScreen.screen.template !== 'End' ? (
+                        {course.screens && screenIndex < course.screens.length ? (
                             <Stack direction="row" spacing={2} justifyContent="space-between" alignItems="center">
                                 <Box sx={{ width: '80%' }}>
                                     <ProgressBar completed={
@@ -107,6 +110,12 @@ function StudentView() {
                     </Stack>
                 </Box>
             </div>
+            {/* This is the end card that gets rendered if we are on the last screen */}
+            {course.screens && screenIndex === course.screens.length ? (
+                <StudentEndCard />
+            ) : (
+                <div></div>
+            )}
         </div>
     );
 }
