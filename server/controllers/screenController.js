@@ -1,6 +1,5 @@
 const mongoose = require("mongoose");
 const asyncHandler = require("express-async-handler");
-const multer = require("multer");
 const Course = require("../models/Course");
 const { Screen, Picture, TextField, H5P } = require("../models/Screen");
 
