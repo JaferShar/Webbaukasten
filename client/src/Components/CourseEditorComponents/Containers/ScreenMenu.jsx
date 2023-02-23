@@ -69,8 +69,7 @@ export default function BasicTabs() {
               disabled={screen.template !== 'Standard'} {...a11yProps(2)} />
           </Tabs>
         </Box>
-
-        {screen.template === 'Standard' && (
+        {screen.template === 'Standard' ? (
           <>
             <TabPanel value={value} index={0}>
               <TextFieldMenu />
@@ -85,6 +84,8 @@ export default function BasicTabs() {
               <H5PMenu />
             </TabPanel>
           </>
+        ) : (
+          <div>No menu available on Welcome Screen</div>
         )}
       </Box>
     </div>
