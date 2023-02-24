@@ -46,7 +46,7 @@ npm run dev
 5. Open your browser and navigate to
 
 ```
-localhost:300/login 
+localhost:3000/login 
 ```
 to access Kursify.
 
