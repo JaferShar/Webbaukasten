@@ -11,10 +11,9 @@ import { Box, Button, TextField, Modal } from "@mui/material";
  * }
  * @returns popup to upload an H5P element.
  */
-export default function H5PPopover({
+export default function H5PModal({
   h5pModalOpen,
   handleClose,
-  anchorEl,
   handleExchangeH5P,
 }) {
   const [content, setContent] = useState("");

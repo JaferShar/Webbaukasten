@@ -21,8 +21,8 @@ export default function ElementList() {
   const [selectedElement, setSelectedElement] = useState(null);
   const [reload, setReload] = useState(false);
   const dispatch = useDispatch();
+  const validH5PLink = new RegExp("https://h5p.org/h5p/embed/[0-9]+");
 
-  
   useEffect(() => {
     if (reload === true) {
       dispatch(getScreen(screen._id));
@@ -32,7 +32,7 @@ export default function ElementList() {
 
   /**
    * Opens the context menu on right-click.
-   * @param {*} event 
+   * @param {*} event
    * @param {*} elementId The element selected
    */
   const handleContextMenu = (event, elementId) => {
@@ -75,7 +75,7 @@ export default function ElementList() {
 
   /**
    * Exchange an element with a new image.
-   * @param {*} file 
+   * @param {*} file
    */
   const handleExchangeImage = async (file) => {
     try {
@@ -98,21 +98,38 @@ export default function ElementList() {
 
   /**
    * Exchange an element with a new H5P.
-   * @param {Exchange} content 
+   * @param {Exchange} content
    */
   const handleExchangeH5P = (content) => {
-    dispatch(
-      exchangeElement({
-        screenId: screen._id,
-        prevElementId: selectedElement,
-        element: { elementType: "H5P", content: content },
-      })
-    );
+    const h5pURL = String(content.match(validH5PLink));
+    if (!h5pURL || h5pURL === "null") {
+      invalidLinkNotify();
+    } else {
+      dispatch(
+        exchangeElement({
+          screenId: screen._id,
+          prevElementId: selectedElement,
+          element: { elementType: "H5P", content: h5pURL },
+        })
+      );
+    }
     handleClose();
     // reload because the elementId has not changed, thus the element is not reloaded
     setReload(true);
   };
 
+  const invalidLinkNotify = () => {
+    toast.error("Kein gültiger Link", {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    });
+  };
   // If there are no elements, return an empty stack.
   if (!screen.elements || screen.elements.length === 0) {
     return <Stack spacing={2} />;

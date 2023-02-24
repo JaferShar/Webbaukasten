@@ -11,10 +11,9 @@ import { Box, Button, InputLabel, Modal } from "@mui/material";
  * }
  * @returns popup to upload an image.
  */
-export default function PrettyPopover({
+export default function ImageModal({
   imageModalOpen,
   handleClose,
-  anchorEl,
   handleExchangeImage, 
 }) {
   const [file, setFile] = useState(null);
