@@ -3,7 +3,12 @@ import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
 import axios from "axios";
 import PixabayView from "./PixabayView";
-
+/**
+ * This component allows users to search for images on Pixabay and displays the results.
+ *
+ * @class PixabaySearch
+ * @extends {Component}
+ */
 class PixabaySearch extends Component {
   state = {
     searchText: "",
@@ -13,7 +18,8 @@ class PixabaySearch extends Component {
     images: [],
   };
 
-  onTextChange = (e) => {
+  // Handles changes to the search text input and queries the Pixabay API for images.
+onTextChange = (e) => {
     const val = e.target.value;
     this.setState({ [e.target.name]: e.target.value }, () => {
       if (val === "") {
@@ -29,6 +35,8 @@ class PixabaySearch extends Component {
     });
   };
 
+  //Handles changes to the amount of images to be displayed.
+  
   onAmountChange = (e, index, value) => this.setState({ amount: value });
 
   render() {
@@ -46,8 +54,10 @@ class PixabaySearch extends Component {
           />
           <br />
           {this.state.images.length > 0 ? (
-            <PixabayView images={this.state.images}
-            handleClose={this.props.handleClose}/>
+            <PixabayView
+              images={this.state.images}
+              handleClose={this.props.handleClose}
+            />
           ) : null}
         </Box>
       </div>
