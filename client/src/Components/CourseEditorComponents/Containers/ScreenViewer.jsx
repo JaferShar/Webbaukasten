@@ -8,6 +8,7 @@ import {
 import {
   getScreen,
   createScreen,
+  updateScreen,
 } from "../../../features/courseEditor/screenSlice";
 import AddScreenMenu from "../Menus/AddScreenMenu";
 import DeleteScreenMenu from "../Menus/DeleteScreenMenu";
@@ -99,10 +100,10 @@ function ScreenViewer({ changeTemplate }) {
    * @param {*} template the template of the screen to be created.
    */
   const handleCreate = async (template) => {
-      const screen = await dispatch(createScreen({ template: template, courseId: courseId }));
-      await dispatch(getCourse(courseId));
-      setSelectedScreen(screen.payload._id);
-      handleClose();
+    const screen = await dispatch(createScreen({ template: template, courseId: courseId }));
+    await dispatch(getCourse(courseId));
+    setSelectedScreen(screen.payload._id);
+    handleClose();
   };
 
   const handleContextMenu = (event, screenId) => {
@@ -116,10 +117,15 @@ function ScreenViewer({ changeTemplate }) {
   };
 
   const handleOnClickScreen = (screenId) => {
-    dispatch(getScreen(screenId));
-    setSelectedScreen(screenId);
-  };
+    dispatch(updateScreen({ screenId: screen._id, elements: screen.elements }));
 
+    setTimeout(() => {
+      dispatch(getScreen(screenId));
+      setSelectedScreen(screenId);
+    }, 300);
+
+
+  };
   const handleEmphasize = (screenId) => {
     if (screenId === selectedScreen) {
       return "1px solid #0000ff";
@@ -153,7 +159,10 @@ function ScreenViewer({ changeTemplate }) {
                   cursor: "context-menu",
                 }}
                 sx={{ mb: 2 }}
-                onClick={() => handleOnClickScreen(screenId)}
+                onClick={() => {
+                  handleOnClickScreen(screenId);
+                }}
+
                 onContextMenu={(event) => {
                   handleContextMenu(event, screenId);
                 }}
