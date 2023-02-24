@@ -1,7 +1,11 @@
 import axios from "axios";
-
+/**
+ * This function pploads a file to Cloudinary .
+ *
+ * @param {*} file The file to be uploaded.
+ * @returns the URL of the uploaded file.
+ */
 const CloudinaryUpload = async (file) => {
-
   const cloudName = process.env.REACT_APP_CLOUD_NAME;
   const uploadPreset = process.env.REACT_APP_UPLOAD_PRESET;
 
@@ -11,7 +15,6 @@ const CloudinaryUpload = async (file) => {
   formData.append("cloud_name", cloudName);
 
   try {
-
     const result = await axios.post(
       `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`,
       formData

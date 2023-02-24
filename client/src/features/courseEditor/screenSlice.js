@@ -10,84 +10,115 @@ const initialState = {
   message: "",
 };
 
-export const getScreen = createAsyncThunk("getScreen", async (screenId, thunkAPI) => {
-  try {
-    const token = thunkAPI.getState().auth.account.token;
-    return await screenService.getScreen(screenId, token);
-  } catch (error) {
-    const message =
-      (error.response && error.response.data && error.response.data.message) ||
-      error.message ||
-      error.toString();
-    return thunkAPI.rejectWithValue(message);
+// function that gets a screen.
+export const getScreen = createAsyncThunk(
+  "getScreen",
+  async (screenId, thunkAPI) => {
+    try {
+      const token = thunkAPI.getState().auth.account.token;
+      return await screenService.getScreen(screenId, token);
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
   }
-});
-
-export const createScreen = createAsyncThunk("/createScreen", async (screenData, thunkAPI) => {
-  try {
-    const token = thunkAPI.getState().auth.account.token;
-    return await screenService.createScreen(screenData, token);
-  } catch (error) {
-    const message =
-      (error.response && error.response.data && error.response.data.message) ||
-      error.message ||
-      error.toString();
-    return thunkAPI.rejectWithValue(message);
+);
+// function that creates a screen.
+const createScreen = createAsyncThunk(
+  "/createScreen",
+  async (screenData, thunkAPI) => {
+    try {
+      const token = thunkAPI.getState().auth.account.token;
+      return await screenService.createScreen(screenData, token);
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
   }
-});
-
-export const setTextField = createAsyncThunk("/setTextField", async (screenData, thunkAPI) => {
-  try {
-    const token = thunkAPI.getState().auth.account.token;
-    return await screenService.setTextField(screenData, token);
-  } catch (error) {
-    const message =
-      (error.response && error.response.data && error.response.data.message) ||
-      error.message ||
-      error.toString();
-    return thunkAPI.rejectWithValue(message);
+);
+// function that sets a text field.
+export const setTextField = createAsyncThunk(
+  "/setTextField",
+  async (screenData, thunkAPI) => {
+    try {
+      const token = thunkAPI.getState().auth.account.token;
+      return await screenService.setTextField(screenData, token);
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
   }
-});
-
-export const setH5P = createAsyncThunk("/setH5P", async (screenData, thunkAPI) => {
-  try {
-    const token = thunkAPI.getState().auth.account.token;
-    return await screenService.setH5P(screenData, token);
-  } catch (error) {
-    const message =
-      (error.response && error.response.data && error.response.data.message) ||
-      error.message ||
-      error.toString();
-    return thunkAPI.rejectWithValue(message);
+);
+// function that sets a H5P element.
+export const setH5P = createAsyncThunk(
+  "/setH5P",
+  async (screenData, thunkAPI) => {
+    try {
+      const token = thunkAPI.getState().auth.account.token;
+      return await screenService.setH5P(screenData, token);
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
   }
-});
-
-export const setPicture = createAsyncThunk("/setPicture", async (screenData, thunkAPI) => {
-  try {
-    const token = thunkAPI.getState().auth.account.token;
-    return await screenService.setPicture(screenData, token);
-  } catch (error) {
-    const message =
-      (error.response && error.response.data && error.response.data.message) ||
-      error.message ||
-      error.toString();
-    return thunkAPI.rejectWithValue(message);
+);
+// function that sets an image.
+export const setPicture = createAsyncThunk(
+  "/setPicture",
+  async (screenData, thunkAPI) => {
+    try {
+      const token = thunkAPI.getState().auth.account.token;
+      return await screenService.setPicture(screenData, token);
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
   }
-});
-
-export const updateScreen = createAsyncThunk("/updateScreen", async (screenData, thunkAPI) => {
-  try {
-    const token = thunkAPI.getState().auth.account.token;
-    return await screenService.updateScreen(screenData, token);
-  } catch (error) {
-    const message =
-      (error.response && error.response.data && error.response.data.message) ||
-      error.message ||
-      error.toString();
-    return thunkAPI.rejectWithValue(message);
+);
+// function that updates a screen.
+export const updateScreen = createAsyncThunk(
+  "/updateScreen",
+  async (screenData, thunkAPI) => {
+    try {
+      const token = thunkAPI.getState().auth.account.token;
+      return await screenService.updateScreen(screenData, token);
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
   }
-});
-
+);
+// function that updates a text field.
 export const updateTextField = (updateData) => {
   const { screen, elementId, text } = updateData;
   const updatedElements = screen.elements.map((element) => {
@@ -102,36 +133,46 @@ export const updateTextField = (updateData) => {
     payload: updatedScreen,
   };
 };
-
-export const exchangeElement = createAsyncThunk("/exchangeElement", async (elementData, thunkAPI) => {
-  try {
-    const token = thunkAPI.getState().auth.account.token;
-    return screenService.exchangeElement(elementData, token);
-  } catch (error) {
-    const message =
-      (error.response && error.response.data && error.response.data.message) ||
-      error.message ||
-      error.toString();
-      console.log(message)
+// function that exchanges an element.
+export const exchangeElement = createAsyncThunk(
+  "/exchangeElement",
+  async (elementData, thunkAPI) => {
+    try {
+      const token = thunkAPI.getState().auth.account.token;
+      return screenService.exchangeElement(elementData, token);
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      console.log(message);
       toast.error(message);
-    return thunkAPI.rejectWithValue(message);
+      return thunkAPI.rejectWithValue(message);
+    }
   }
-});
-
-export const deleteElement = createAsyncThunk("/deleteElement", async (elementData, thunkAPI) => {
-  try {
-    const token = thunkAPI.getState().auth.account.token;
-    return screenService.deleteElement(elementData, token);
-  } catch (error) {
-    const message =
-      (error.response && error.response.data && error.response.data.message) ||
-      error.message ||
-      error.toString();
+);
+// function that deletes an element.
+export const deleteElement = createAsyncThunk(
+  "/deleteElement",
+  async (elementData, thunkAPI) => {
+    try {
+      const token = thunkAPI.getState().auth.account.token;
+      return screenService.deleteElement(elementData, token);
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
       toast.error(message);
-    return thunkAPI.rejectWithValue(message);
+      return thunkAPI.rejectWithValue(message);
+    }
   }
-});
-
+);
+// Defines a Redux slice for managing the state of the screen editor.
 export const screenSlice = createSlice({
   name: "screenEditor",
   initialState,
@@ -203,7 +244,7 @@ export const screenSlice = createSlice({
         state.isLoading = false;
         state.isSuccess = true;
         state.screen = action.payload;
-      }) 
+      })
       .addCase(setH5P.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
@@ -247,7 +288,7 @@ export const screenSlice = createSlice({
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload;
-      })
+      });
   },
 });
 
