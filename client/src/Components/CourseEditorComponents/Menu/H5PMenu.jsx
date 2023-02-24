@@ -35,7 +35,7 @@ const H5P = () => {
   Dispatches if it is, else notifies toastify that throws an error*/
   const handleClick = () => {
     const h5pURL = String(value.match(validH5PLink));
-    if (!h5pURL) {
+    if (!h5pURL || h5pURL === "null") {
       invalidLinkNotify();
       setValue("");
     } else {
