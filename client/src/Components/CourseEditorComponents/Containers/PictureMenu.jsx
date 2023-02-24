@@ -23,6 +23,8 @@ export default function CloudinaryUploadWidget() {
           "google_drive",
           "dropbox",
         ],
+        googleApiKey: process.env.REACT_APP_GOOGLE_API_KEY,
+        searchByRights: true,
       },
       (error, result) => {
         if (!error && result && result.event === "success") {
