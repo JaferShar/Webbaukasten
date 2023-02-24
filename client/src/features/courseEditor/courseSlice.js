@@ -9,7 +9,7 @@ const initialState = {
   message: "",
 };
 // Function that asynchronously retrieves course data.
-export const getCourse = createAsyncThunk("get", async (courseId, thunkAPI) => {
+export const getCourse = createAsyncThunk("getCourse", async (courseId, thunkAPI) => {
   try {
     const token = thunkAPI.getState().auth.account.token;
     return await courseEditorService.getCourse(courseId, token);
@@ -23,7 +23,7 @@ export const getCourse = createAsyncThunk("get", async (courseId, thunkAPI) => {
 });
 // Function that asynchronously deletes a screen.
 export const deleteScreen = createAsyncThunk(
-  "/delete",
+  "/deleteScreen",
   async (screenData, thunkAPI) => {
     try {
       const token = thunkAPI.getState().auth.account.token;

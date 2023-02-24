@@ -83,13 +83,15 @@ function ScreenViewer({ changeTemplate }) {
     setAnchorEl(null);
   };
 
-  const handleDelete = () => {
+  const handleDelete = async () => {
+    setDeleteAnchorEl(null);
     if (course.screens[0] !== selectedScreen) {
-      dispatch(deleteScreen({ courseId: course._id, screenId: selectedScreen }));
+      await dispatch(deleteScreen({ courseId: course._id, screenId: selectedScreen }));
+      setSelectedScreen(course.screens[0]);
+      await dispatch(getScreen(course.screens[0]));
     } else {
       toast.error("You cannot delete the first screen.")
     }
-
     handleCloseContextMenu();
   };
 
@@ -121,8 +123,9 @@ function ScreenViewer({ changeTemplate }) {
    * @param {*} screenId 
    */
   const handleOnClickScreen = (screenId) => {
-    dispatch(updateScreen({ screenId: screen._id, elements: screen.elements }));
-
+    if (screen._id) {
+      dispatch(updateScreen({ screenId: screen._id, elements: screen.elements }));
+    }
     setTimeout(() => {
       dispatch(getScreen(screenId));
       setSelectedScreen(screenId);
