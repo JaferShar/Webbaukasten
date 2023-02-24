@@ -1,8 +1,6 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
-import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
-import { styled } from '@mui/material/styles';
 import ProgressBar from "@ramonak/react-progress-bar";
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import Button from '@mui/material/Button';
@@ -15,14 +13,6 @@ import templates from '../Components/StudentViewComponents/StudentTemplate.jsx';
 import { resetScreen } from '../features/studentView/studentScreenSlice';
 import StudentEndCard from '../Components/StudentViewComponents/Templates/StudentEndCard';
 
-
-const Item = styled(Paper)(({ theme }) => ({
-    backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
-    ...theme.typography.body2,
-    padding: theme.spacing(1),
-    textAlign: 'center',
-    color: theme.palette.text.secondary,
-}));
 
 /**
  *StudentView is the main component for the student view. It fetches the course data from the backend and renders the course content.
@@ -38,7 +28,7 @@ function StudentView() {
     const courseId = params.get("courseId");
     const [screenIndex, setScreenIndex] = useState(0);
 
-    const { course, isError, message } = useSelector(
+    const { course } = useSelector(
         (state) => state.studentCourse
     );
 
