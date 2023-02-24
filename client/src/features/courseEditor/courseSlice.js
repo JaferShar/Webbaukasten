@@ -9,7 +9,7 @@ const initialState = {
   message: "",
 };
 // Function that asynchronously retrieves course data.
-const getCourse = createAsyncThunk("get", async (courseId, thunkAPI) => {
+export const getCourse = createAsyncThunk("get", async (courseId, thunkAPI) => {
   try {
     const token = thunkAPI.getState().auth.account.token;
     return await courseEditorService.getCourse(courseId, token);
@@ -22,7 +22,7 @@ const getCourse = createAsyncThunk("get", async (courseId, thunkAPI) => {
   }
 });
 // Function that asynchronously deletes a screen.
-const deleteScreen = createAsyncThunk(
+export const deleteScreen = createAsyncThunk(
   "/delete",
   async (screenData, thunkAPI) => {
     try {
@@ -40,7 +40,7 @@ const deleteScreen = createAsyncThunk(
   }
 );
 // Redux slice for managing the course editor state, including asynchronous API requests.
-const courseSlice = createSlice({
+export const courseSlice = createSlice({
   name: "courseEditor",
   initialState,
   reducers: {

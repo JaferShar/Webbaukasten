@@ -29,7 +29,7 @@ export const getScreen = createAsyncThunk(
   }
 );
 // function that creates a screen.
-const createScreen = createAsyncThunk(
+export const createScreen = createAsyncThunk(
   "/createScreen",
   async (screenData, thunkAPI) => {
     try {

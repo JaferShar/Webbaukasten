@@ -28,7 +28,7 @@ export const createCourse = createAsyncThunk(
   }
 );
 // function that retrieves all courses.
-const getAllCourses = createAsyncThunk("/all", async (_, thunkAPI) => {
+export const getAllCourses = createAsyncThunk("/all", async (_, thunkAPI) => {
   try {
     const token = thunkAPI.getState().auth.account.token;
     return await courseOverViewService.getAllCourses(token);
@@ -77,7 +77,7 @@ export const renameCourse = createAsyncThunk(
   }
 );
 // function that shares a new course.
-const shareCourse = createAsyncThunk("/share", async (data, thunkAPI) => {
+export const shareCourse = createAsyncThunk("/share", async (data, thunkAPI) => {
   try {
     const token = thunkAPI.getState().auth.account.token;
     return await courseOverViewService.shareCourse(data, token);
@@ -91,7 +91,7 @@ const shareCourse = createAsyncThunk("/share", async (data, thunkAPI) => {
   }
 });
 // represents a slice of the Redux store for managing course overview data.
-const courseOverViewSlice = createSlice({
+export const courseOverViewSlice = createSlice({
   name: "courseOverview",
   initialState,
   reducers: {
