@@ -29,7 +29,8 @@ export default function Element({ element, handleContextMenu }) {
         <TextField
           label="Text"
           onChange={(event) => handleUpdateTextField(event, element)}
-          multiline="true"
+          value={element.text}
+          multiline
           style={{ width: "100%", cursor: "context-menu" }}
           onContextMenu={(event) => {
             handleContextMenu(event, element._id);
