@@ -65,7 +65,6 @@ function ResponsiveAppBar({ searchTerm, onSearch, handleSearch }) {
       dispatch(
         updateScreen({ screenId: screen._id, elements: screen.elements })
       );
-      toast.success("Your changes have been saved.");
     } catch (error) {
       toast.error(error.message);
     }
