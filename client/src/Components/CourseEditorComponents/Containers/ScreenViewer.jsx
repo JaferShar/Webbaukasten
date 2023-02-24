@@ -116,6 +116,10 @@ function ScreenViewer({ changeTemplate }) {
     setDeleteAnchorEl(null);
   };
 
+  /**
+   * This method handles the logic for changing a screen in the Screen Viewer.
+   * @param {*} screenId 
+   */
   const handleOnClickScreen = (screenId) => {
     dispatch(updateScreen({ screenId: screen._id, elements: screen.elements }));
 
@@ -123,9 +127,13 @@ function ScreenViewer({ changeTemplate }) {
       dispatch(getScreen(screenId));
       setSelectedScreen(screenId);
     }, 300);
-
-
   };
+
+  /**
+   * The selected Screen is emphasized by a blue border.
+   * @param {*} screenId 
+   * @returns 
+   */
   const handleEmphasize = (screenId) => {
     if (screenId === selectedScreen) {
       return "1px solid #0000ff";

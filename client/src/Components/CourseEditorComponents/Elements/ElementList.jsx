@@ -10,6 +10,7 @@ import {
 import ElementMenu from "./ElementMenu";
 import uploadCloudinary from "../../../features/upload/CloudinaryUpload";
 import { toast } from "react-toastify";
+
 /**
  * This module provides a list of elements within the screen editor.
  * @returns A list of elements.
@@ -21,6 +22,7 @@ export default function ElementList() {
   const [reload, setReload] = useState(false);
   const dispatch = useDispatch();
 
+  
   useEffect(() => {
     if (reload === true) {
       dispatch(getScreen(screen._id));
@@ -28,17 +30,28 @@ export default function ElementList() {
     }
   }, [reload, dispatch, screen._id]);
 
+  /**
+   * Opens the context menu on right-click.
+   * @param {*} event 
+   * @param {*} elementId The element selected
+   */
   const handleContextMenu = (event, elementId) => {
     event.preventDefault();
     setAnchorEl(event.currentTarget);
     setSelectedElement(elementId);
   };
 
+  /**
+   * Closes the context menu.
+   */
   const handleClose = () => {
     setAnchorEl(null);
     setSelectedElement(null);
   };
 
+  /**
+   * Deletes the selected element.
+   */
   const handleDelete = () => {
     dispatch(
       deleteElement({ screenId: screen._id, elementId: selectedElement })
@@ -46,6 +59,9 @@ export default function ElementList() {
     handleClose();
   };
 
+  /**
+   * Exchanges the selected element with a text field.
+   */
   const handleExchangeTextField = () => {
     dispatch(
       exchangeElement({
@@ -57,6 +73,10 @@ export default function ElementList() {
     handleClose();
   };
 
+  /**
+   * Exchange an element with a new image.
+   * @param {*} file 
+   */
   const handleExchangeImage = async (file) => {
     try {
       const url = await uploadCloudinary(file);
@@ -76,6 +96,10 @@ export default function ElementList() {
     }
   };
 
+  /**
+   * Exchange an element with a new H5P.
+   * @param {Exchange} content 
+   */
   const handleExchangeH5P = (content) => {
     dispatch(
       exchangeElement({
@@ -89,6 +113,7 @@ export default function ElementList() {
     setReload(true);
   };
 
+  // If there are no elements, return an empty stack.
   if (!screen.elements || screen.elements.length === 0) {
     return <Stack spacing={2} />;
   } else {

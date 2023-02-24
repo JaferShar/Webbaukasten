@@ -30,7 +30,7 @@ export default function Element({ element, handleContextMenu }) {
           label="Text"
           onChange={(event) => handleUpdateTextField(event, element)}
           value={element.text}
-          multiline
+          multiline={true}
           style={{ width: "100%", cursor: "context-menu" }}
           onContextMenu={(event) => {
             handleContextMenu(event, element._id);
