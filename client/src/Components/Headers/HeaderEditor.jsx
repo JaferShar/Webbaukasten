@@ -61,10 +61,7 @@ function ResponsiveAppBar({ searchTerm, onSearch, handleSearch }) {
       if (!screen._id) {
         toast.error("Please select a screen first.");
         return;
-      } else if (screen.elements.length === 0) {
-        toast.error("Please add elements to the screen first.");
-        return;
-      }
+      } 
       dispatch(
         updateScreen({ screenId: screen._id, elements: screen.elements })
       );
@@ -77,6 +74,7 @@ function ResponsiveAppBar({ searchTerm, onSearch, handleSearch }) {
   const handleClickHome = () => {
     dispatch(resetScreen());
     dispatch(resetCourse());
+    handleSafe();
     navigate("/kursuebersicht");
   };
 
