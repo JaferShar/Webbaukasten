@@ -3,7 +3,12 @@ import { toast } from "react-toastify";
 
 const API_URL = "/api/account/";
 
-// Register a new account
+/**
+ * This module registers a new account using the provided account data.
+ *
+ * @param {*} accountData the account information to be registered.
+ * @returns a promise that resolves to the response data from the API.
+ */
 const register = async (accountData) => {
   try {
     const response = await Axios.post(API_URL, accountData);

@@ -5,7 +5,19 @@ import ShareIcon from "@mui/icons-material/Share";
 import PublishIcon from "@mui/icons-material/Publish";
 import DriveFileRenameOutlineIcon from "@mui/icons-material/DriveFileRenameOutline";
 import Container from "@mui/material/Container";
-
+/**
+ * A menu component that displays a vertical menu with options for renaming, sharing, publishing, and deleting a course.
+ *
+ * @param {*} {
+ *   anchorEl, The anchor element that the menu should attach to.
+ *   handleClose, The function to close the menu.
+ *   handleDelete, The function to handle deleting a course.
+ *   handleShare, The function to handle sharing a course with another user.
+ *   handlePublish, The function to handle sharing a course with another user.
+ *   handleRename, The function to handle renaming a course.
+ * }
+ * @returns vertical menu 
+ */
 export default function MoreVertMenu({
   anchorEl,
   handleClose,
@@ -48,7 +60,7 @@ export default function MoreVertMenu({
   return (
     <Container>
       <Menu
-        id='long-menu'
+        id="long-menu"
         anchorEl={anchorEl}
         keepMounted
         open={Boolean(anchorEl)}
@@ -87,7 +99,7 @@ export default function MoreVertMenu({
           }}
         >
           <TextField
-            label='Neuer Kursname'
+            label="Neuer Kursname"
             value={newName}
             onChange={(e) => setNewName(e.target.value)}
           />
@@ -114,7 +126,7 @@ export default function MoreVertMenu({
           }}
         >
           <TextField
-            label='User Email'
+            label="User Email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />

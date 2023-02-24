@@ -2,7 +2,13 @@ import axios from "axios";
 import { toast } from "react-toastify";
 
 const API_URL = "api/course";
-
+/**
+ * Creates a new course on the server using the provided courseData and user token.
+ *
+ * @param {*} courseData the data of the course to be created.
+ * @param {*} token the user token for authorization.
+ * @returns  A Promise that resolves to the created course data.
+ */
 const createCourse = async (courseData, token) => {
   try {
     const config = {
@@ -21,7 +27,12 @@ const createCourse = async (courseData, token) => {
     }
   }
 };
-
+/**
+ * Fetches all courses from the server.
+ *
+ * @param {*} token user authentication token
+ * @returns a promise that resolves to an array of all courses.
+ */
 const getAllCourses = async (token) => {
   try {
     const config = {
@@ -40,7 +51,13 @@ const getAllCourses = async (token) => {
     }
   }
 };
-
+/**
+ * Deletes a course with the specified ID from the server.
+ *
+ * @param {*} courseId the ID of the course to delete.
+ * @param {*} token
+ * @returns the data of the deleted course from the server.
+ */
 const deleteCourse = async (courseId, token) => {
   try {
     const config = {
@@ -59,7 +76,13 @@ const deleteCourse = async (courseId, token) => {
     }
   }
 };
-
+/**
+ * Renames a course with the given courseId using the provided courseData and token.
+ *
+ * @param {*} courseData The new data for the course, including courseId, name, and description.
+ * @param {*} token The user's authentication token.
+ * @returns the data of the updated course.
+ */
 const renameCourse = async (courseData, token) => {
   try {
     const config = {
@@ -82,7 +105,13 @@ const renameCourse = async (courseData, token) => {
     }
   }
 };
-
+/**
+ * Shares a course with other users.
+ *
+ * @param {*} data The data of the course to share, including the course ID and a list of user IDs to share it with.
+ * @param {*} token The user's authentication token.
+ * @returns  a promise that resolves to the data of the response from the server
+ */
 const shareCourse = async (data, token) => {
   try {
     const config = {

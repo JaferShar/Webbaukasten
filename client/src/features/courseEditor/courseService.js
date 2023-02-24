@@ -3,7 +3,13 @@ import { toast } from "react-toastify";
 
 const API_URL = `api/course`;
 const SCREEN_URL = `api/screen`;
-
+/**
+ * Asynchronous function that retrieves course data from the server.
+ *
+ * @param {*} courseId the ID of the course to retrieve.
+ * @param {*} token the authentication token required for access.
+ * @returns a promise that resolves the response data obtained from the API when the course is successfully retrieved.
+ */
 const getCourse = async (courseId, token) => {
   try {
     const config = {
@@ -23,6 +29,13 @@ const getCourse = async (courseId, token) => {
   }
 };
 
+/**
+ * Asynchronous function that deletes a screen from a course.
+ *
+ * @param {*} screenData object containing the courseId and screenId of the screen to delete.
+ * @param {*} token the authentication token required for access.
+ * @returns a promise that resolves the response data obtained from the API when the course is successfully deleted.
+ */
 const deleteScreen = async (screenData, token) => {
   try {
     const config = {

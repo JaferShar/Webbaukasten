@@ -26,7 +26,12 @@ import {
 import { useEffect } from "react";
 import { getCourse, resetCourse } from "../features/courseEditor/courseSlice";
 import { getScreen, resetScreen } from "../features/courseEditor/screenSlice";
-
+/**
+ * This component provides the course overview page.
+ * It displays a list of courses and allows the user to create, rename, delete, share, and publish courses. 
+ *
+ * @returns the course overview page.
+ */
 export default function CourseOverview() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -55,22 +60,18 @@ export default function CourseOverview() {
 
   useEffect(() => {
     try {
-      if (isError) {
-        console.log(message);
-      }
       if (!account) {
         navigate("/login");
         return;
       }
       dispatch(getAllCourses());
-      dispatch(resetCourse())
-      dispatch(resetScreen())
+      dispatch(resetCourse());
+      dispatch(resetScreen());
     } catch (error) {
       toast("Kurse konnten nicht geladen werden", { type: "error" });
     }
   }, [account, navigate, dispatch, isError, message, course]);
 
-  // tested
   const handleCreateCourse = async () => {
     const existingCourseNames = new Set(
       coursesState.map((course) => course.courseName)
@@ -85,7 +86,6 @@ export default function CourseOverview() {
     try {
       dispatch(createCourse({ courseName }));
     } catch (error) {
-      console.log(error, "error inseide overview");
       toast(error.message, { type: "error" });
     }
   };
@@ -105,7 +105,6 @@ export default function CourseOverview() {
       const changeCourse = coursesState.find(
         (course) => course._id === selectedCourseId
       );
-      // nothing to do
       if (changeCourse.courseName === newName) {
         handleClose();
         return;
@@ -157,11 +156,9 @@ export default function CourseOverview() {
 
   const handleListItemClick = async (courseId) => {
     dispatch(getCourse(courseId));
-    const selectedCourse = coursesState.find((course) => course._id === courseId);
-    if (selectedCourse.screens.length !== 0) {
-      const screenId = selectedCourse.screens[0]
-      dispatch(getScreen(screenId));
-    }
+    const selectedCourse = coursesState.find(
+      (course) => course._id === courseId
+    );
     navigate(`/kurs?courseId=${courseId}`);
   };
 
@@ -192,8 +189,8 @@ export default function CourseOverview() {
                   <ListItemText primary={course.courseName} />
                   <Box sx={{ ml: "auto" }}>
                     <IconButton
-                      edge='end'
-                      aria-label='more'
+                      edge="end"
+                      aria-label="more"
                       onClick={(event) => {
                         event.stopPropagation(); // stop the event from propagating to the parent
                         handleClickMoreVertIcon(event, course._id);
@@ -219,8 +216,8 @@ export default function CourseOverview() {
         sx={{ display: "flex", justifyContent: "center", marginTop: "20px" }}
       >
         <Button
-          variant='contained'
-          color='primary'
+          variant="contained"
+          color="primary"
           onClick={handleCreateCourse}
         >
           <AddIcon />

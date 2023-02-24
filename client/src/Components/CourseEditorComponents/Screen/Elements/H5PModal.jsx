@@ -1,19 +1,25 @@
 import { useState } from "react";
 import { Box, Button, TextField, Modal } from "@mui/material";
-
-export default function H5PPopover({
+/**
+ * This module provides a popup to exchange an existing image by uploading another one.
+ *
+ * @param {*} {
+ *   h5pModalOpen, Function to handle opening.
+ *   handleClose, Function to handle closing.
+ *   anchorEl,
+ *   handleExchangeH5P, Function to handle the exchange of H5P element.
+ * }
+ * @returns popup to upload an H5P element.
+ */
+export default function H5PModal({
   h5pModalOpen,
   handleClose,
-  anchorEl,
   handleExchangeH5P,
 }) {
   const [content, setContent] = useState("");
 
   return (
-    <Modal
-      open={h5pModalOpen}
-      onClose={handleClose}
-    >
+    <Modal open={h5pModalOpen} onClose={handleClose}>
       <Box
         p={2}
         sx={{
@@ -28,13 +34,13 @@ export default function H5PPopover({
         }}
       >
         <TextField
-          label='H5P Link'
+          label="H5P Link"
           value={content}
           onChange={(e) => setContent(e.target.value)}
         />
         <Box mt={2} sx={{ display: "flex", justifyContent: "flex-end" }}>
           <Button
-            variant='contained'
+            variant="contained"
             onClick={() => {
               handleClose();
               handleExchangeH5P(content);
@@ -44,7 +50,7 @@ export default function H5PPopover({
           </Button>
           <Box mx={1} />
           <Button
-            variant='outlined'
+            variant="outlined"
             onClick={() => {
               handleClose();
               setContent("");

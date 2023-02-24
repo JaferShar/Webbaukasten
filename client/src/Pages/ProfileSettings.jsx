@@ -8,16 +8,33 @@ import {
 } from "@mui/material";
 import ProfileHeader from "../Components/Headers/ProfileHeader";
 import { useSelector } from "react-redux";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+
+/**
+ * This component displays the user's profile information, including their
+ * profile picture, first name, last name, and email. 
+ *
+ * @returns the user's profile information.
+ */
 const ProfileSetting = () => {
   const { account } = useSelector((state) => state.auth);
   const [setAnchorElUser] = React.useState(null);
-
+  const navigate = useNavigate();
 
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
   };
 
-  return (
+  useEffect(() => {
+    if (!account) {
+      navigate("/login");
+      return;
+    }
+  }, [account, navigate]);
+
+  if (account) {
+    return (
     <div>
       <ProfileHeader></ProfileHeader>
       <div style={{ display: "flex", justifyContent: "center" }}>
@@ -47,6 +64,12 @@ const ProfileSetting = () => {
       </div>
     </div>
   );
+  } else {
+    <div>
+    </div>
+  }
+
+  
 };
 
 export default ProfileSetting;

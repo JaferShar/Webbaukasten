@@ -102,11 +102,12 @@ const setTextField = asyncHandler(async (req, res) => {
  */
 const setPicture = asyncHandler(async (req, res) => {
   const { url } = req.body;
+  console.log(req.body)
   try {
     if (!url) {
       return res
         .status(400)
-        .json({ error: "Please provide valid inputs for the H5P" });
+        .json({ error: "Please provide valid inputs for the Picture url" });
     }
     const screen = await Screen.findById(req.params.screenId);
     if (!screen) {

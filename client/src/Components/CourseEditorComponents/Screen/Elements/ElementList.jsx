@@ -6,17 +6,22 @@ import {
   deleteElement,
   exchangeElement,
   getScreen,
-} from "../../../features/courseEditor/screenSlice";
+} from "../../../../features/courseEditor/screenSlice";
 import ElementMenu from "./ElementMenu";
-import uploadCloudinary from '../../../features/upload/CloudinaryUpload'
+import uploadCloudinary from "../../../../features/upload/CloudinaryUpload";
 import { toast } from "react-toastify";
 
+/**
+ * This module provides a list of elements within the screen editor.
+ * @returns A list of elements.
+ */
 export default function ElementList() {
   const screen = useSelector((state) => state.screenEditor.screen);
   const [anchorEl, setAnchorEl] = useState(null);
   const [selectedElement, setSelectedElement] = useState(null);
   const [reload, setReload] = useState(false);
   const dispatch = useDispatch();
+  const validH5PLink = new RegExp("https://h5p.org/h5p/embed/[0-9]+");
 
   useEffect(() => {
     if (reload === true) {
@@ -25,17 +30,28 @@ export default function ElementList() {
     }
   }, [reload, dispatch, screen._id]);
 
+  /**
+   * Opens the context menu on right-click.
+   * @param {*} event
+   * @param {*} elementId The element selected
+   */
   const handleContextMenu = (event, elementId) => {
     event.preventDefault();
     setAnchorEl(event.currentTarget);
     setSelectedElement(elementId);
   };
 
+  /**
+   * Closes the context menu.
+   */
   const handleClose = () => {
     setAnchorEl(null);
     setSelectedElement(null);
   };
 
+  /**
+   * Deletes the selected element.
+   */
   const handleDelete = () => {
     dispatch(
       deleteElement({ screenId: screen._id, elementId: selectedElement })
@@ -43,6 +59,9 @@ export default function ElementList() {
     handleClose();
   };
 
+  /**
+   * Exchanges the selected element with a text field.
+   */
   const handleExchangeTextField = () => {
     dispatch(
       exchangeElement({
@@ -54,6 +73,10 @@ export default function ElementList() {
     handleClose();
   };
 
+  /**
+   * Exchange an element with a new image.
+   * @param {*} file
+   */
   const handleExchangeImage = async (file) => {
     try {
       const url = await uploadCloudinary(file);
@@ -64,29 +87,50 @@ export default function ElementList() {
           element: { elementType: "Picture", url: url },
         })
       );
-      setReload(true)
-      toast.success("Image uploaded to cloudinary")
+      setReload(true);
+      toast.success("Image uploaded to cloudinary");
     } catch (error) {
       toast.error(error.message);
     } finally {
       handleClose();
     }
-
   };
 
+  /**
+   * Exchange an element with a new H5P.
+   * @param {Exchange} content
+   */
   const handleExchangeH5P = (content) => {
-    dispatch(
-      exchangeElement({
-        screenId: screen._id,
-        prevElementId: selectedElement,
-        element: { elementType: "H5P", content: content },
-      })
-    );
+    const h5pURL = String(content.match(validH5PLink));
+    if (!h5pURL || h5pURL === "null") {
+      invalidLinkNotify();
+    } else {
+      dispatch(
+        exchangeElement({
+          screenId: screen._id,
+          prevElementId: selectedElement,
+          element: { elementType: "H5P", content: h5pURL },
+        })
+      );
+    }
     handleClose();
     // reload because the elementId has not changed, thus the element is not reloaded
     setReload(true);
   };
 
+  const invalidLinkNotify = () => {
+    toast.error("Kein gültiger Link", {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    });
+  };
+  // If there are no elements, return an empty stack.
   if (!screen.elements || screen.elements.length === 0) {
     return <Stack spacing={2} />;
   } else {
@@ -107,7 +151,7 @@ export default function ElementList() {
           handleExchangeTextField={handleExchangeTextField}
           handleExchangeImage={handleExchangeImage}
           handleExchangeH5P={handleExchangeH5P}
-          />
+        />
       </Stack>
     );
   }

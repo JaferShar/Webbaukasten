@@ -8,9 +8,10 @@ import {
 import {
   getScreen,
   createScreen,
+  updateScreen,
 } from "../../../features/courseEditor/screenSlice";
-import AddScreenMenu from "../Menus/AddScreenMenu";
-import DeleteScreenMenu from "../Menus/DeleteScreenMenu";
+import AddScreenMenu from "./AddScreenMenu";
+import DeleteScreenMenu from "./DeleteScreenMenu";
 import Article from "@mui/icons-material/Article";
 import NoteAdd from "@mui/icons-material/NoteAdd";
 import {
@@ -82,13 +83,15 @@ function ScreenViewer({ changeTemplate }) {
     setAnchorEl(null);
   };
 
-  const handleDelete = () => {
+  const handleDelete = async () => {
+    setDeleteAnchorEl(null);
     if (course.screens[0] !== selectedScreen) {
-      dispatch(deleteScreen({ courseId: course._id, screenId: selectedScreen }));
+      await dispatch(deleteScreen({ courseId: course._id, screenId: selectedScreen }));
+      setSelectedScreen(course.screens[0]);
+      await dispatch(getScreen(course.screens[0]));
     } else {
       toast.error("You cannot delete the first screen.")
     }
-
     handleCloseContextMenu();
   };
 
@@ -98,16 +101,11 @@ function ScreenViewer({ changeTemplate }) {
    *
    * @param {*} template the template of the screen to be created.
    */
-  const handleCreate = (template) => {
-    try {
-      dispatch(createScreen({ template: template, courseId: courseId }));
-      dispatch(getCourse(courseId));
-      setSelectedScreen(course.screens[course.screens.length - 1])
-    } catch (error) {
-      toast(error.message, { type: "error" });
-    } finally {
-      handleClose();
-    }
+  const handleCreate = async (template) => {
+    const screen = await dispatch(createScreen({ template: template, courseId: courseId }));
+    await dispatch(getCourse(courseId));
+    setSelectedScreen(screen.payload._id);
+    handleClose();
   };
 
   const handleContextMenu = (event, screenId) => {
@@ -120,11 +118,25 @@ function ScreenViewer({ changeTemplate }) {
     setDeleteAnchorEl(null);
   };
 
+  /**
+   * This method handles the logic for changing a screen in the Screen Viewer.
+   * @param {*} screenId 
+   */
   const handleOnClickScreen = (screenId) => {
-    dispatch(getScreen(screenId));
-    setSelectedScreen(screenId);
+    if (screen._id) {
+      dispatch(updateScreen({ screenId: screen._id, elements: screen.elements }));
+    }
+    setTimeout(() => {
+      dispatch(getScreen(screenId));
+      setSelectedScreen(screenId);
+    }, 300);
   };
 
+  /**
+   * The selected Screen is emphasized by a blue border.
+   * @param {*} screenId 
+   * @returns 
+   */
   const handleEmphasize = (screenId) => {
     if (screenId === selectedScreen) {
       return "1px solid #0000ff";
@@ -158,7 +170,10 @@ function ScreenViewer({ changeTemplate }) {
                   cursor: "context-menu",
                 }}
                 sx={{ mb: 2 }}
-                onClick={() => handleOnClickScreen(screenId)}
+                onClick={() => {
+                  handleOnClickScreen(screenId);
+                }}
+
                 onContextMenu={(event) => {
                   handleContextMenu(event, screenId);
                 }}

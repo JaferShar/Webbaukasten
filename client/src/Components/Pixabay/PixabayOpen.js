@@ -17,7 +17,11 @@ const style = {
   boxShadow: 24,
   p: 4,
 };
-
+/**
+ * This module displays a button with the Pixabay logo,
+ * and when clicked, opens a modal window containing the PixabaySearch component.
+ * @returns button to open Pixabay.
+ */
 export default function PixabayTestPage() {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
@@ -26,13 +30,13 @@ export default function PixabayTestPage() {
   return (
     <div>
       <Button onClick={handleOpen}>
-        <img src={PixabayLogo} alt='Pixabay Button' style={{ width: "13vh" }} />
+        <img src={PixabayLogo} alt="Pixabay Button" style={{ width: "13vh" }} />
       </Button>
       <Modal
         open={open}
         onClose={handleClose}
-        aria-labelledby='modal-modal-title'
-        aria-describedby='modal-modal-description'
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
           <PixabaySearch handleClose={handleClose} />
