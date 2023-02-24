@@ -4,6 +4,9 @@ import ScreenViewer from "../Components/CourseEditorComponents/Viewer/ScreenView
 import Menu from "../Components/CourseEditorComponents/Menu/ScreenMenu";
 import HeaderEditor from "../Components/Headers/HeaderEditor";
 import Screen from "../Components/CourseEditorComponents/Screen/Screen";
+import { useEffect } from "react";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 /**
  * This component provides the course editor page.
  *
@@ -11,10 +14,19 @@ import Screen from "../Components/CourseEditorComponents/Screen/Screen";
  */
 function CourseEditor() {
   const [template, setTemplate] = useState("Welcome");
+ const { account } = useSelector((state) => state.auth);
+ const navigate = useNavigate();
 
   const changeTemplate = (template) => {
     setTemplate(template);
   };
+
+  useEffect(() => {
+    if (!account) {
+      navigate("/login");
+      return;
+    }
+  }, [account, navigate]);
 
   return (
     <div>
