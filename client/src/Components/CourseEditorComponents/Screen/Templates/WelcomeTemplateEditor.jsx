@@ -1,7 +1,7 @@
 import { Stack } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { TextField } from "@mui/material";
-import { updateTextField } from "../../../features/courseEditor/screenSlice";
+import { updateTextField } from "../../../../features/courseEditor/screenSlice";
 /**
  * This module provides the welcome template.
  *

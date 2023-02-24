@@ -6,9 +6,9 @@ import {
   deleteElement,
   exchangeElement,
   getScreen,
-} from "../../../features/courseEditor/screenSlice";
+} from "../../../../features/courseEditor/screenSlice";
 import ElementMenu from "./ElementMenu";
-import uploadCloudinary from "../../../features/upload/CloudinaryUpload";
+import uploadCloudinary from "../../../../features/upload/CloudinaryUpload";
 import { toast } from "react-toastify";
 
 /**

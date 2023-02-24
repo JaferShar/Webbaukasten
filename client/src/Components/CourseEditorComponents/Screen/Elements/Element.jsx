@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { ListItem, TextField, Button } from "@mui/material";
-import { updateTextField } from "../../../features/courseEditor/screenSlice";
+import { updateTextField } from "../../../../features/courseEditor/screenSlice";
 
 /**
  * This module implements an element in the screen editor.

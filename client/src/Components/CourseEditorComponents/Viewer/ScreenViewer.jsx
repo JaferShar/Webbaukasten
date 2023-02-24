@@ -10,8 +10,8 @@ import {
   createScreen,
   updateScreen,
 } from "../../../features/courseEditor/screenSlice";
-import AddScreenMenu from "../Menus/AddScreenMenu";
-import DeleteScreenMenu from "../Menus/DeleteScreenMenu";
+import AddScreenMenu from "./AddScreenMenu";
+import DeleteScreenMenu from "./DeleteScreenMenu";
 import Article from "@mui/icons-material/Article";
 import NoteAdd from "@mui/icons-material/NoteAdd";
 import {

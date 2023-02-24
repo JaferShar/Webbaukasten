@@ -1,5 +1,5 @@
 import { Box } from "@mui/material";
-import templates from "../Templates/Template";
+import templates from "./Templates/Template";
 import "../../../Styling/PageStyling/Screen.css";
 /**
  * This module delivers a screen based on a given template.
