@@ -35,8 +35,7 @@ git clone git@github.com:JaferShar/Webbaukasten.git
 npm install
 ```
 
-3. Create a '.env' file in the server of your project and add the necessary environment variables. You can copy the '.env.example' file and modify it to suit your needs. 
-With the '.envexample' file you are however able to run the application.
+3. Create a '.env' file in the server of your project and add the necessary environment variables.
 
 4. Start the client and server by running the following command in the root directory (Webbaukasten):
 
