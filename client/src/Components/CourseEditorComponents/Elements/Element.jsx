@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { ListItem, Typography, Button } from "@mui/material";
+import { ListItem, TextField, Button } from "@mui/material";
 import { updateTextField } from "../../../features/courseEditor/screenSlice";
 
 /**
@@ -26,16 +26,13 @@ export default function Element({ element, handleContextMenu }) {
   if (element.elementType === "TextField") {
     return (
       <ListItem>
-        <Typography
+        <TextField
+          label="Text"
           onChange={(event) => handleUpdateTextField(event, element)}
           multiline="true"
           style={{ width: "100%", cursor: "context-menu" }}
           onContextMenu={(event) => {
             handleContextMenu(event, element._id);
-          }}
-          variant="body1"
-          dangerouslySetInnerHTML={{
-            __html: element.text,
           }}
         />
       </ListItem>
