@@ -4,7 +4,11 @@ import ScreenViewer from "../Components/CourseEditorComponents/Containers/Screen
 import Menu from "../Components/CourseEditorComponents/Containers/ScreenMenu";
 import HeaderEditor from "../Components/Headers/HeaderEditor";
 import Screen from "../Components/CourseEditorComponents/Screen/Screen";
-
+/**
+ * This component provides the course editor page.
+ *
+ * @returns course editor page.
+ */
 function CourseEditor() {
   const [template, setTemplate] = useState("Welcome");
 

@@ -8,10 +8,16 @@ import {
 } from "@mui/material";
 import ProfileHeader from "../Components/Headers/ProfileHeader";
 import { useSelector } from "react-redux";
+
+/**
+ * This component displays the user's profile information, including their
+ * profile picture, first name, last name, and email. 
+ *
+ * @returns the user's profile information.
+ */
 const ProfileSetting = () => {
   const { account } = useSelector((state) => state.auth);
   const [setAnchorElUser] = React.useState(null);
-
 
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);

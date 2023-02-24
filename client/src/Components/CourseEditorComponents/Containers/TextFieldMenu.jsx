@@ -11,7 +11,12 @@ import {
 import { useSelector, useDispatch } from "react-redux";
 import { setTextField } from "../../../features/courseEditor/screenSlice";
 import AddIcon from "@mui/icons-material/Add";
-
+/**
+ * This component provides a text editor with a toolbar for formatting text.
+ * Users can add, edit, and save text notes in HTML format.
+ * 
+ * @returns  A dialog box with a text editor and buttons for saving or canceling changes.
+ */
 const TextEditor = () => {
   const [open, setOpen] = useState(false);
   const [text] = useState("");
@@ -45,7 +50,7 @@ const TextEditor = () => {
 
   const [notes, setNotes] = useState(
     RichTextEditor.createValueFromString(text, "html")
-  );  
+  );
 
   const onValueChangeCallback = useCallback((value) => {
     const toHtml = value.toString("html");
@@ -68,7 +73,6 @@ const TextEditor = () => {
     dispatch(setTextField({ text: htmlString, screenId: screen._id }));
   };
 
-  
   const cleanText = (text) => {
     const regex = /(<([^>]+)>)/gi;
     const htmlEntities = {
@@ -79,18 +83,18 @@ const TextEditor = () => {
       "'": "&#x27;",
       "/": "&#x2F;",
     };
-    return text.replace(regex, "").replace(/[&<>"'\/]/g, (match) => htmlEntities[match]);
+    return text
+      .replace(regex, "")
+      .replace(/[&<>"'\/]/g, (match) => htmlEntities[match]);
   };
-  
 
   <RichTextEditor
-  value={notes}
-  onChange={onValueChangeCallback}
-  data-test="notes"
-  toolbarConfig={toolbarConfig}
-  blockStyleFn={() => ({})}
-/>
-
+    value={notes}
+    onChange={onValueChangeCallback}
+    data-test="notes"
+    toolbarConfig={toolbarConfig}
+    blockStyleFn={() => ({})}
+  />;
 
   return (
     <div>
@@ -106,7 +110,7 @@ const TextEditor = () => {
             data-test="notes"
             toolbarConfig={toolbarConfig}
             customStyleMap={{
-              'paragraph': {
+              paragraph: {
                 margin: 0,
                 padding: 0,
               },
@@ -121,10 +125,8 @@ const TextEditor = () => {
       <Button style={{ border: "1px solid #d9dddd" }} onClick={handleOpen}>
         <AddIcon />
         Text hinzufügen
-     
-        </Button>
-      </div>
-   
+      </Button>
+    </div>
   );
 };
 

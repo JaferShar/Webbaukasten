@@ -1,24 +1,31 @@
-import * as React from 'react';
-import Avatar from '@mui/material/Avatar';
-import CssBaseline from '@mui/material/CssBaseline';
-import Link from '@mui/material/Link';
-import Paper from '@mui/material/Paper';
-import Box from '@mui/material/Box';
-import Grid from '@mui/material/Grid';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import Typography from '@mui/material/Typography';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-import Image from '../assets/bookShelf.jpg';
-import { GoogleLogin } from '@react-oauth/google';
-import { GoogleOAuthProvider } from '@react-oauth/google';
-import jwtDecode from 'jwt-decode';
-import { useSelector, useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
-import { toast } from 'react-toastify';
-import { register, reset } from '../features/auth/authSlice';
-import { useEffect } from 'react';
-import Kursify from '../assets/Kursify.jpg';
-
+import * as React from "react";
+import Avatar from "@mui/material/Avatar";
+import CssBaseline from "@mui/material/CssBaseline";
+import Link from "@mui/material/Link";
+import Paper from "@mui/material/Paper";
+import Box from "@mui/material/Box";
+import Grid from "@mui/material/Grid";
+import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import Typography from "@mui/material/Typography";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import Image from "../assets/bookShelf.jpg";
+import { GoogleLogin } from "@react-oauth/google";
+import { GoogleOAuthProvider } from "@react-oauth/google";
+import jwtDecode from "jwt-decode";
+import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import { register, reset } from "../features/auth/authSlice";
+import { useEffect } from "react";
+import Kursify from "../assets/Kursify.jpg";
+/**
+ * This component provides a registration form, allowing users to sign up for an account.
+ * It also includes Google OAuth login functionality.
+ * Upon successful registration, the user is redirected to the course overview page.
+ *
+ * @returns a registration form with Google OAuth login button,
+*/
+ 
 function Register() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -32,45 +39,43 @@ function Register() {
       toast.error(message);
     }
     if (isSuccess || account) {
-      navigate('/kursuebersicht');
+      navigate("/kursuebersicht");
     }
     dispatch(reset());
   }, [isError, isSuccess, message, navigate, dispatch, account]);
 
+  function Copyright(props) {
+    return (
+      <Typography
+        variant="body2"
+        color="text.secondary"
+        align="center"
+        {...props}
+      >
+        {"Copyright © "}
+        <Link color="inherit" href="https://youtu.be/dQw4w9WgXcQ">
+          Kursify
+        </Link>{" "}
+        {new Date().getFullYear()}
+        {"."}
+      </Typography>
+    );
+  }
 
-function Copyright(props) {
-  return (
-    <Typography
-      variant="body2"
-      color="text.secondary"
-      align="center"
-      {...props}
-    >
-      {'Copyright © '}
-      <Link color="inherit" href="https://youtu.be/dQw4w9WgXcQ">
-        Kursify
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
+  const theme = createTheme();
 
-const theme = createTheme();
-
-const handleSubmit = (event) => {
+  const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     console.log({
-      email: data.get('email'),
-      password: data.get('password'),
+      email: data.get("email"),
+      password: data.get("password"),
     });
   };
 
-
   return (
     <ThemeProvider theme={theme}>
-      <Grid container component="main" sx={{ height: '100vh' }}>
+      <Grid container component="main" sx={{ height: "100vh" }}>
         <CssBaseline />
         <Grid
           item
@@ -79,13 +84,13 @@ const handleSubmit = (event) => {
           md={7}
           sx={{
             backgroundImage: `url(${Image})`,
-            backgroundRepeat: 'no-repeat',
+            backgroundRepeat: "no-repeat",
             backgroundColor: (t) =>
-              t.palette.mode === 'light'
+              t.palette.mode === "light"
                 ? t.palette.grey[50]
                 : t.palette.grey[900],
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
+            backgroundSize: "cover",
+            backgroundPosition: "center",
           }}
         />
         <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
@@ -93,18 +98,14 @@ const handleSubmit = (event) => {
             sx={{
               my: 8,
               mx: 4,
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
             }}
           >
-            <img
-            style={{width: "30vw"}}
-              src={Kursify}
-              alt="Kursify"
-            />
-            <Box sx={{mb: 10}} />
-            <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+            <img style={{ width: "30vw" }} src={Kursify} alt="Kursify" />
+            <Box sx={{ mb: 10 }} />
+            <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
               <LockOutlinedIcon />
             </Avatar>
             <Typography component="h1" variant="h5">
@@ -126,7 +127,7 @@ const handleSubmit = (event) => {
                   dispatch(register(accountData));
                 }}
                 onError={() => {
-                  console.log('Login Failed');
+                  console.log("Login Failed");
                 }}
               />
             </GoogleOAuthProvider>
@@ -144,6 +145,5 @@ const handleSubmit = (event) => {
     </ThemeProvider>
   );
 }
-
 
 export default Register;
