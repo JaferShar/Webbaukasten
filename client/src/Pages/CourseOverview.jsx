@@ -60,9 +60,6 @@ export default function CourseOverview() {
 
   useEffect(() => {
     try {
-      if (isError) {
-        console.log(message);
-      }
       if (!account) {
         navigate("/login");
         return;
@@ -89,7 +86,6 @@ export default function CourseOverview() {
     try {
       dispatch(createCourse({ courseName }));
     } catch (error) {
-      console.log(error, "error inseide overview");
       toast(error.message, { type: "error" });
     }
   };

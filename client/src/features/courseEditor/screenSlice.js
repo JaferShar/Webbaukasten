@@ -147,7 +147,6 @@ export const exchangeElement = createAsyncThunk(
           error.response.data.message) ||
         error.message ||
         error.toString();
-      console.log(message);
       toast.error(message);
       return thunkAPI.rejectWithValue(message);
     }
