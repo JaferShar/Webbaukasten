@@ -81,6 +81,11 @@ export default function Element({ element, handleContextMenu }) {
   }
 }
 
+/**
+ * This module implements an iframe for H5P content which scales to the content.
+ * @param {*} src The source of the H5P content. 
+ * @returns an iframe for H5P content.
+ */
 const H5PIframe = ({ src }) => {
   const iframeRef = useRef(null);
 
