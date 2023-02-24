@@ -1,26 +1,20 @@
-import React, { useCallback } from "react";
+import React, { useEffect } from "react";
 import AddIcon from "@mui/icons-material/Add";
 import { Button } from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
 import { setPicture } from "../../../features/courseEditor/screenSlice";
-import { toast } from "react-toastify";
 
-/**
- * This component provides a button to open Cloudinary upload widget.
- * Upon successful upload, the uploaded image is saved to the current screen in the Redux store.
- *
- * @returns button with a popup to upload images
- */
 export default function CloudinaryUploadWidget() {
   const dispatch = useDispatch();
   const screen = useSelector((state) => state.screenEditor.screen);
-  const { REACT_APP_CLOUD_NAME, REACT_APP_UPLOAD_PRESET } = process.env;
-  // Memoize Cloudinary upload widget creation.
-  const widget = useCallback(() => {
-    window.cloudinary.createUploadWidget(
+  const cloudName = process.env.REACT_APP_CLOUD_NAME;
+  const uploadPreset = process.env.REACT_APP_UPLOAD_PRESET;
+
+  useEffect(() => {
+    const widget = window.cloudinary.createUploadWidget(
       {
-        cloudName: REACT_APP_CLOUD_NAME,
-        uploadPreset: REACT_APP_UPLOAD_PRESET,
+        cloudName: cloudName,
+        uploadPreset: uploadPreset,
         sources: [
           "local",
           "url",
@@ -30,35 +24,28 @@ export default function CloudinaryUploadWidget() {
           "dropbox",
         ],
       },
-      async (error, result) => {
+      (error, result) => {
         if (!error && result && result.event === "success") {
-          try {
-            dispatch(setPicture({ url: result.info.secure_url, screenId: screen._id }));
-          } catch (error) {
-            toast.error("Failed to upload image");
-          }
+          dispatch(
+            setPicture({ url: result.info.secure_url, screenId: screen._id })
+          );
         }
       }
     );
-  }, [REACT_APP_CLOUD_NAME, REACT_APP_UPLOAD_PRESET, dispatch, screen._id]);
 
-
-  // Use ref hook to attach Cloudinary upload widget to button click event.
-  const buttonRef = useCallback(
-    (node) => {
-      if (node !== null) {
-        node.addEventListener("click", () => {
-          widget.open();
-        });
-      }
-    },
-    [widget]
-  );
+    document.getElementById("upload_widget").addEventListener(
+      "click",
+      () => {
+        widget.open();
+      },
+      false
+    );
+  }, [dispatch, screen._id, cloudName, uploadPreset]);
 
   return (
     <Button
       style={{ border: "1px solid #d9dddd" }}
-      ref={buttonRef}
+      id='upload_widget'
       className='cloudinary-button'
     >
       <AddIcon />
