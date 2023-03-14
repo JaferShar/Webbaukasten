@@ -8,7 +8,7 @@ import { store } from "../app/store";
 import CourseEditor from "../Pages/CourseEditor";
 
 describe("CourseEditor", () => {
-  test("renders the course editor page", () => {
+  test("renders the course editor page", async () => {
     const originalWarn = console.warn;
 
     const useSelectorMock = jest.fn();
@@ -43,21 +43,22 @@ describe("CourseEditor", () => {
     console.warn = originalWarn;
   });
 
-  test("redirects to login page if user is not logged in", () => {
+  test("redirects to login page if user is not logged in", async () => {
     const mockNavigate = jest.fn();
     const useSelectorMock = jest.fn();
     useSelectorMock.mockReturnValue({ account: null });
 
-    act(() => {
+    await act(async () => {
       render(
         <Provider store={store}>
-          <MemoryRouter>
+          <MemoryRouter initialEntries={["/course-editor"]}>
             <CourseEditor />
           </MemoryRouter>
         </Provider>
       );
     });
 
-    waitFor(() => expect(mockNavigate).toHaveBeenCalledWith("/login"));
+    await waitFor(() => expect(mockNavigate).toHaveBeenCalledWith("/login"));
   });
 });
+
