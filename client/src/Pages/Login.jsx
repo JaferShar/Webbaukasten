@@ -24,8 +24,8 @@ import Kursify from "../assets/Kursify.jpg";
  * Upon successful registration, the user is redirected to the course overview page.
  *
  * @returns a registration form with Google OAuth login button,
-*/
- 
+ */
+
 function Register() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -102,7 +102,7 @@ function Register() {
             <img style={{ width: "30vw" }} src={Kursify} alt="Kursify" />
             <Box sx={{ mb: 10 }} />
             <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
-              <LockOutlinedIcon />
+              <LockOutlinedIcon data-testid="lockOutIcon" />
             </Avatar>
             <Typography component="h1" variant="h5">
               Sign in
@@ -110,6 +110,7 @@ function Register() {
             <h1>Kursify</h1>
             <GoogleOAuthProvider clientId="852695826269-326bgl5c4t0sojrcoqq3kqtentjo7hqp.apps.googleusercontent.com">
               <GoogleLogin
+                data-testid="googleLogin"
                 onSuccess={(credentialResponse) => {
                   const { email, given_name, family_name, picture } = jwtDecode(
                     credentialResponse.credential
@@ -122,7 +123,6 @@ function Register() {
                   };
                   dispatch(register(accountData));
                 }}
-                
               />
             </GoogleOAuthProvider>
             <Box
