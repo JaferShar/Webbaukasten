@@ -14,8 +14,8 @@ import { useNavigate } from "react-router-dom";
  */
 function CourseEditor() {
   const [template, setTemplate] = useState("Welcome");
- const { account } = useSelector((state) => state.auth);
- const navigate = useNavigate();
+  const { account } = useSelector((state) => state.auth);
+  const navigate = useNavigate();
 
   const changeTemplate = (template) => {
     setTemplate(template);
@@ -30,10 +30,21 @@ function CourseEditor() {
 
   return (
     <div>
-      <HeaderEditor />
-      <Screen template={template} />
-      <ScreenViewer changeTemplate={changeTemplate} />
-      <Menu />
+      <div data-testid="HeaderEditor">
+        <HeaderEditor />
+      </div>
+      
+      <div data-testid="screen">
+        <Screen template={template} />
+      </div>
+
+      <div data-testid="screen-viewer">
+        <ScreenViewer changeTemplate={changeTemplate} />
+      </div>
+      
+      <div data-testid="screen-menu">
+        <Menu />
+      </div>
     </div>
   );
 }
