@@ -60,7 +60,7 @@ function StudentView() {
 
 
     return (
-        <div>
+        <div data-testid="studentView">
             <div style={{ display: 'flex', justifyContent: 'center' }}>
                 <Box sx={{ width: '70%', margin: 'auto', marginBottom: 4 }}>
 
@@ -79,12 +79,14 @@ function StudentView() {
                         {course.screens && screenIndex < course.screens.length ? (
                             <Stack direction="row" spacing={2} justifyContent="space-between" alignItems="center">
                                 <Box sx={{ width: '80%' }}>
+                                <div data-testid="progressBar">
                                     <ProgressBar completed={
                                         course.screens !== undefined
                                         ? Math.round((screenIndex  / (course.screens.length -1)) * 100)
                                         : 0
                                     }
                                  />
+                                 </div>
                                 </Box>
                                 <Box sx={{ width: '20%', display: 'flex', justifyContent: 'flex-end' }}>
                                     <Button variant="contained" endIcon={<ArrowForwardIosIcon />} onClick={handleWeiterButton}>
@@ -102,7 +104,9 @@ function StudentView() {
             </div>
             {/* This is the end card that gets rendered if we are on the last screen */}
             {course.screens && screenIndex === course.screens.length ? (
+                <div data-testid="endCard">
                 <StudentEndCard />
+                </div>
             ) : (
                 <div></div>
             )}
