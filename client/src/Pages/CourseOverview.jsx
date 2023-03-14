@@ -28,7 +28,7 @@ import { getCourse, resetCourse } from "../features/courseEditor/courseSlice";
 import { getScreen, resetScreen } from "../features/courseEditor/screenSlice";
 /**
  * This component provides the course overview page.
- * It displays a list of courses and allows the user to create, rename, delete, share, and publish courses. 
+ * It displays a list of courses and allows the user to create, rename, delete, share, and publish courses.
  *
  * @returns the course overview page.
  */
@@ -163,7 +163,7 @@ export default function CourseOverview() {
   };
 
   return (
-    <div>
+    <div data-testid="searchbar">
       <ResponsiveAppBar handleSearch={handleSearch} searchTerm={searchTerm} />
       <Box b={1} mt={5} />
       <Box sx={{ display: "flex", justifyContent: "center" }}>
@@ -180,6 +180,7 @@ export default function CourseOverview() {
                   key={course._id}
                   onClick={() => handleListItemClick(course._id)}
                   sx={{ py: 2 }}
+                  data-testid="listitem"
                 >
                   <ListItemAvatar>
                     <Avatar>
@@ -204,21 +205,25 @@ export default function CourseOverview() {
           </List>
         </Grid>
       </Box>
-      <MoreVertMenu
-        anchorEl={anchorEl}
-        handleClose={handleClose}
-        handleDelete={handleDelete}
-        handleShare={handleShare}
-        handlePublish={handlePublish}
-        handleRename={handleRename}
-      />
+      <div data-testid="more-vert-icon-button">
+        <MoreVertMenu
+          anchorEl={anchorEl}
+          handleClose={handleClose}
+          handleDelete={handleDelete}
+          handleShare={handleShare}
+          handlePublish={handlePublish}
+          handleRename={handleRename}
+        />
+      </div>
       <Box
         sx={{ display: "flex", justifyContent: "center", marginTop: "20px" }}
+        data-testid="textarea"
       >
         <Button
           variant="contained"
           color="primary"
           onClick={handleCreateCourse}
+          data-testid="save-button"
         >
           <AddIcon />
           Kurs erstellen
