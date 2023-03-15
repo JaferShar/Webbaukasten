@@ -19,6 +19,7 @@ export default function ElementList() {
   const screen = useSelector((state) => state.screenEditor.screen);
   const [anchorEl, setAnchorEl] = useState(null);
   const [selectedElement, setSelectedElement] = useState(null);
+  const [elementType, setElementType] = useState(null);
   const [reload, setReload] = useState(false);
   const dispatch = useDispatch();
   const validH5PLink = new RegExp("https://h5p.org/h5p/embed/[0-9]+");
@@ -35,10 +36,11 @@ export default function ElementList() {
    * @param {*} event
    * @param {*} elementId The element selected
    */
-  const handleContextMenu = (event, elementId) => {
+  const handleContextMenu = (event, element) => {
     event.preventDefault();
     setAnchorEl(event.currentTarget);
-    setSelectedElement(elementId);
+    setSelectedElement(element._id);
+    setElementType(element.elementType);
   };
 
   /**
@@ -47,6 +49,7 @@ export default function ElementList() {
   const handleClose = () => {
     setAnchorEl(null);
     setSelectedElement(null);
+    setElementType(null);
   };
 
   /**
@@ -140,7 +143,9 @@ export default function ElementList() {
           <Element
             key={element._id}
             element={element}
-            handleContextMenu={handleContextMenu}
+            handleContextMenu={(event) => {
+              handleContextMenu(event, element)
+            }}
             style={{ cursor: "context-menu" }}
           />
         ))}
@@ -151,6 +156,7 @@ export default function ElementList() {
           handleExchangeTextField={handleExchangeTextField}
           handleExchangeImage={handleExchangeImage}
           handleExchangeH5P={handleExchangeH5P}
+          elementType={elementType}
         />
       </Stack>
     );
