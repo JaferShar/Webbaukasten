@@ -133,6 +133,11 @@ export default function ElementList() {
       theme: "light",
     });
   };
+
+  const handleScaleImage = (width, height) => {
+    
+  };
+
   // If there are no elements, return an empty stack.
   if (!screen.elements || screen.elements.length === 0) {
     return <Stack spacing={2} />;

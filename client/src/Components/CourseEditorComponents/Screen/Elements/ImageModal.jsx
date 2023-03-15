@@ -6,7 +6,6 @@ import { Box, Button, InputLabel, Modal } from "@mui/material";
  * @param {*} {
  *   imageModalOpen, Function to handle opening.
  *   handleClose, Function to handle closing.
- *   anchorEl,
  *   handleExchangeImage, Function to handle exhanging images.
  * }
  * @returns popup to upload an image.

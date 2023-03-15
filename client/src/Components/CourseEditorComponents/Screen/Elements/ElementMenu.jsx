@@ -12,6 +12,7 @@ import {
   Delete as DeleteIcon,
   SwapHoriz as SwapHorizIcon,
 } from "@mui/icons-material";
+import ScaleImageModal from "./ScaleImageModal";
 import H5PModal from "./H5PModal";
 import ImageModal from "./ImageModal";
 /**
@@ -39,6 +40,7 @@ export default function ElementMenu({
   const [subMenuAnchorEl, setSubMenuAnchorEl] = useState(null);
   const [h5pModalOpen, setH5PModalOpen] = useState(false);
   const [imageModalOpen, setImageModalOpen] = useState(false);
+  const [scaleModalOpen, setScaleModalOpen] = useState(false);
 
   const handleOpenSubMenu = (event) => {
     setSubMenuAnchorEl(event.currentTarget);
@@ -62,11 +64,21 @@ export default function ElementMenu({
     setH5PModalOpen(true);
   };
 
+  const handleClickScaleImage = () => {
+    setScaleModalOpen(true);
+  };
+
+  const handleScaleImage = (scale) => {
+    handleClose();
+    handleCloseSubMenu();
+  };
+
   const closeAll = () => {
     handleClose();
     handleCloseSubMenu();
     setH5PModalOpen(false);
     setImageModalOpen(false);
+    setScaleModalOpen(false);
   };
 
   return (
@@ -88,7 +100,7 @@ export default function ElementMenu({
       >
         <List>
           {elementType === "Picture" && (
-            <ListItemButton onClick={handleClose}>
+            <ListItemButton onClick={handleClickScaleImage}>
               <ListItemIcon>
                 <PhotoSizeSelectLargeIcon />
               </ListItemIcon>
@@ -157,6 +169,11 @@ export default function ElementMenu({
         imageModalOpen={imageModalOpen}
         handleClose={closeAll}
         handleExchangeImage={handleExchangeImage}
+      />
+      <ScaleImageModal
+        scaleModalOpen={scaleModalOpen}
+        handleClose={closeAll}
+        handleScaleImage={handleScaleImage}
       />
     </Box>
   );

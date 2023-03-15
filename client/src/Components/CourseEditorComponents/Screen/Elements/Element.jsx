@@ -45,10 +45,9 @@ export default function Element({ element, handleContextMenu }) {
           <img
             src={element.url}
             alt="placeholder"
-            width="100%"
             height="auto"
             loading="lazy"
-            style={{ cursor: "context-menu" }}
+            style={{ cursor: "context-menu", maxWidth: "100%" }}
             onContextMenu={(event) => {
               handleContextMenu(event, element._id);
             }}
@@ -108,3 +107,5 @@ const H5PIframe = ({ src }) => {
     />
   );
 };
+
+
