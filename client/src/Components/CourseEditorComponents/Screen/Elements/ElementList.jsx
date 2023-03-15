@@ -39,7 +39,7 @@ export default function ElementList() {
   const handleContextMenu = (event, element) => {
     event.preventDefault();
     setAnchorEl(event.currentTarget);
-    setSelectedElement(element._id);
+    setSelectedElement(element);
     setElementType(element.elementType);
   };
 
@@ -57,7 +57,7 @@ export default function ElementList() {
    */
   const handleDelete = () => {
     dispatch(
-      deleteElement({ screenId: screen._id, elementId: selectedElement })
+      deleteElement({ screenId: screen._id, elementId: selectedElement._id })
     );
     handleClose();
   };
@@ -69,7 +69,7 @@ export default function ElementList() {
     dispatch(
       exchangeElement({
         screenId: screen._id,
-        prevElementId: selectedElement,
+        prevElementId: selectedElement._id,
         element: { elementType: "TextField", text: "" },
       })
     );
@@ -86,7 +86,7 @@ export default function ElementList() {
       dispatch(
         exchangeElement({
           screenId: screen._id,
-          prevElementId: selectedElement,
+          prevElementId: selectedElement._id,
           element: { elementType: "Picture", url: url },
         })
       );
@@ -111,7 +111,7 @@ export default function ElementList() {
       dispatch(
         exchangeElement({
           screenId: screen._id,
-          prevElementId: selectedElement,
+          prevElementId: selectedElement._id,
           element: { elementType: "H5P", content: h5pURL },
         })
       );
@@ -134,8 +134,21 @@ export default function ElementList() {
     });
   };
 
-  const handleScaleImage = (width, height) => {
-    
+  const handleScaleImage = (width) => {
+    // const url = selectedElement.url;
+    const url = "https://res.cloudinary.com/demo/image/upload/turtles.jpg";
+    const regex = /^(.*?\/upload\/)(w_0\.[0-9]|[01],c_scale\/)(.*)$/;
+
+    if (regex.test(url)) {
+      const [, baseUrl, scale,  path] = url.match(regex);
+      const newUrl = `${baseUrl}w_${width}${path}`;
+      console.log(newUrl);
+    } else {
+      const regex = /^(.*?\/upload\/)(.*)$/;
+      const [, baseUrl, path] = url.match(regex);
+      const newUrl = baseUrl + "w_" + width + ",c_scale/" + path;
+      console.log(newUrl);
+    }
   };
 
   // If there are no elements, return an empty stack.

@@ -10,6 +10,7 @@ import { Box, Button, Modal, Slider } from "@mui/material";
  * @returns popup to scale an image.
  */
 export default function ImageModal({ scaleModalOpen, handleClose }) {
+    
   return (
     <Modal open={scaleModalOpen} onClose={handleClose}>
       <Box
