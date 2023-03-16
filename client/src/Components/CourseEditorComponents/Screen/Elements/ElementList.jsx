@@ -6,6 +6,8 @@ import {
   deleteElement,
   exchangeElement,
   getScreen,
+  scaleImage,
+  updateScreen,
 } from "../../../../features/courseEditor/screenSlice";
 import ElementMenu from "./ElementMenu";
 import uploadCloudinary from "../../../../features/upload/CloudinaryUpload";
@@ -135,23 +137,26 @@ export default function ElementList() {
   };
 
   const handleScaleImage = (width) => {
-    // const url = selectedElement.url;
+    const url = selectedElement.url;
     if (width === 1 || width === 2) {
       width += ".0";
     }
-    const url = "https://res.cloudinary.com/demo/image/upload/turtles.jpg";
     const regex = /^(.*?\/upload\/)(w_0\.[0-9]|[01],c_scale\/)(.*)$/;
+    var newUrl = "";
 
     if (regex.test(url)) {
       const [, baseUrl, ,  path] = url.match(regex);
-      const newUrl = `${baseUrl}w_${width}${path}`;
+      newUrl = `${baseUrl}w_${width}${path}`;
       console.log(newUrl);
     } else {
       const regex = /^(.*?\/upload\/)(.*)$/;
       const [, baseUrl, path] = url.match(regex);
-      const newUrl = baseUrl + "w_" + width + ",c_scale/" + path;
+      newUrl = baseUrl + "w_" + width + ",c_scale/" + path;
       console.log(newUrl);
     }
+    console.log({ screenId: screen._id, elementId: selectedElement._id, url: newUrl })
+    dispatch(scaleImage({ screen: screen, elementId: selectedElement._id, url: newUrl }));
+    //dispatch(updateScreen({ screenId: screen._id, elements: screen.elements }));
   };
 
   // If there are no elements, return an empty stack.
