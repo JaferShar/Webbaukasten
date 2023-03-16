@@ -143,11 +143,13 @@ export const scaleImage = (updateData) => {
     return element;
   });
   const updatedScreen = { ...screen, elements: updatedElements };
+
+  updateScreen({ screenId: screen._id, elements: screen.elements });
   return {
     type: "screenEditor/updateImage",
     payload: updatedScreen,
   };
-}
+};
 
 // function that exchanges an element.
 export const exchangeElement = createAsyncThunk(

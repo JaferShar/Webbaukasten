@@ -275,7 +275,7 @@ const updateScreen = asyncHandler(async (req, res) => {
       switch (elementType) {
         case "Picture":
           // update picture
-          screen.elements.id(_id).set({ data: element.data });
+          screen.elements.id(_id).set({ url: element.url });
           break;
         case "TextField":
           // update text field
@@ -329,11 +329,11 @@ const exchangeElement = asyncHandler(async (req, res) => {
       case "H5P":
         newElement = await H5P.create({ content: element.content });
         break;
-        default:
-          return res.status(400).send({ error: "Invalid element type" });
-          break;
-        }
-        
+      default:
+        return res.status(400).send({ error: "Invalid element type" });
+        break;
+    }
+
     if (newElement === null) {
       return res.status(400).send({ error: "Could not create new Element" });
     }

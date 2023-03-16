@@ -145,18 +145,20 @@ export default function ElementList() {
     var newUrl = "";
 
     if (regex.test(url)) {
-      const [, baseUrl, ,  path] = url.match(regex);
+      const [, baseUrl, , path] = url.match(regex);
       newUrl = `${baseUrl}w_${width}${path}`;
-      console.log(newUrl);
     } else {
       const regex = /^(.*?\/upload\/)(.*)$/;
       const [, baseUrl, path] = url.match(regex);
       newUrl = baseUrl + "w_" + width + ",c_scale/" + path;
-      console.log(newUrl);
     }
-    console.log({ screenId: screen._id, elementId: selectedElement._id, url: newUrl })
-    dispatch(scaleImage({ screen: screen, elementId: selectedElement._id, url: newUrl }));
-    //dispatch(updateScreen({ screenId: screen._id, elements: screen.elements }));
+    dispatch(
+      scaleImage({
+        screen: screen,
+        elementId: selectedElement._id,
+        url: newUrl,
+      })
+    );
   };
 
   // If there are no elements, return an empty stack.
@@ -170,7 +172,7 @@ export default function ElementList() {
             key={element._id}
             element={element}
             handleContextMenu={(event) => {
-              handleContextMenu(event, element)
+              handleContextMenu(event, element);
             }}
             style={{ cursor: "context-menu" }}
           />
