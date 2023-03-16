@@ -9,8 +9,14 @@ import { Box, Button, Modal, Slider } from "@mui/material";
  * }
  * @returns popup to scale an image.
  */
-export default function ImageModal({ scaleModalOpen, handleClose }) {
-    
+export default function ScaleImageModal({
+  scaleModalOpen,
+  handleClose,
+  handleScaleImage,
+  selectedElement,
+}) {
+  const [sliderValue, setSliderValue] = useState(1.0);
+
   return (
     <Modal open={scaleModalOpen} onClose={handleClose}>
       <Box
@@ -27,21 +33,26 @@ export default function ImageModal({ scaleModalOpen, handleClose }) {
         }}
       >
         <Box>
-            Width
-            <Slider
-                defaultValue={1}
-                aria-label="Default"
-                valueLabelDisplay="auto"
-                step={0.1}
-                marks
-                min={0}
-                max={1}
-            />
+          Width
+          <Slider
+            defaultValue={getDefaultSliderValue(selectedElement)}
+            aria-label='Default'
+            valueLabelDisplay='auto'
+            step={0.1}
+            marks
+            min={0}
+            max={2.0}
+            value={sliderValue}
+            onChange={(event, newValue) => {
+              setSliderValue(newValue);
+            }}
+          />
         </Box>
         <Box mt={2} sx={{ display: "flex", justifyContent: "flex-end" }}>
           <Button
             variant='contained'
             onClick={() => {
+              handleScaleImage(sliderValue);
               handleClose();
             }}
           >
@@ -55,4 +66,18 @@ export default function ImageModal({ scaleModalOpen, handleClose }) {
       </Box>
     </Modal>
   );
+}
+
+function getDefaultSliderValue(selectedElement) {
+  if (!selectedElement) return 1;
+  const url = selectedElement.url;
+  const regex = /^(.*?\/upload\/)(w_0\.[0-9]|[01],c_scale\/)(.*)$/;
+  if (regex.test(url)) {
+    const regexDigit = /w_(\d+(?:\.\d+)?)/;
+    const [, , scale] = url.match(regex);
+    const match = scale.match(regexDigit);
+    const numberAfterW = match ? match[1] : null;
+    return numberAfterW ? parseFloat(numberAfterW) : 1.0;
+  }
+  return 1.0;
 }

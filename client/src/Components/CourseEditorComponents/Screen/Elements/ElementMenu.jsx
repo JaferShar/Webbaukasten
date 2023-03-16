@@ -35,7 +35,9 @@ export default function ElementMenu({
   handleExchangeTextField,
   handleExchangeImage,
   handleExchangeH5P,
+  handleScaleImage,
   elementType,
+  selectedElement,
 }) {
   const [subMenuAnchorEl, setSubMenuAnchorEl] = useState(null);
   const [h5pModalOpen, setH5PModalOpen] = useState(false);
@@ -66,11 +68,6 @@ export default function ElementMenu({
 
   const handleClickScaleImage = () => {
     setScaleModalOpen(true);
-  };
-
-  const handleScaleImage = (scale) => {
-    handleClose();
-    handleCloseSubMenu();
   };
 
   const closeAll = () => {
@@ -172,8 +169,9 @@ export default function ElementMenu({
       />
       <ScaleImageModal
         scaleModalOpen={scaleModalOpen}
-        handleClose={closeAll}
         handleScaleImage={handleScaleImage}
+        handleClose={closeAll}
+        selectedElement={selectedElement}
       />
     </Box>
   );

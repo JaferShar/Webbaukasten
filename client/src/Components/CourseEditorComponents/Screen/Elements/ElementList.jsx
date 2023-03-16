@@ -136,11 +136,14 @@ export default function ElementList() {
 
   const handleScaleImage = (width) => {
     // const url = selectedElement.url;
+    if (width === 1 || width === 2) {
+      width += ".0";
+    }
     const url = "https://res.cloudinary.com/demo/image/upload/turtles.jpg";
     const regex = /^(.*?\/upload\/)(w_0\.[0-9]|[01],c_scale\/)(.*)$/;
 
     if (regex.test(url)) {
-      const [, baseUrl, scale,  path] = url.match(regex);
+      const [, baseUrl, ,  path] = url.match(regex);
       const newUrl = `${baseUrl}w_${width}${path}`;
       console.log(newUrl);
     } else {
@@ -174,6 +177,8 @@ export default function ElementList() {
           handleExchangeTextField={handleExchangeTextField}
           handleExchangeImage={handleExchangeImage}
           handleExchangeH5P={handleExchangeH5P}
+          handleScaleImage={handleScaleImage}
+          selectedElement={selectedElement}
           elementType={elementType}
         />
       </Stack>
