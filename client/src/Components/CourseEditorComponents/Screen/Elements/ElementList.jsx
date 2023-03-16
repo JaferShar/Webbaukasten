@@ -67,7 +67,8 @@ export default function ElementList() {
   /**
    * Exchanges the selected element with a text field.
    */
-  const handleExchangeTextField = () => {
+  const handleExchangeTextField = async () => {
+    await dispatch(updateScreen({ screenId: screen._id, elements: screen.elements }))
     dispatch(
       exchangeElement({
         screenId: screen._id,
@@ -85,6 +86,7 @@ export default function ElementList() {
   const handleExchangeImage = async (file) => {
     try {
       const url = await uploadCloudinary(file);
+      await dispatch(updateScreen({ screenId: screen._id, elements: screen.elements }))
       dispatch(
         exchangeElement({
           screenId: screen._id,
@@ -105,11 +107,12 @@ export default function ElementList() {
    * Exchange an element with a new H5P.
    * @param {Exchange} content
    */
-  const handleExchangeH5P = (content) => {
+  const handleExchangeH5P = async (content) => {
     const h5pURL = String(content.match(validH5PLink));
     if (!h5pURL || h5pURL === "null") {
       invalidLinkNotify();
     } else {
+      await dispatch(updateScreen({ screenId: screen._id, elements: screen.elements }))
       dispatch(
         exchangeElement({
           screenId: screen._id,

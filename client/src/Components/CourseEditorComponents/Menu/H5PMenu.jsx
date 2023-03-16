@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { setH5P } from "../../../features/courseEditor/screenSlice";
+import { setH5P, updateScreen } from "../../../features/courseEditor/screenSlice";
 import { Button, Box, TextField } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import H5PLogo from "../../../assets/H5PLogo.jpg";
@@ -33,12 +33,13 @@ const H5P = () => {
 
   /*handleClick checks if the input value in the H5P-Searchbar is a valid H5P-element URL.
   Dispatches if it is, else notifies toastify that throws an error*/
-  const handleClick = () => {
+  const handleClick = async () => {
     const h5pURL = String(value.match(validH5PLink));
     if (!h5pURL || h5pURL === "null") {
       invalidLinkNotify();
       setValue("");
     } else {
+      await dispatch(updateScreen({ screenId: screen._id, elements: screen.elements }))
       dispatch(setH5P({ screenId: screen._id, content: h5pURL }));
       setValue("");
     }

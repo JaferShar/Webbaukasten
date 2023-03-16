@@ -2,7 +2,7 @@ import UploadWidget from "../../../features/upload/UploadWidget";
 import Button from "@mui/material/Button";
 import AddIcon from "@mui/icons-material/Add";
 import { useSelector, useDispatch } from "react-redux";
-import { setPicture } from "../../../features/courseEditor/screenSlice";
+import { setPicture, updateScreen } from "../../../features/courseEditor/screenSlice";
 import { toast } from "react-toastify";
 
 /**
@@ -22,7 +22,7 @@ export default function PictureMenu() {
    * @param {*} widget The cloudinary widget that is used to upload the picture.
    * @returns 
    */
-  function handleOnUpload(error, result, widget) {
+  async function handleOnUpload(error, result, widget) {
     // If an error occured during the upload, the widget is closed and an error message is displayed.
     if ( error ) {
       toast.error(error.statusText);
@@ -33,6 +33,7 @@ export default function PictureMenu() {
     } else if ( result.event === "success" ) {
       // If the upload was successful, the picture url is stored in the url field of the screen.
       try {
+        await dispatch(updateScreen({ screenId: screen._id, elements: screen.elements }))
         dispatch(setPicture({ url: result.info.secure_url, screenId: screen._id }));
       } catch (error) {
         // If the picture url could not be stored in the url field of the screen, 
