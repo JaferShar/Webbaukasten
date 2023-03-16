@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Box, Button, Modal, Slider } from "@mui/material";
 /**
  * This module provides a popup to rescale an existing image.
@@ -16,6 +16,27 @@ export default function ScaleImageModal({
   selectedElement,
 }) {
   const [sliderValue, setSliderValue] = useState(1.0);
+
+  useEffect(() => {
+    if (selectedElement) {
+      setSliderValue(getDefaultSliderValue());
+    }
+  }, [selectedElement]);
+
+  function getDefaultSliderValue() {
+    if (!selectedElement) return 1;
+    const url = selectedElement.url;
+    const regex = /^(.*?\/upload\/)(w_\d\.\d+,c_scale\/)(.*)$/;
+    if (regex.test(url)) {
+      console.log("regex matched")
+      const regexDigit = /w_(\d+(?:\.\d+)?)/;
+      const [, , scale] = url.match(regex);
+      const match = scale.match(regexDigit);
+      const numberAfterW = match[1] ? match[1] : null;
+      return parseFloat(numberAfterW);
+    }
+    return 1.0;
+  }
 
   return (
     <Modal open={scaleModalOpen} onClose={handleClose}>
@@ -35,7 +56,6 @@ export default function ScaleImageModal({
         <Box>
           Width
           <Slider
-            defaultValue={getDefaultSliderValue(selectedElement)}
             aria-label='Default'
             valueLabelDisplay='auto'
             step={0.1}
@@ -53,6 +73,7 @@ export default function ScaleImageModal({
             variant='contained'
             onClick={() => {
               handleScaleImage(sliderValue);
+              setSliderValue(1.0);
               handleClose();
             }}
           >
@@ -66,18 +87,4 @@ export default function ScaleImageModal({
       </Box>
     </Modal>
   );
-}
-
-function getDefaultSliderValue(selectedElement) {
-  if (!selectedElement) return 1;
-  const url = selectedElement.url;
-  const regex = /^(.*?\/upload\/)(w_0\.[0-9]|[01],c_scale\/)(.*)$/;
-  if (regex.test(url)) {
-    const regexDigit = /w_(\d+(?:\.\d+)?)/;
-    const [, , scale] = url.match(regex);
-    const match = scale.match(regexDigit);
-    const numberAfterW = match ? match[1] : null;
-    return numberAfterW ? parseFloat(numberAfterW) : 1.0;
-  }
-  return 1.0;
 }

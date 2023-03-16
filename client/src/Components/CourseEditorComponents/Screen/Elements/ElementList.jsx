@@ -140,13 +140,15 @@ export default function ElementList() {
     const url = selectedElement.url;
     if (width === 1 || width === 2) {
       width += ".0";
+    } else if (!width || width === 0 || width === null) {
+      return
     }
-    const regex = /^(.*?\/upload\/)(w_0\.[0-9]|[01],c_scale\/)(.*)$/;
+    const regex = /^(.*?\/upload\/)(w_\d\.\d+,c_scale\/)(.*)$/;
     var newUrl = "";
 
     if (regex.test(url)) {
       const [, baseUrl, , path] = url.match(regex);
-      newUrl = `${baseUrl}w_${width}${path}`;
+      newUrl = baseUrl + "w_" + width + ",c_scale/" + path;
     } else {
       const regex = /^(.*?\/upload\/)(.*)$/;
       const [, baseUrl, path] = url.match(regex);
