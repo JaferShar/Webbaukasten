@@ -4,21 +4,15 @@ import { render, screen, waitFor } from "@testing-library/react";
 import { act } from "react-dom/test-utils";
 import { Provider } from "react-redux";
 import { MemoryRouter } from "react-router-dom";
-
+import { store } from "../app/store";
 import CourseEditor from "../Pages/CourseEditor";
 
 
-let request = require('supertest');
-let app = require('../app');
-let server;
-
-beforeAll((done) => {
-  server = app.listen(done);
+jest.mock("../app", () => {
+  const express = require("express");
+  return express();
 });
 
-afterAll((done) => {
-  server.close(done);
-});
 
 describe("CourseEditor", () => {
   test("renders the course editor page", async () => {
