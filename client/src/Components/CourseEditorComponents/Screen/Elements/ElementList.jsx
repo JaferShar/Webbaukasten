@@ -6,6 +6,8 @@ import {
   deleteElement,
   exchangeElement,
   getScreen,
+  scaleImage,
+  updateScreen,
 } from "../../../../features/courseEditor/screenSlice";
 import ElementMenu from "./ElementMenu";
 import uploadCloudinary from "../../../../features/upload/CloudinaryUpload";
@@ -19,6 +21,7 @@ export default function ElementList() {
   const screen = useSelector((state) => state.screenEditor.screen);
   const [anchorEl, setAnchorEl] = useState(null);
   const [selectedElement, setSelectedElement] = useState(null);
+  const [elementType, setElementType] = useState(null);
   const [reload, setReload] = useState(false);
   const dispatch = useDispatch();
   const validH5PLink = new RegExp("https://h5p.org/h5p/embed/[0-9]+");
@@ -35,10 +38,11 @@ export default function ElementList() {
    * @param {*} event
    * @param {*} elementId The element selected
    */
-  const handleContextMenu = (event, elementId) => {
+  const handleContextMenu = (event, element) => {
     event.preventDefault();
     setAnchorEl(event.currentTarget);
-    setSelectedElement(elementId);
+    setSelectedElement(element);
+    setElementType(element.elementType);
   };
 
   /**
@@ -47,6 +51,7 @@ export default function ElementList() {
   const handleClose = () => {
     setAnchorEl(null);
     setSelectedElement(null);
+    setElementType(null);
   };
 
   /**
@@ -54,7 +59,7 @@ export default function ElementList() {
    */
   const handleDelete = () => {
     dispatch(
-      deleteElement({ screenId: screen._id, elementId: selectedElement })
+      deleteElement({ screenId: screen._id, elementId: selectedElement._id })
     );
     handleClose();
   };
@@ -62,11 +67,12 @@ export default function ElementList() {
   /**
    * Exchanges the selected element with a text field.
    */
-  const handleExchangeTextField = () => {
+  const handleExchangeTextField = async () => {
+    await dispatch(updateScreen({ screenId: screen._id, elements: screen.elements }))
     dispatch(
       exchangeElement({
         screenId: screen._id,
-        prevElementId: selectedElement,
+        prevElementId: selectedElement._id,
         element: { elementType: "TextField", text: "" },
       })
     );
@@ -80,10 +86,11 @@ export default function ElementList() {
   const handleExchangeImage = async (file) => {
     try {
       const url = await uploadCloudinary(file);
+      await dispatch(updateScreen({ screenId: screen._id, elements: screen.elements }))
       dispatch(
         exchangeElement({
           screenId: screen._id,
-          prevElementId: selectedElement,
+          prevElementId: selectedElement._id,
           element: { elementType: "Picture", url: url },
         })
       );
@@ -100,15 +107,16 @@ export default function ElementList() {
    * Exchange an element with a new H5P.
    * @param {Exchange} content
    */
-  const handleExchangeH5P = (content) => {
+  const handleExchangeH5P = async (content) => {
     const h5pURL = String(content.match(validH5PLink));
     if (!h5pURL || h5pURL === "null") {
       invalidLinkNotify();
     } else {
+      await dispatch(updateScreen({ screenId: screen._id, elements: screen.elements }))
       dispatch(
         exchangeElement({
           screenId: screen._id,
-          prevElementId: selectedElement,
+          prevElementId: selectedElement._id,
           element: { elementType: "H5P", content: h5pURL },
         })
       );
@@ -130,6 +138,34 @@ export default function ElementList() {
       theme: "light",
     });
   };
+
+  const handleScaleImage = (width) => {
+    const url = selectedElement.url;
+    if (width === 1 || width === 2) {
+      width += ".0";
+    } else if (!width || width === 0 || width === null) {
+      return
+    }
+    const regex = /^(.*?\/upload\/)(w_\d\.\d+,c_scale\/)(.*)$/;
+    var newUrl = "";
+
+    if (regex.test(url)) {
+      const [, baseUrl, , path] = url.match(regex);
+      newUrl = baseUrl + "w_" + width + ",c_scale/" + path;
+    } else {
+      const regex = /^(.*?\/upload\/)(.*)$/;
+      const [, baseUrl, path] = url.match(regex);
+      newUrl = baseUrl + "w_" + width + ",c_scale/" + path;
+    }
+    dispatch(
+      scaleImage({
+        screen: screen,
+        elementId: selectedElement._id,
+        url: newUrl,
+      })
+    );
+  };
+
   // If there are no elements, return an empty stack.
   if (!screen.elements || screen.elements.length === 0) {
     return <Stack spacing={2} />;
@@ -140,7 +176,9 @@ export default function ElementList() {
           <Element
             key={element._id}
             element={element}
-            handleContextMenu={handleContextMenu}
+            handleContextMenu={(event) => {
+              handleContextMenu(event, element);
+            }}
             style={{ cursor: "context-menu" }}
           />
         ))}
@@ -151,6 +189,9 @@ export default function ElementList() {
           handleExchangeTextField={handleExchangeTextField}
           handleExchangeImage={handleExchangeImage}
           handleExchangeH5P={handleExchangeH5P}
+          handleScaleImage={handleScaleImage}
+          selectedElement={selectedElement}
+          elementType={elementType}
         />
       </Stack>
     );

@@ -133,6 +133,24 @@ export const updateTextField = (updateData) => {
     payload: updatedScreen,
   };
 };
+
+export const scaleImage = (updateData) => {
+  const { screen, elementId, url } = updateData;
+  const updatedElements = screen.elements.map((element) => {
+    if (element._id === elementId) {
+      return { ...element, url };
+    }
+    return element;
+  });
+  const updatedScreen = { ...screen, elements: updatedElements };
+
+  updateScreen({ screenId: screen._id, elements: screen.elements });
+  return {
+    type: "screenEditor/updateImage",
+    payload: updatedScreen,
+  };
+};
+
 // function that exchanges an element.
 export const exchangeElement = createAsyncThunk(
   "/exchangeElement",
@@ -234,6 +252,9 @@ export const screenSlice = createSlice({
         state.message = action.payload;
       })
       .addCase("screenEditor/updateScreen", (state, action) => {
+        state.screen = action.payload;
+      })
+      .addCase("screenEditor/updateImage", (state, action) => {
         state.screen = action.payload;
       })
       .addCase(setH5P.pending, (state) => {

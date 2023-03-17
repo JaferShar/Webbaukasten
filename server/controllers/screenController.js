@@ -275,7 +275,7 @@ const updateScreen = asyncHandler(async (req, res) => {
       switch (elementType) {
         case "Picture":
           // update picture
-          screen.elements.id(_id).set({ data: element.data });
+          screen.elements.id(_id).set({ url: element.url });
           break;
         case "TextField":
           // update text field
@@ -329,11 +329,11 @@ const exchangeElement = asyncHandler(async (req, res) => {
       case "H5P":
         newElement = await H5P.create({ content: element.content });
         break;
-        default:
-          return res.status(400).send({ error: "Invalid element type" });
-          break;
-        }
-        
+      default:
+        return res.status(400).send({ error: "Invalid element type" });
+        break;
+    }
+
     if (newElement === null) {
       return res.status(400).send({ error: "Could not create new Element" });
     }
@@ -362,17 +362,19 @@ const deleteScreen = asyncHandler(async (req, res) => {
     if (!course) {
       return res.status(404).json({ error: "Course not found" });
     }
-    const screen = course.screens.find(
+    const screenID = course.screens.find(
       (screen) => screen._id.toString() === screenId
     );
-    if (!screen) {
+    if (!screenID) {
       return res.status(404).json({ error: "Screen not found" });
     }
     course.screens.pull(screenId);
 
     // save changes and delete screen afterwards
     await course.save();
-    await Screen.findByIdAndDelete(screenId);
+    // delete screen and its elements using the pre middleware in the Screen model
+    const screen = await Screen.findById(screenId);
+    await screen.remove();
 
     res.status(200).json(course);
   } catch (error) {

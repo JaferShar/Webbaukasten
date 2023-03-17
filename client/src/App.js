@@ -20,7 +20,7 @@ function App() {
         <Routes>
           <Route path="/kursuebersicht" element={<CourseOverview />} />
           <Route path="/kurs" element={<Course />} />
-          <Route path="/login" element={<Login />} />
+          <Route path="/" element={<Login />} />
           <Route path="/student/view" element={<StudentView />} />
           <Route path="/profile" element={<Profile />} />
         </Routes>
@@ -29,5 +29,4 @@ function App() {
     </div>
   );
 }
-
 export default App;

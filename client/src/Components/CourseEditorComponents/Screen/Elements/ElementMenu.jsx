@@ -7,17 +7,19 @@ import {
   ListItemText,
   Menu,
 } from "@mui/material";
+import PhotoSizeSelectLargeIcon from "@mui/icons-material/PhotoSizeSelectLarge";
 import {
   Delete as DeleteIcon,
   SwapHoriz as SwapHorizIcon,
 } from "@mui/icons-material";
+import ScaleImageModal from "./ScaleImageModal";
 import H5PModal from "./H5PModal";
 import ImageModal from "./ImageModal";
 /**
  * This module dleivers a menu that allows the user to edit,delete and swap elements within the screen editor.
  *
  * @param {*} {
- *   anchorEl 
+ *   anchorEl
  *   handleClose, Function to handle closing.
  *   handleDelete, Function to handle delete.
  *   handleExchangeTextField, Function to handle swapping the text field.
@@ -33,10 +35,14 @@ export default function ElementMenu({
   handleExchangeTextField,
   handleExchangeImage,
   handleExchangeH5P,
+  handleScaleImage,
+  elementType,
+  selectedElement,
 }) {
   const [subMenuAnchorEl, setSubMenuAnchorEl] = useState(null);
   const [h5pModalOpen, setH5PModalOpen] = useState(false);
   const [imageModalOpen, setImageModalOpen] = useState(false);
+  const [scaleModalOpen, setScaleModalOpen] = useState(false);
 
   const handleOpenSubMenu = (event) => {
     setSubMenuAnchorEl(event.currentTarget);
@@ -60,17 +66,22 @@ export default function ElementMenu({
     setH5PModalOpen(true);
   };
 
+  const handleClickScaleImage = () => {
+    setScaleModalOpen(true);
+  };
+
   const closeAll = () => {
     handleClose();
     handleCloseSubMenu();
     setH5PModalOpen(false);
     setImageModalOpen(false);
+    setScaleModalOpen(false);
   };
 
   return (
     <Box sx={{ width: "250px", display: "flex", alignItems: "center" }}>
       <Menu
-        id="long-menu"
+        id='long-menu'
         keepMounted
         open={Boolean(anchorEl)}
         onClose={handleClose}
@@ -85,11 +96,19 @@ export default function ElementMenu({
         }}
       >
         <List>
+          {elementType === "Picture" && (
+            <ListItemButton onClick={handleClickScaleImage}>
+              <ListItemIcon>
+                <PhotoSizeSelectLargeIcon />
+              </ListItemIcon>
+              <ListItemText primary='Skalieren' />
+            </ListItemButton>
+          )}
           <ListItemButton onClick={handleDelete}>
             <ListItemIcon>
               <DeleteIcon />
             </ListItemIcon>
-            <ListItemText primary="Löschen" />
+            <ListItemText primary='Löschen' />
           </ListItemButton>
           <ListItemButton
             onClick={(event) => {
@@ -99,13 +118,12 @@ export default function ElementMenu({
             <ListItemIcon>
               <SwapHorizIcon />
             </ListItemIcon>
-            <ListItemText primary="Austauschen" />
+            <ListItemText primary='Austauschen' />
           </ListItemButton>
-          
         </List>
       </Menu>
       <Menu
-        id="long-menu"
+        id='long-menu'
         keepMounted
         open={Boolean(subMenuAnchorEl)}
         onClose={handleCloseSubMenu}
@@ -121,21 +139,21 @@ export default function ElementMenu({
       >
         <List>
           <ListItemButton onClick={handleClickTextField}>
-            <ListItemText primary="Textfeld" />
+            <ListItemText primary='Textfeld' />
           </ListItemButton>
           <ListItemButton
             onClick={() => {
               handleClickImage();
             }}
           >
-            <ListItemText primary="Bild" />
+            <ListItemText primary='Bild' />
           </ListItemButton>
           <ListItemButton
             onClick={() => {
               handleClickH5P();
             }}
           >
-            <ListItemText primary="H5P" />
+            <ListItemText primary='H5P' />
           </ListItemButton>
         </List>
       </Menu>
@@ -148,6 +166,12 @@ export default function ElementMenu({
         imageModalOpen={imageModalOpen}
         handleClose={closeAll}
         handleExchangeImage={handleExchangeImage}
+      />
+      <ScaleImageModal
+        scaleModalOpen={scaleModalOpen}
+        handleScaleImage={handleScaleImage}
+        handleClose={closeAll}
+        selectedElement={selectedElement}
       />
     </Box>
   );

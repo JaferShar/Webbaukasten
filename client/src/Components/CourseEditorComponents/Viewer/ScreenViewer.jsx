@@ -58,18 +58,14 @@ function ScreenViewer({ changeTemplate }) {
   useEffect(() => {
     dispatch(getCourse(courseId));
     changeTemplate(screen.template);
-  }, [
-    dispatch,
-    courseId,
-    screen.template,
-    changeTemplate,
-    selectedScreen,
-  ]);
+  }, [dispatch, courseId, screen.template, changeTemplate, selectedScreen]);
 
   useEffect(() => {
-    if (selectedScreen === null &&
+    if (
+      selectedScreen === null &&
       course.screens !== undefined &&
-      course.screens.length > 0) {
+      course.screens.length > 0
+    ) {
       dispatch(getScreen(course.screens[0]));
       setSelectedScreen(course.screens[0]);
     }
@@ -86,11 +82,13 @@ function ScreenViewer({ changeTemplate }) {
   const handleDelete = async () => {
     setDeleteAnchorEl(null);
     if (course.screens[0] !== selectedScreen) {
-      await dispatch(deleteScreen({ courseId: course._id, screenId: selectedScreen }));
+      await dispatch(
+        deleteScreen({ courseId: course._id, screenId: selectedScreen })
+      );
       setSelectedScreen(course.screens[0]);
       await dispatch(getScreen(course.screens[0]));
     } else {
-      toast.error("You cannot delete the first screen.")
+      toast.error("You cannot delete the first screen.");
     }
     handleCloseContextMenu();
   };
@@ -102,9 +100,14 @@ function ScreenViewer({ changeTemplate }) {
    * @param {*} template the template of the screen to be created.
    */
   const handleCreate = async (template) => {
-    const screen = await dispatch(createScreen({ template: template, courseId: courseId }));
+    await dispatch(
+      updateScreen({ screenId: screen._id, elements: screen.elements })
+    );
+    const newScreen = await dispatch(
+      createScreen({ template: template, courseId: courseId })
+    );
     await dispatch(getCourse(courseId));
-    setSelectedScreen(screen.payload._id);
+    setSelectedScreen(newScreen.payload._id);
     handleClose();
   };
 
@@ -120,22 +123,22 @@ function ScreenViewer({ changeTemplate }) {
 
   /**
    * This method handles the logic for changing a screen in the Screen Viewer.
-   * @param {*} screenId 
+   * @param {*} screenId
    */
-  const handleOnClickScreen = (screenId) => {
+  const handleOnClickScreen = async (screenId) => {
     if (screen._id) {
-      dispatch(updateScreen({ screenId: screen._id, elements: screen.elements }));
+      await dispatch(
+        updateScreen({ screenId: screen._id, elements: screen.elements })
+      );
     }
-    setTimeout(() => {
-      dispatch(getScreen(screenId));
-      setSelectedScreen(screenId);
-    }, 300);
+    dispatch(getScreen(screenId));
+    setSelectedScreen(screenId);
   };
 
   /**
    * The selected Screen is emphasized by a blue border.
-   * @param {*} screenId 
-   * @returns 
+   * @param {*} screenId
+   * @returns
    */
   const handleEmphasize = (screenId) => {
     if (screenId === selectedScreen) {
@@ -173,7 +176,6 @@ function ScreenViewer({ changeTemplate }) {
                 onClick={() => {
                   handleOnClickScreen(screenId);
                 }}
-
                 onContextMenu={(event) => {
                   handleContextMenu(event, screenId);
                 }}

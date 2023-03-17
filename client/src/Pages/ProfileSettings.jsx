@@ -13,7 +13,7 @@ import { useNavigate } from "react-router-dom";
 
 /**
  * This component displays the user's profile information, including their
- * profile picture, first name, last name, and email. 
+ * profile picture, first name, last name, and email.
  *
  * @returns the user's profile information.
  */
@@ -28,48 +28,49 @@ const ProfileSetting = () => {
 
   useEffect(() => {
     if (!account) {
-      navigate("/login");
+      navigate("/");
       return;
     }
   }, [account, navigate]);
 
   if (account) {
     return (
-    <div>
-      <ProfileHeader></ProfileHeader>
-      <div style={{ display: "flex", justifyContent: "center" }}>
-        <List>
-          <ListItem>
-            <ListItemAvatar>
-              <Avatar
-                onClick={handleOpenUserMenu}
-                sx={{ p: 0 }}
-                alt="Remy Sharp"
-                src={account ? account.picture : ""}
-                referrerPolicy="no-referrer"
+      <div>
+        <ProfileHeader></ProfileHeader>
+        <div style={{ display: "flex", justifyContent: "center" }}>
+          <List>
+            <ListItem>
+              <ListItemAvatar>
+                <Avatar
+                  onClick={handleOpenUserMenu}
+                  sx={{ p: 0 }}
+                  alt="Remy Sharp"
+                  src={account ? account.picture : ""}
+                  referrerPolicy="no-referrer"
+                  data-testid="avatar"
+                />
+              </ListItemAvatar>
+              <ListItemText />
+            </ListItem>
+            <ListItem>
+              <ListItemText
+                primary="First Name"
+                secondary={account.firstName}
               />
-            </ListItemAvatar>
-            <ListItemText />
-          </ListItem>
-          <ListItem>
-            <ListItemText primary="First Name" secondary={account.firstName} />
-          </ListItem>
-          <ListItem>
-            <ListItemText primary="Last Name" secondary={account.lastName} />
-          </ListItem>
-          <ListItem>
-            <ListItemText primary="Email" secondary={account.email} />
-          </ListItem>
-        </List>
+            </ListItem>
+            <ListItem>
+              <ListItemText primary="Last Name" secondary={account.lastName} />
+            </ListItem>
+            <ListItem>
+              <ListItemText primary="Email" secondary={account.email} />
+            </ListItem>
+          </List>
+        </div>
       </div>
-    </div>
-  );
+    );
   } else {
-    <div>
-    </div>
+    <div></div>;
   }
-
-  
 };
 
 export default ProfileSetting;

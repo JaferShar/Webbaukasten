@@ -32,14 +32,19 @@
     "react-syntax-highlighter": "^15.5.0",
     "react-toastify": "^9.1.1",
     "redux": "^4.2.1",
+    "redux-mock-store": "^1.5.4",
     "uuid": "^9.0.0",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "test": "react-scripts test --transformIgnorePatterns node_modules/jest/bin/jest.js/ --watchAll --coverage",
+    "clear:test": "test --clearCache ",
+    "eject": "react-scripts eject",
+    "cypress": "cypress open",
+    "cyreports": "cypress run --reporter mochawesome",
+    "test:coverage": "nyc --reporter=html --reporter=text cypress run"
   },
   "eslintConfig": {
     "extends": [
@@ -58,5 +63,16 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "concurrently": "^7.6.0",
+    "cypress": "^12.8.1",
+    "cypress-real-events": "^1.7.6",
+    "faker": "^6.6.6",
+    "mochawesome": "^7.1.3",
+    "mochawesome-merge": "^4.3.0",
+    "mochawesome-report-generator": "^6.2.0",
+    "nyc": "^15.1.0",
+    "supertest": "^6.3.3"
   }
 }

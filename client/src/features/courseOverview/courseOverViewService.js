@@ -30,7 +30,7 @@ const createCourse = async (courseData, token) => {
 /**
  * Fetches all courses from the server.
  *
- * @param {*} token user authentication token
+ * @param {*} courseId the ID of the course to fetch.
  * @returns a promise that resolves to an array of all courses.
  */
 const getAllCourses = async (token) => {
@@ -83,14 +83,14 @@ const deleteCourse = async (courseId, token) => {
  * @param {*} token The user's authentication token.
  * @returns the data of the updated course.
  */
-const renameCourse = async (courseData, token) => {
+const renameCourse = async (updatedCourse, token) => {
   try {
     const config = {
       headers: { Authorization: `Bearer ${token}` },
     };
     const response = await axios.put(
-      API_URL + `/${courseData.courseId}`,
-      courseData,
+      API_URL + `/${updatedCourse.courseId}`,
+      updatedCourse,
       config
     );
     return response.data;
@@ -135,12 +135,42 @@ const shareCourse = async (data, token) => {
   }
 };
 
+
+
+/**
+ * Fetches the course with the specified ID from the server.
+ *
+ * @param {*} courseId the ID of the course to fetch.
+ * @param {*} token user authentication token
+ * @returns a promise that resolves to the course data.
+ */
+const getCourse = async (courseId, token) => {
+  try {
+    const config = {
+      headers: { Authorization: `Bearer ${token}` },
+    };
+    const response = await axios.get(API_URL + `/${courseId}`, config);
+    return response.data;
+  } catch (error) {
+    if (error.response) {
+      const errorMessage = error.response.data.error;
+      toast.error(errorMessage);
+      throw new Error(errorMessage);
+    } else {
+      toast.error("Something went wrong, try again later");
+      throw new Error("Something went wrong, try again later");
+    }
+  }
+};
+
+
 const courseOverviewService = {
   createCourse,
   renameCourse,
   getAllCourses,
   deleteCourse,
   shareCourse,
+  getCourse,
 };
 
 export default courseOverviewService;
