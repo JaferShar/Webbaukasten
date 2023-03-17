@@ -1,0 +1,1349 @@
+{
+	"info": {
+		"_postman_id": "2938256c-1656-412d-b8f7-d202ab5d0a8b",
+		"name": "Backend Tests",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "25901644"
+	},
+	"item": [
+		{
+			"name": "Unprotected Tests",
+			"item": [
+				{
+					"name": "Student Tests",
+					"item": [
+						{
+							"name": "Get Student Course Data",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"// Test name: Course name is TestKursPostman1",
+											"pm.test(\"Course name is TestKursPostman1\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData.courseName).to.eql(\"TestKursPostman1\");",
+											"});",
+											"",
+											"// Test name: Number of screens is 1",
+											"pm.test(\"Number of screens is 1\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData.screens.length).to.eql(1);",
+											"});",
+											"",
+											"// Test name: Section name is TestKursPostman1",
+											"pm.test(\"Section name is TestKursPostman1\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData.sections[0].sectionName).to.eql(\"TestKursPostman1\");",
+											"});",
+											"",
+											"// Test name: Section index is 0",
+											"pm.test(\"Section index is 0\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData.sections[0].index).to.eql(0);",
+											"});",
+											"",
+											"// Test name: Account ID is 64134c4fcfa7fe3799d0bfd8",
+											"pm.test(\"Account ID is 64134c4fcfa7fe3799d0bfd8\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData.account).to.eql(\"64134c4fcfa7fe3799d0bfd8\");",
+											"});",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:5000/api/student/course/6414a72e60ff2707e2a0736d",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"api",
+										"student",
+										"course",
+										"6414a72e60ff2707e2a0736d"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Student Screen Data",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"// Verify the response status code",
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test(\"ID should match\", function () {",
+											"    pm.expect(pm.response.json()._id).to.eql(\"6414a72e60ff2707e2a07370\");",
+											"});",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:5000/api/student/screen/6414a72e60ff2707e2a07370",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"api",
+										"student",
+										"screen",
+										"6414a72e60ff2707e2a07370"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Login & Register",
+					"item": [
+						{
+							"name": "Post Invalid Register",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function() {",
+											"    pm.response.to.have.status(400);",
+											"})",
+											"",
+											"pm.test(\"Correct error message is returned\", function() {",
+											"    pm.expect(pm.response.json().message).to.eql(\"Please add all fields\");",
+											"});",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "firstName",
+											"value": "Nick",
+											"type": "text"
+										},
+										{
+											"key": "lastName",
+											"value": "hatDenGang",
+											"type": "text",
+											"disabled": true
+										},
+										{
+											"key": "email",
+											"value": "Gang10@gmail.com",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "http://localhost:5000/api/account/",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"api",
+										"account",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Post Valid Register",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function() {",
+											"    pm.response.to.have.status(200);",
+											"})",
+											"",
+											"pm.test(\"Response body has correct properties\", function() {",
+											"    pm.expect(pm.response.json()).to.have.keys('_id', 'firstName', 'lastName', 'email', 'picture', 'token');",
+											"});",
+											"",
+											"pm.test(\"First name, last name, and email are correct\", function() {",
+											"    const responseBody = pm.response.json();",
+											"    pm.expect(responseBody.firstName).to.eql(\"Nick\");",
+											"    pm.expect(responseBody.lastName).to.eql(\"Mustermann\");",
+											"    pm.expect(responseBody.email).to.eql(\"nick.mustermann@gmail.com\");",
+											"});",
+											"",
+											"pm.test(\"Picture URL is valid\", function() {",
+											"    const responseBody = pm.response.json();",
+											"    pm.expect(responseBody.picture).to.match(/^https?:\\/\\/.+/);",
+											"});",
+											"",
+											"pm.test(\"Token is a non-empty string\", function() {",
+											"    const responseBody = pm.response.json();",
+											"    pm.expect(responseBody.token).to.be.a('string').and.to.not.be.empty;",
+											"});",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "firstName",
+											"value": "Nick",
+											"type": "text"
+										},
+										{
+											"key": "lastName",
+											"value": "Mustermann",
+											"type": "text"
+										},
+										{
+											"key": "email",
+											"value": "nick.mustermann@gmail.com",
+											"type": "text"
+										},
+										{
+											"key": "picture",
+											"value": "https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.dgvaishnavcollege.edu.in%2Fdummy-profile-pic%2F&psig=AOvVaw3w1x8AgXLTmzwa56YlZsQr&ust=1679072696219000&source=images&cd=vfe&ved=0CA8QjRxqFwoTCJDVrK734P0CFQAAAAAdAAAAABAE",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "http://localhost:5000/api/account/",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"api",
+										"account",
+										""
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Protected Tests",
+			"item": [
+				{
+					"name": "Account",
+					"item": [
+						{
+							"name": "GetAccountInfo",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test(\"Response body should contain all expected properties\", function () {",
+											"    pm.expect(pm.response.json()).to.have.keys([        \"_id\",        \"firstName\",        \"lastName\",        \"email\",        \"picture\",        \"createdAt\",        \"updatedAt\",        \"__v\"    ]);",
+											"});",
+											"",
+											"pm.test(\"Response body should contain correct values\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData._id).to.eql(\"64134c4fcfa7fe3799d0bfd8\");",
+											"    pm.expect(jsonData.firstName).to.eql(\"Nick\");",
+											"    pm.expect(jsonData.lastName).to.eql(\"Mustermann\");",
+											"    pm.expect(jsonData.email).to.eql(\"nick.mustermann@gmail.com\");",
+											"    pm.expect(jsonData.picture).to.eql(\"https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.dgvaishnavcollege.edu.in%2Fdummy-profile-pic%2F&psig=AOvVaw3w1x8AgXLTmzwa56YlZsQr&ust=1679072696219000&source=images&cd=vfe&ved=0CA8QjRxqFwoTCJDVrK734P0CFQAAAAAdAAAAABAE\");",
+											"    pm.expect(jsonData.__v).to.eql(0);",
+											"});",
+											"",
+											"pm.test(\"Response body should contain correct data types\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData._id).to.be.a(\"string\");",
+											"    pm.expect(jsonData.firstName).to.be.a(\"string\");",
+											"    pm.expect(jsonData.lastName).to.be.a(\"string\");",
+											"    pm.expect(jsonData.email).to.be.a(\"string\");",
+											"    pm.expect(jsonData.picture).to.be.a(\"string\");",
+											"    pm.expect(jsonData.createdAt).to.be.a(\"string\");",
+											"    pm.expect(jsonData.updatedAt).to.be.a(\"string\");",
+											"    pm.expect(jsonData.__v).to.be.a(\"number\");",
+											"});",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:5000/api/account/me",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"api",
+										"account",
+										"me"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Course",
+					"item": [
+						{
+							"name": "create Course",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 201\", function () {",
+											"    pm.response.to.have.status(201);",
+											"});",
+											"",
+											"// Test 1: Response should contain account field",
+											"pm.test(\"Response should contain account field\", function () {",
+											"    pm.response.to.have.jsonBody('account');",
+											"});",
+											"",
+											"// Test 2: Response should contain courseName field",
+											"pm.test(\"Response should contain courseName field\", function () {",
+											"    pm.response.to.have.jsonBody('courseName');",
+											"});",
+											"",
+											"// Test 3: Response should have a screens array with at least one element",
+											"pm.test(\"Response should have a screens array with at least one element\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData.screens).to.be.an('array').that.is.not.empty;",
+											"});",
+											"",
+											"// Test 4: Response should contain _id field",
+											"pm.test(\"Response should contain _id field\", function () {",
+											"    pm.response.to.have.jsonBody('_id');",
+											"});",
+											"",
+											"// Test 5: Response should have a sections array with at least one element",
+											"pm.test(\"Response should have a sections array with at least one element\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData.sections).to.be.an('array').that.is.not.empty;",
+											"});",
+											"",
+											"// Test 6: The template field of the first screen should be \"Welcome\"",
+											"pm.test(\"The template field of the first screen should be 'Welcome'\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData.screens[0].template).to.equal(\"Welcome\");",
+											"});",
+											"",
+											"// Test 7: The text field of the first element of the first screen should be \"e.g. Math for beginners\"",
+											"pm.test(\"The text field of the first element of the first screen should be 'e.g. Math for beginners'\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData.screens[0].elements[0].text).to.equal(\"e.g. Math for beginners\");",
+											"});",
+											"",
+											"// Test 8: The text field of the second element of the first screen should be \"e.g. This course is for beginners who want to learn math.\"",
+											"pm.test(\"The text field of the second element of the first screen should be 'e.g. This course is for beginners who want to learn math.'\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData.screens[0].elements[1].text).to.equal(\"e.g. This course is for beginners who want to learn math.\");",
+											"});",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "courseName",
+											"value": "TestKursPostman1",
+											"type": "text"
+										},
+										{
+											"key": "accountID",
+											"value": "64134c4fcfa7fe3799d0bfd8",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "http://localhost:5000/api/course/",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"api",
+										"course",
+										""
+									],
+									"query": [
+										{
+											"key": "courseName",
+											"value": "TestKursPostman",
+											"disabled": true
+										},
+										{
+											"key": "accountID",
+											"value": "64134c4fcfa7fe3799d0bfd8",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get all courses",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"// Test if the response has a status of 200 OK",
+											"pm.test(\"Response status is 200 OK\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test(\"Response should be an Object\", function () {",
+											"    pm.response.to.be.an('Object');",
+											"});",
+											"",
+											"pm.test(\"Each element in the response should be a valid course object\", function () {",
+											"    var schema = {",
+											"        \"type\": \"object\",",
+											"        \"properties\": {",
+											"            \"_id\": {\"type\": \"string\"},",
+											"            \"account\": {\"type\": \"string\"},",
+											"            \"courseName\": {\"type\": \"string\"},",
+											"            \"screens\": {",
+											"                \"type\": \"array\",",
+											"                \"items\": {\"type\": \"string\"}",
+											"            },",
+											"            \"sections\": {",
+											"                \"type\": \"array\",",
+											"                \"items\": {",
+											"                    \"type\": \"object\",",
+											"                    \"properties\": {",
+											"                        \"index\": {\"type\": \"number\"},",
+											"                        \"_id\": {\"type\": \"string\"},",
+											"                        \"sectionName\": {\"type\": \"string\"},",
+											"                        \"startIndex\": {\"type\": \"number\"}",
+											"                    },",
+											"                    \"required\": [\"index\", \"_id\", \"sectionName\", \"startIndex\"]",
+											"                }",
+											"            },",
+											"            \"__v\": {\"type\": \"number\"}",
+											"        },",
+											"        \"required\": [\"_id\", \"account\", \"courseName\", \"screens\", \"sections\", \"__v\"]",
+											"    };",
+											"    ",
+											"    var courses = pm.response.json();",
+											"    for (var i = 0; i < courses.length; i++) {",
+											"        pm.expect(courses[i]).to.have.jsonSchema(schema);",
+											"    }",
+											"});",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "courseName",
+											"value": "TestKursPostman",
+											"type": "text",
+											"disabled": true
+										},
+										{
+											"key": "accountID",
+											"value": "64134c4fcfa7fe3799d0bfd8",
+											"type": "text",
+											"disabled": true
+										}
+									]
+								},
+								"url": {
+									"raw": "http://localhost:5000/api/course/all",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"api",
+										"course",
+										"all"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get course",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"// Test if the response has a status of 200 OK",
+											"pm.test(\"Response status is 200 OK\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"// Test for required fields",
+											"pm.test(\"Response should contain _id field\", function () {",
+											"    pm.response.to.have.jsonBody('_id');",
+											"});",
+											"",
+											"pm.test(\"Response should contain account field\", function () {",
+											"    pm.response.to.have.jsonBody('account');",
+											"});",
+											"",
+											"pm.test(\"Response should contain courseName field\", function () {",
+											"    pm.response.to.have.jsonBody('courseName');",
+											"});",
+											"",
+											"// Test for arrays",
+											"pm.test(\"Response should have a screens array with at least one element\", function () {",
+											"    pm.expect(pm.response.json().screens).to.be.an('array').that.is.not.empty;",
+											"});",
+											"",
+											"pm.test(\"Response should have a sections array with at least one element\", function () {",
+											"    pm.expect(pm.response.json().sections).to.be.an('array').that.is.not.empty;",
+											"});",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "courseName",
+											"value": "TestKursPostman",
+											"type": "text",
+											"disabled": true
+										},
+										{
+											"key": "accountID",
+											"value": "64134c4fcfa7fe3799d0bfd8",
+											"type": "text",
+											"disabled": true
+										}
+									]
+								},
+								"url": {
+									"raw": "http://localhost:5000/api/course/6414a6db60ff2707e2a07357",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"api",
+										"course",
+										"6414a6db60ff2707e2a07357"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "share course",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"// Test if the response has a status of 201 Created",
+											"pm.test(\"Response status is 201 Created\", function () {",
+											"    pm.response.to.have.status(201);",
+											"});",
+											"",
+											"// Test if the response body contains the required fields",
+											"pm.test(\"Response should contain account field\", function () {",
+											"    pm.expect(pm.response.json()).to.have.property('account');",
+											"});",
+											"",
+											"pm.test(\"Response should contain courseName field\", function () {",
+											"    pm.expect(pm.response.json()).to.have.property('courseName');",
+											"});",
+											"",
+											"pm.test(\"Response should contain _id field\", function () {",
+											"    pm.expect(pm.response.json()).to.have.property('_id');",
+											"});",
+											"",
+											"// Test if the response body has a screens array with at least one element",
+											"pm.test(\"Response should have a screens array with at least one element\", function () {",
+											"    pm.expect(pm.response.json().screens).to.be.an('array').that.is.not.empty;",
+											"});",
+											"",
+											"// Test if the response body has a sections array with at least one element",
+											"pm.test(\"Response should have a sections array with at least one element\", function () {",
+											"    pm.expect(pm.response.json().sections).to.be.an('array').that.is.not.empty;",
+											"});",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "email",
+											"value": "seven.performance7@gmail.com",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "http://localhost:5000/api/course/share/6414a6db60ff2707e2a07357",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"api",
+										"course",
+										"share",
+										"6414a6db60ff2707e2a07357"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete course",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"// Test if the response has a status of 200 OK",
+											"pm.test(\"Response status is 200 OK\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"// Test if the response has a string value for the 'id' field",
+											"pm.test(\"Response should have a string value for the 'id' field\", function () {",
+											"    pm.expect(pm.response.json().id).to.be.a('string');",
+											"});",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "email",
+											"value": "seven.performance7@gmail.com",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "http://localhost:5000/api/course/6414a6db60ff2707e2a07357",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"api",
+										"course",
+										"6414a6db60ff2707e2a07357"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Element",
+					"item": [
+						{
+							"name": "Set Textfield",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"// Test if the response has a status of 201 Created",
+											"pm.test(\"Response status is 201 Created\", function () {",
+											"    pm.response.to.have.status(201);",
+											"});",
+											"",
+											"// Test if the response contains an _id field",
+											"pm.test(\"Response should contain _id field\", function () {",
+											"    pm.response.to.have.jsonBody(\"_id\");",
+											"});",
+											"",
+											"",
+											"// Test if each element in the elements array contains the required fields",
+											"pm.test(\"Each element in elements array should contain required fields\", function () {",
+											"    var elements = pm.response.json().elements;",
+											"    for (var i = 0; i < elements.length; i++) {",
+											"        pm.expect(elements[i]).to.have.property(\"elementType\").to.be.a(\"string\");",
+											"        pm.expect(elements[i]).to.have.property(\"_id\").to.be.a(\"string\");",
+											"        pm.expect(elements[i]).to.have.property(\"__v\").to.be.a(\"number\");",
+											"        pm.expect(elements[i]).to.have.property(\"text\").to.be.a(\"string\");",
+											"    }",
+											"});",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "text",
+											"value": "Dies ist ein Postman Test to check create Textfield",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "http://localhost:5000/api/element/textfield/6414a72e60ff2707e2a07370",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"api",
+										"element",
+										"textfield",
+										"6414a72e60ff2707e2a07370"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Set Picture",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Response status is 201 Created\", function () {",
+											"    pm.response.to.have.status(201);",
+											"});",
+											"",
+											"pm.test(\"Response should contain _id field\", function () {",
+											"    pm.response.to.have.jsonBody(\"_id\");",
+											"});",
+											"",
+											"pm.test(\"Response should have an elements array with at least one element\", function () {",
+											"    pm.response.to.have.jsonBody(\"elements\").that.is.an(\"Object\").and.not.empty;",
+											"});",
+											"",
+											"pm.test(\"Each element in elements array should contain required fields\", function () {",
+											"    pm.response.json().elements.forEach(function(element) {",
+											"        pm.expect(element).to.have.property(\"elementType\");",
+											"        pm.expect(element).to.have.property(\"_id\");",
+											"    });",
+											"});",
+											"",
+											"",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "url",
+											"value": "https://picsum.photos/200",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "http://localhost:5000/api/element/picture/6414a72e60ff2707e2a07370",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"api",
+										"element",
+										"picture",
+										"6414a72e60ff2707e2a07370"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Set H5P",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 201\", function () {",
+											"    pm.response.to.have.status(201);",
+											"});",
+											"",
+											"pm.test(\"Response body contains at least one element with elementType H5P\", function () {",
+											"    const jsonData = pm.response.json();",
+											"    const h5pElements = jsonData.elements.filter(element => element.elementType === \"H5P\");",
+											"    pm.expect(h5pElements.length).to.be.above(0);",
+											"});",
+											"",
+											"",
+											"pm.test(\"Response body contains at least one element with expected content value\", function () {",
+											"    const jsonData = pm.response.json();",
+											"    const contentElements = jsonData.elements.filter(element => element.content === \"https://h5p.org/h5p/embed/1072182\");",
+											"    pm.expect(contentElements.length).to.be.above(0);",
+											"});",
+											"",
+											"",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "content",
+											"value": "https://h5p.org/h5p/embed/1072182",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "http://localhost:5000/api/element/H5P/6414a72e60ff2707e2a07370",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"api",
+										"element",
+										"H5P",
+										"6414a72e60ff2707e2a07370"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete Element",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:5000/api/element/6414a72e60ff2707e2a07370",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"api",
+										"element",
+										"6414a72e60ff2707e2a07370"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Screen",
+					"item": [
+						{
+							"name": "Create Screen",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"// Test to check if the API call returns a 200 OK status code",
+											"pm.test(\"Status code is 201\", function () {",
+											"    pm.response.to.have.status(201);",
+											"});",
+											"",
+											"// Test to check if the API response contains a valid JSON body",
+											"pm.test(\"Response body is valid JSON\", function () {",
+											"    pm.response.to.be.json;",
+											"    pm.response.to.have.jsonBody();",
+											"});",
+											"",
+											"// Test to check if the template property exists in the API response",
+											"pm.test(\"Response body has template property\", function () {",
+											"    pm.expect(pm.response.json()).to.have.property(\"template\");",
+											"});",
+											"",
+											"// Test to check if the _id property exists in the API response",
+											"pm.test(\"Response body has _id property\", function () {",
+											"    pm.expect(pm.response.json()).to.have.property(\"_id\");",
+											"});",
+											"",
+											"// Test to check if the elements property exists in the API response",
+											"pm.test(\"Response body has elements property\", function () {",
+											"    pm.expect(pm.response.json()).to.have.property(\"elements\");",
+											"});",
+											"",
+											"// Test to check if the __v property exists in the API response",
+											"pm.test(\"Response body has __v property\", function () {",
+											"    pm.expect(pm.response.json()).to.have.property(\"__v\");",
+											"});",
+											"",
+											"// Test to check if the template property in the API response has a value of \"Standard\"",
+											"pm.test(\"Template property has value 'Standard'\", function () {",
+											"    pm.expect(pm.response.json().template).to.eql(\"Standard\");",
+											"});",
+											"",
+											"// Test to check if the elements property in the API response is an empty array",
+											"pm.test(\"Elements property is an empty array\", function () {",
+											"    pm.expect(pm.response.json().elements).to.be.an(\"array\").that.is.empty;",
+											"});",
+											"",
+											"// Test to check if the __v property in the API response has a value of 0",
+											"pm.test(\"__v property has value 0\", function () {",
+											"    pm.expect(pm.response.json().__v).to.eql(0);",
+											"});",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "template",
+											"value": "Standard",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "http://localhost:5000/api/screen/6414a72e60ff2707e2a0736d",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"api",
+										"screen",
+										"6414a72e60ff2707e2a0736d"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Screen",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"// Test to check if the API call returns a 200 OK status code",
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"// Test to check if the API response contains a valid JSON body",
+											"pm.test(\"Response body is valid JSON\", function () {",
+											"    pm.response.to.be.json;",
+											"    pm.response.to.have.jsonBody();",
+											"});",
+											"",
+											"// Test to check if the _id property exists in the API response",
+											"pm.test(\"Response body has _id property\", function () {",
+											"    pm.expect(pm.response.json()).to.have.property(\"_id\");",
+											"});",
+											"",
+											"// Test to check if the template property exists in the API response",
+											"pm.test(\"Response body has template property\", function () {",
+											"    pm.expect(pm.response.json()).to.have.property(\"template\");",
+											"});",
+											"",
+											"// Test to check if the elements property exists in the API response",
+											"pm.test(\"Response body has elements property\", function () {",
+											"    pm.expect(pm.response.json()).to.have.property(\"elements\");",
+											"});",
+											"",
+											"// Test to check if the __v property exists in the API response",
+											"pm.test(\"Response body has __v property\", function () {",
+											"    pm.expect(pm.response.json()).to.have.property(\"__v\");",
+											"});",
+											"",
+											"// Test to check if the _id property in the API response has the expected value",
+											"pm.test(\"_id property has expected value\", function () {",
+											"    pm.expect(pm.response.json()._id).to.eql(\"6414d92c60ff2707e2a0751b\");",
+											"});",
+											"",
+											"// Test to check if the template property in the API response has the expected value",
+											"pm.test(\"Template property has expected value\", function () {",
+											"    pm.expect(pm.response.json().template).to.eql(\"Standard\");",
+											"});",
+											"",
+											"// Test to check if the elements property in the API response is an empty array",
+											"pm.test(\"Elements property is an empty array\", function () {",
+											"    pm.expect(pm.response.json().elements).to.be.an(\"array\").that.is.empty;",
+											"});",
+											"",
+											"// Test to check if the __v property in the API response has the expected value",
+											"pm.test(\"__v property has expected value\", function () {",
+											"    pm.expect(pm.response.json().__v).to.eql(0);",
+											"});",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:5000/api/screen/6414d92c60ff2707e2a0751b",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"api",
+										"screen",
+										"6414d92c60ff2707e2a0751b"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Screen Copy",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"// Test to check if the API call returns a 200 OK status code",
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"// Test to check if the API response contains a valid JSON body",
+											"pm.test(\"Response body is valid JSON\", function () {",
+											"    pm.response.to.be.json;",
+											"    pm.response.to.have.jsonBody();",
+											"});",
+											"",
+											"// Test to check if the _id property exists in the API response",
+											"pm.test(\"Response body has _id property\", function () {",
+											"    pm.expect(pm.response.json()).to.have.property(\"_id\");",
+											"});",
+											"",
+											"// Test to check if the template property exists in the API response",
+											"pm.test(\"Response body has template property\", function () {",
+											"    pm.expect(pm.response.json()).to.have.property(\"template\");",
+											"});",
+											"",
+											"// Test to check if the elements property exists in the API response",
+											"pm.test(\"Response body has elements property\", function () {",
+											"    pm.expect(pm.response.json()).to.have.property(\"elements\");",
+											"});",
+											"",
+											"// Test to check if the __v property exists in the API response",
+											"pm.test(\"Response body has __v property\", function () {",
+											"    pm.expect(pm.response.json()).to.have.property(\"__v\");",
+											"});",
+											"",
+											"// Test to check if the _id property in the API response has the expected value",
+											"pm.test(\"_id property has expected value\", function () {",
+											"    pm.expect(pm.response.json()._id).to.eql(\"6414d92c60ff2707e2a0751b\");",
+											"});",
+											"",
+											"// Test to check if the template property in the API response has the expected value",
+											"pm.test(\"Template property has expected value\", function () {",
+											"    pm.expect(pm.response.json().template).to.eql(\"Standard\");",
+											"});",
+											"",
+											"// Test to check if the elements property in the API response is an empty array",
+											"pm.test(\"Elements property is an empty array\", function () {",
+											"    pm.expect(pm.response.json().elements).to.be.an(\"array\").that.is.empty;",
+											"});",
+											"",
+											"// Test to check if the __v property in the API response has the expected value",
+											"pm.test(\"__v property has expected value\", function () {",
+											"    pm.expect(pm.response.json().__v).to.eql(0);",
+											"});",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:5000/api/screen/6414d92c60ff2707e2a0751b",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"api",
+										"screen",
+										"6414d92c60ff2707e2a0751b"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete Screen",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"// Test to check if the API call returns a 200 OK status code",
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"// Test to check if the API response contains a valid JSON body",
+											"pm.test(\"Response body is valid JSON\", function () {",
+											"    pm.response.to.be.json;",
+											"    pm.response.to.have.jsonBody();",
+											"});",
+											"",
+											"// Test to check if the _id property exists in the API response",
+											"pm.test(\"Response body has _id property\", function () {",
+											"    pm.expect(pm.response.json()).to.have.property(\"_id\");",
+											"});",
+											"",
+											"// Test to check if the account property exists in the API response",
+											"pm.test(\"Response body has account property\", function () {",
+											"    pm.expect(pm.response.json()).to.have.property(\"account\");",
+											"});",
+											"",
+											"// Test to check if the courseName property exists in the API response",
+											"pm.test(\"Response body has courseName property\", function () {",
+											"    pm.expect(pm.response.json()).to.have.property(\"courseName\");",
+											"});",
+											"",
+											"// Test to check if the screens property exists in the API response",
+											"pm.test(\"Response body has screens property\", function () {",
+											"    pm.expect(pm.response.json()).to.have.property(\"screens\");",
+											"});",
+											"",
+											"// Test to check if the sections property exists in the API response",
+											"pm.test(\"Response body has sections property\", function () {",
+											"    pm.expect(pm.response.json()).to.have.property(\"sections\");",
+											"});",
+											"",
+											"// Test to check if the __v property exists in the API response",
+											"pm.test(\"Response body has __v property\", function () {",
+											"    pm.expect(pm.response.json()).to.have.property(\"__v\");",
+											"});",
+											"",
+											"// Test to check if the _id property in the API response has the expected value",
+											"pm.test(\"_id property has expected value\", function () {",
+											"    pm.expect(pm.response.json()._id).to.eql(\"6414a72e60ff2707e2a0736d\");",
+											"});",
+											"",
+											"// Test to check if the account property in the API response has the expected value",
+											"pm.test(\"account property has expected value\", function () {",
+											"    pm.expect(pm.response.json().account).to.eql(\"64134c4fcfa7fe3799d0bfd8\");",
+											"});",
+											"",
+											"// Test to check if the courseName property in the API response has the expected value",
+											"pm.test(\"courseName property has expected value\", function () {",
+											"    pm.expect(pm.response.json().courseName).to.eql(\"TestKursPostman1\");",
+											"});",
+											"",
+											"",
+											"",
+											"",
+											"",
+											"",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:5000/api/screen/?param1=6414a72e60ff2707e2a0736d&param2=6414dfc160ff2707e2a07552",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"api",
+										"screen",
+										""
+									],
+									"query": [
+										{
+											"key": "param1",
+											"value": "6414a72e60ff2707e2a0736d"
+										},
+										{
+											"key": "param2",
+											"value": "6414dfc160ff2707e2a07552"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MTM0YzRmY2ZhN2ZlMzc5OWQwYmZkOCIsImlhdCI6MTY3OTAwMDg3NiwiZXhwIjoxNjgxNTkyODc2fQ.uPldZRq50lhbBnpX99lQVcFZyuP7auADJkQnUxo4ojQ",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		}
+	]
+}
