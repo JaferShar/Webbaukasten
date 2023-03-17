@@ -39,11 +39,12 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build && echo '/* /index.html 200' | cat >build/_redirects ",
-    "test": "react-scripts test --transformIgnorePatterns node_modules/jest/bin/jest.js/ --watchAll",
+    "test": "react-scripts test --transformIgnorePatterns node_modules/jest/bin/jest.js/ --watchAll --coverage",
     "clear:test": "test --clearCache ",
     "eject": "react-scripts eject",
     "cypress": "cypress open",
     "cyreports": "cypress run --reporter mochawesome"
+
   },
   "eslintConfig": {
     "extends": [
