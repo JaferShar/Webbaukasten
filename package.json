@@ -43,6 +43,7 @@
   },
   "devDependencies": {
     "concurrently": "^7.6.0",
+    "faker": "^6.6.6",
     "supertest": "^6.3.3"
   },
   "scripts": {
