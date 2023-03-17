@@ -65,6 +65,7 @@ function ResponsiveAppBar({ searchTerm, onSearch, handleSearch }) {
       await dispatch(
         updateScreen({ screenId: screen._id, elements: screen.elements })
       );
+      toast.success("Screen saved.");
     } catch (error) {
       toast.error(error.message);
     }
