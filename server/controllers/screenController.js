@@ -362,17 +362,19 @@ const deleteScreen = asyncHandler(async (req, res) => {
     if (!course) {
       return res.status(404).json({ error: "Course not found" });
     }
-    const screen = course.screens.find(
+    const screenID = course.screens.find(
       (screen) => screen._id.toString() === screenId
     );
-    if (!screen) {
+    if (!screenID) {
       return res.status(404).json({ error: "Screen not found" });
     }
     course.screens.pull(screenId);
 
     // save changes and delete screen afterwards
     await course.save();
-    await Screen.findByIdAndDelete(screenId);
+    // delete screen and its elements using the pre middleware in the Screen model
+    const screen = await Screen.findById(screenId);
+    await screen.remove();
 
     res.status(200).json(course);
   } catch (error) {
