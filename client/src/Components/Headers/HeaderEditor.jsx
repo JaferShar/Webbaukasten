@@ -56,13 +56,13 @@ function ResponsiveAppBar({ searchTerm, onSearch, handleSearch }) {
     setAnchorElUser(null);
   };
 
-  const handleSafe = () => {
+  const handleSafe = async () => {
     try {
       if (!screen._id) {
         toast.error("Please select a screen first.");
         return;
       } 
-      dispatch(
+      await dispatch(
         updateScreen({ screenId: screen._id, elements: screen.elements })
       );
     } catch (error) {

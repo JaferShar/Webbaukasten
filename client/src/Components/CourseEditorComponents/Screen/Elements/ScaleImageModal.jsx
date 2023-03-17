@@ -29,7 +29,6 @@ export default function ScaleImageModal({
     const url = selectedElement.url;
     const regex = /^(.*?\/upload\/)(w_\d\.\d+,c_scale\/)(.*)$/;
     if (regex.test(url)) {
-      console.log("regex matched");
       const regexDigit = /w_(\d+(?:\.\d+)?)/;
       const [, , scale] = url.match(regex);
       const match = scale.match(regexDigit);
@@ -55,7 +54,7 @@ export default function ScaleImageModal({
         }}
       >
         <Box>
-          Width
+          Größe des Bildes anpassen
           <Tooltip
             title='Es wird die Originalgröße des Bildes skaliert, 
             weshalb eine Änderung nicht immer im Editor sichtbar sein muss.'
@@ -68,7 +67,7 @@ export default function ScaleImageModal({
             valueLabelDisplay='auto'
             step={0.1}
             marks
-            min={0}
+            min={0.1}
             max={2.0}
             value={sliderValue}
             onChange={(event, newValue) => {

@@ -13,7 +13,7 @@ import { toast } from "react-toastify";
  */
 export default function PictureMenu() {
   const dispatch = useDispatch();
-  const screen = useSelector((state) => state.screenEditor.screen);
+  var screen = useSelector((state) => state.screenEditor.screen);
 
   /**
    * This function handles the upload of a picture to the cloudinary database.
@@ -51,7 +51,8 @@ export default function PictureMenu() {
     <div>
         <UploadWidget onUpload={handleOnUpload}>
           {({ open }) => {
-            function handleOnClick(e) {
+            async function handleOnClick(e) {
+              // await dispatch(updateScreen({ screenId: screen._id, elements: screen.elements }))
               e.preventDefault();
               open();
             }
