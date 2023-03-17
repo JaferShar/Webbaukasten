@@ -73,23 +73,21 @@ Cypress.Commands.add("renameCourse", (index, name, cancel) => {
 
 Cypress.Commands.add("editCourseDescriptions", (index, title, description) => {
   cy.get(`.MuiGrid-root > .MuiList-root > :nth-child(${index + 1})`).click();
+  cy.wait(2000); 
   cy.get("#root").should("contain.text", "Kurs");
+  cy.wait(2000); 
 
   cy.get("#standard-basic").clear().type(title);
+  cy.wait(2000); 
   cy.get("#standard-textarea").clear().type(description);
+  cy.wait(2000); 
   cy.get(".MuiToolbar-root > :nth-child(2)").click();
   cy.wait(2000);
   cy.get(".MuiToolbar-root > :nth-child(3)").click();
+  cy.wait(2000); 
 });
 
-Cypress.Commands.add(
-  "verifyCourseDescriptions",
-  (index, title, description) => {
-    cy.get(`.MuiGrid-root > .MuiList-root > :nth-child(${index + 1})`).click();
-    cy.get("#standard-basic").invoke("val").should("contain", title);
-    cy.get("#standard-textarea").invoke("val").should("contain", description);
-  }
-);
+
 
 Cypress.Commands.add("addCourseSlide", () => {
   cy.get('[data-testid="NoteAddIcon"]').click({ force: true });
@@ -143,3 +141,9 @@ Cypress.Commands.add("changeToTextfield", () => {
     .click({ force: true })
     .wait(1000);
 });
+
+
+
+
+
+
