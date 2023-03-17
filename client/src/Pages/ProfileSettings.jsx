@@ -28,7 +28,7 @@ const ProfileSetting = () => {
 
   useEffect(() => {
     if (!account) {
-      navigate("/login");
+      navigate("/");
       return;
     }
   }, [account, navigate]);
