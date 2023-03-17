@@ -61,7 +61,7 @@ export default function CourseOverview() {
   useEffect(() => {
     try {
       if (!account) {
-        navigate("/login");
+        navigate("/");
         return;
       }
       dispatch(getAllCourses());
