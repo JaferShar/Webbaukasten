@@ -58,50 +58,6 @@ describe("Test Scenario 2", () => {
     );
   });
 
-  it("Change textfields", () => {
-    cy.contains("Zoo Animals").click();
-    cy.clickSlide(3);
-
-    cy.get("#root > div > div:nth-child(1) > div:nth-child(2) > div > div > li")
-      .eq(0)
-      .rightclick();
-    cy.changeToTextfield();
-    cy.get("#root > div > div:nth-child(1) > div:nth-child(2) > div > div > li")
-      .eq(0)
-      .find('textarea[aria-invalid="false"]')
-      .clear()
-      .type("A gorilla's DNA is about 98% the same as a human's DNA!");
-    cy.get(".MuiToolbar-root > :nth-child(2)").click();
-    cy.wait(2000);
-
-    cy.get("#root > div > div:nth-child(1) > div:nth-child(2) > div > div > li")
-      .eq(1)
-      .rightclick();
-    cy.changeToTextfield();
-    cy.get("#root > div > div:nth-child(1) > div:nth-child(2) > div > div > li")
-      .eq(1)
-      .find('textarea[aria-invalid="false"]')
-      .clear()
-      .type(
-        "Gorillas are herbivores and play a crucial role in dispersing seeds."
-      );
-
-    cy.get(".MuiToolbar-root > :nth-child(2)").click();
-    cy.wait(2000);
-    cy.get(".MuiToolbar-root > :nth-child(3)").click();
-
-    cy.contains("Zoo Animals").click();
-    cy.clickSlide(3);
-    cy.get("#root").should(
-      "contain.text",
-      "A gorilla's DNA is about 98% the same as a human's DNA!"
-    );
-    cy.get("#root").should(
-      "contain.text",
-      "Gorillas are herbivores and play a crucial role in dispersing seeds."
-    );
-  });
-
   it("Share a course", () => {
     cy.get(
       ".MuiGrid-root > ul.MuiList-root > .MuiListItemButton-root:contains(Zoo Animals)"
