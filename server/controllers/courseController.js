@@ -140,8 +140,11 @@ const deleteCourse = asyncHandler(async (req, res) => {
       return res.status(401).json({ error: "Access denied." });
     }
 
-    // remove screens
-    await Screen.deleteMany({ _id: { $in: course.screens } });
+    // remove screens and elements using pre middleware of Screen model
+    for (const screenId of course.screens) {
+      const screen = await Screen.findById(screenId);
+      await screen.remove();
+    }
     // remove course
     await course.remove();
 

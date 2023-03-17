@@ -71,6 +71,11 @@ const screenSchema = new mongoose.Schema({
   },
 });
 
+screenSchema.pre("remove", async function () {
+  const elementIds = this.elements.map((element) => element._id);
+  await Element.deleteMany({ _id: { $in: elementIds } });
+});
+
 const Screen = mongoose.model("Screen", screenSchema);
 
 /**
