@@ -155,10 +155,7 @@ export default function CourseOverview() {
   };
 
   const handleListItemClick = async (courseId) => {
-    dispatch(getCourse(courseId));
-    const selectedCourse = coursesState.find(
-      (course) => course._id === courseId
-    );
+    await dispatch(getCourse(courseId));
     navigate(`/kurs?courseId=${courseId}`);
   };
 
