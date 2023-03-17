@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
-import { Box, Button, Modal, Slider } from "@mui/material";
+import { Box, Button, Modal, Slider, Tooltip } from "@mui/material";
+import InfoIcon from "@mui/icons-material/Info";
 /**
  * This module provides a popup to rescale an existing image.
  *
@@ -28,7 +29,7 @@ export default function ScaleImageModal({
     const url = selectedElement.url;
     const regex = /^(.*?\/upload\/)(w_\d\.\d+,c_scale\/)(.*)$/;
     if (regex.test(url)) {
-      console.log("regex matched")
+      console.log("regex matched");
       const regexDigit = /w_(\d+(?:\.\d+)?)/;
       const [, , scale] = url.match(regex);
       const match = scale.match(regexDigit);
@@ -55,6 +56,13 @@ export default function ScaleImageModal({
       >
         <Box>
           Width
+          <Tooltip
+            title='Es wird die Originalgröße des Bildes skaliert, 
+            weshalb eine Änderung nicht immer im Editor sichtbar sein muss.'
+            placement='right-start'
+          >
+            <InfoIcon sx={{ fontSize: 16, color: "blue" }} />
+          </Tooltip>
           <Slider
             aria-label='Default'
             valueLabelDisplay='auto'
