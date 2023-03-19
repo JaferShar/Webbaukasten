@@ -42,7 +42,7 @@ function ResponsiveAppBar({ searchTerm, onSearch, handleSearch }) {
       localStorage.removeItem("account");
       await dispatch(reset());
       await dispatch(logout());
-      navigate("/login");
+      navigate("/");
     } else if (clickedSetting === "Profile") {
       navigate(`/profile?accountID=${account._id}`);
     }
