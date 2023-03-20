@@ -43,7 +43,7 @@ describe("Test Scenario 2", () => {
     cy.fillTextfield("Wild Chimpanzees Can Only Be Found in Africa.");
 
     cy.get(".MuiToolbar-root > :nth-child(2)").click();
-    cy.wait(2000);
+    cy.wait(4000);
     cy.get(".MuiToolbar-root > :nth-child(3)").click();
 
     cy.contains("Zoo Animals").click();

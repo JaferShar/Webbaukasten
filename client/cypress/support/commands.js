@@ -82,7 +82,7 @@ Cypress.Commands.add("editCourseDescriptions", (index, title, description) => {
   cy.get("#standard-textarea").clear().type(description);
   cy.wait(2000); 
   cy.get(".MuiToolbar-root > :nth-child(2)").click();
-  cy.wait(2000);
+  cy.wait(4000);
   cy.get(".MuiToolbar-root > :nth-child(3)").click();
   cy.wait(2000); 
 });
