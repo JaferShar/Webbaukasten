@@ -43,17 +43,20 @@ describe("Test Scenario 3", () => {
     cy.createTextfield();
     cy.fillTextfield("Chapter 2: Meiosis");
 
+    cy.wait(4000);
     cy.get(".MuiToolbar-root > :nth-child(2)").click();
-    cy.wait(2000);
+    cy.wait(4000);
     cy.get(".MuiToolbar-root > :nth-child(3)").click();
   });
 
   it("Edit Zoo Animals course", () => {
+    cy.wait(5000);
     cy.contains("Zoo Animals").click();
     cy.addCourseSlide();
     cy.clickSlide(2);
     cy.createTextfield();
     cy.fillTextfield("Elephant");
+    cy.wait(2000);
     cy.get(".MuiToolbar-root > :nth-child(2)").click();
     cy.wait(2000);
 
@@ -65,8 +68,9 @@ describe("Test Scenario 3", () => {
     cy.createTextfield();
     cy.fillTextfield("They communicate through vibrations");
 
+    cy.wait(3000);
     cy.get(".MuiToolbar-root > :nth-child(2)").click();
-    cy.wait(2000);
+    cy.wait(4000);
     cy.get(".MuiToolbar-root > :nth-child(3)").click();
 
     cy.contains("Zoo Animals").click();

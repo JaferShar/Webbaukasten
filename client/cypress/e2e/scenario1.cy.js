@@ -75,8 +75,9 @@ describe("Test Scenario 1", () => {
     cy.fillTextfield(
       "1.{enter}2.{enter}3.{enter}4.{enter}5.{enter}6.{enter}7.{enter}8.{enter}9.{enter}10."
     );
+    cy.wait(3000);
     cy.get(".MuiToolbar-root > :nth-child(2)").click();
-    cy.wait(2000);
+    cy.wait(3000);
     cy.get(".MuiToolbar-root > :nth-child(3)").click();
 
     cy.contains("Biology").click();
@@ -86,6 +87,7 @@ describe("Test Scenario 1", () => {
       "1.\n2.\n3.\n4.\n5.\n6.\n7.\n8.\n9.\n10."
     );
 
+    cy.wait(2000);
     cy.get(".MuiAvatar-root").click();
     cy.contains("Logout").click();
     cy.wait(2000);
